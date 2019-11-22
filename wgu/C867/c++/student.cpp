@@ -28,6 +28,12 @@ Student::Student(string sId, string fName, string lName, string eAddress, int ag
     this->daysToComplete = daysCourses;
 }
 
+/* destructor definition */
+
+Student::~Student(){
+
+}
+
 // accessor or 'getter' functions
 string Student::getStudentId()
 {
@@ -82,4 +88,16 @@ void Student::setStudentDaysToComplete(int daysCourse1, int daysCourse2, int day
   this->daysToComplete[0] = daysCourse1;
   this->daysToComplete[1] = daysCourse2;
   this->daysToComplete[2] = daysCourse3;
+}
+
+/* print function */
+
+void Student::print(){
+   cout << getStudentId();
+   cout << "\tFirst Name: " << getStudentFirstName();
+   cout << "\tLast Name: " << getStudentLastName();
+   cout << "\tAge: " << getStudentAge();
+   cout << "\tdaysInCourse: {" << getStudentDaysToComplete(); << "}";
+   cout << "\tDegree Program: " << getDegreeProgram();
+   endl;
 }
