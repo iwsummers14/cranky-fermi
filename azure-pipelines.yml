@@ -11,5 +11,5 @@ pool:
 
 steps:
 - script: |
-    make
+    make degree.h student.cpp student.h securityStudent.cpp securityStudent.h networkStudent.cpp networkStudent.h softwareStudent.cpp softwareStudent.h
   displayName: 'make'
