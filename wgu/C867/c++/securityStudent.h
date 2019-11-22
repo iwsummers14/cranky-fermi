@@ -5,7 +5,7 @@ using namespace std;
 class SecurityStudent : public Student
 {
   public:
-    Degree getDegreeProgram() override;
+    Degree getDegreeProgram() override const;
 
   protected:
     Degree degree = SECURITY;
