@@ -1,6 +1,7 @@
-/* Ian Summers
-C867 
-Student Id:
+/*
+  Ian Summers
+  C867
+  Student Id:
 */
 #include "student.h"
 using namespace std;
@@ -8,23 +9,23 @@ using namespace std;
 /* default constructor definition */
 Student::Student()
 {
-    studentId = "Unknown";
-    firstName = "Unknown";
-    lastName = "Unknown";
-    emailAddress = "Unknown";
-    studentAge = -1;
-    daysToComplete = -1, -1, -1
+    this->studentId = "Unknown";
+    this->firstName = "Unknown";
+    this->lastName = "Unknown";
+    this->emailAddress = "Unknown";
+    this->studentAge = -1;
+    this->daysToComplete = -1, -1, -1
 }
 
 /* constructor definition*/
 Student::Student(string sId, string fName, string lName, string eAddress, int age, int *daysCourses)
 {
-    studentId = sId;
-    firstName = fName;
-    lastName = lName;
-    emailAddress = eAddress;
-    studentAge = age;
-    daysToComplete = daysCourses;
+    this->studentId = sId;
+    this->firstName = fName;
+    this->lastName = lName;
+    this->emailAddress = eAddress;
+    this->studentAge = age;
+    this->daysToComplete = daysCourses;
 }
 
 // accessor or 'getter' functions
@@ -55,9 +56,30 @@ int Student::*getStudentDaysToComplete()
 }
 
 // mutator or 'setter' functions
-void Student::setStudentId(string sId);
-void Student::setStudentFirstName(string fName);
-void Student::setStudentLastName(string lName);
-void Student::setStudentEmailAddress(string eAddress);
-void Student::setStudentAge(int sAge);
-void Student::setStudentDaysToComplete(int daysCourse1, int daysCourse2, int daysCourse3);
+void Student::setStudentId(string sId){
+  this->studentId = sId;
+}
+
+void Student::setStudentFirstName(string fName)
+{
+    this->firstName = fName;
+}
+
+void Student::setStudentLastName(string lName)
+{
+  this->lastName = lName;
+}
+void Student::setStudentEmailAddress(string eAddress)
+{
+  this->emailAddress = eAddress;
+}
+void Student::setStudentAge(int sAge)
+{
+  this->studentAge = sAge;
+}
+void Student::setStudentDaysToComplete(int daysCourse1, int daysCourse2, int daysCourse3)
+{
+  this->daysToComplete[0] = daysCourse1;
+  this->daysToComplete[1] = daysCourse2;
+  this->daysToComplete[2] = daysCourse3;
+}
