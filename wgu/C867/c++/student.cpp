@@ -5,7 +5,6 @@
 */
 #include "student.h"
 #include <iostream>
-using namespace std;
 
 /* default constructor definition */
 Student::Student()
@@ -28,7 +27,7 @@ Student::Student(string sId, string fName, string lName, string eAddress, int ag
     this->lastName = lName;
     this->emailAddress = eAddress;
     this->studentAge = age;
-    for (int i = 0; int i < daysCoursesArraySize; i++){
+    for (int i = 0; i < daysCoursesArraySize; i++;){
       this->daysToComplete[i] = daysCourses[i];
     }
 
@@ -62,7 +61,7 @@ int Student::getStudentAge()
 {
     return studentAge;
 }
-int Student::*getStudentDaysToComplete()
+int* Student::getStudentDaysToComplete()
 {
     return daysToComplete;
 }
