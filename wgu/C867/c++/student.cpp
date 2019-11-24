@@ -14,7 +14,9 @@ Student::Student()
     this->lastName = "Unknown";
     this->emailAddress = "Unknown";
     this->studentAge = -1;
-    this->daysToComplete = -1, -1, -1
+    this->daysToComplete[0] = -1;
+    this->daysToComplete[1]= -1;
+    this->daysToComplete[2]= -1;
 }
 
 /* constructor definition*/
