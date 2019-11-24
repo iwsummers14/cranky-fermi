@@ -4,8 +4,9 @@
   Student Id:
 */
 #include "student.h"
+#include "degree.h"
 #include <iostream>
-using namespace std;
+#include <string>
 
 /* default constructor definition */
 Student::Student()
@@ -28,7 +29,8 @@ Student::Student(string sId, string fName, string lName, string eAddress, int ag
     this->lastName = lName;
     this->emailAddress = eAddress;
     this->studentAge = age;
-    for (int i = 0; i < daysCoursesArraySize; i++;){
+    for (int i = 0; i < daysCoursesArraySize; i++)
+    {
       this->daysToComplete[i] = daysCourses[i];
     }
 
@@ -41,28 +43,28 @@ Student::~Student(){
 }
 
 // accessor or 'getter' functions
-string Student::getStudentId()
+string Student::getStudentId() const
 {
     return studentId;
 }
-string Student::getStudentFirstName()
+string Student::getStudentFirstName() const
 {
     return firstName;
 }
 
-string Student::getStudentLastName()
+string Student::getStudentLastName() const
 {
     return lastName;
 }
-string Student::getStudentEmailAddress()
+string Student::getStudentEmailAddress() const
 {
     return emailAddress;
 }
-int Student::getStudentAge()
+int Student::getStudentAge() const
 {
     return studentAge;
 }
-int* Student::getStudentDaysToComplete()
+int *Student::getStudentDaysToComplete()
 {
     return daysToComplete;
 }
@@ -99,11 +101,12 @@ void Student::setStudentDaysToComplete(int daysCourse1, int daysCourse2, int day
 /* print function */
 
 void Student::print(){
-   cout << getStudentId();
-   cout << "\tFirst Name: " << getStudentFirstName();
-   cout << "\tLast Name: " << getStudentLastName();
-   cout << "\tAge: " << getStudentAge();
-   cout << "\tdaysInCourse: {" << getStudentDaysToComplete(); << "}";
-   cout << "\tDegree Program: " << getDegreeProgram();
-   endl;
+    
+      cout << getStudentId();
+      cout << "\tFirst Name: " << getStudentFirstName();
+      cout << "\tLast Name: " << getStudentLastName();
+      cout << "\tAge: " << getStudentAge();
+      cout << "\tdaysInCourse: " << getStudentDaysToComplete();
+      cout << "\tDegree Program:" << getDegreeProgram() << endl;
+
 }

@@ -8,8 +8,8 @@ Student ID:
 #pragma once
 #ifndef STUDENT_H_
 #define STUDENT_H_
+#include "degree.h"
 
-#include <string>
 using namespace std;
 
 class Student
@@ -36,7 +36,7 @@ class Student
         string getStudentLastName() const;
         string getStudentEmailAddress() const;
         int getStudentAge() const;
-        int* getStudentDaysToComplete() const;
+        int *getStudentDaysToComplete();
 
 
         /* mutator or 'setter' functions */
@@ -48,13 +48,14 @@ class Student
         void setStudentDaysToComplete(int daysCourse1, int daysCourse2, int daysCourse3);
 
         /* virtual functions */
-        virtual void getDegreeProgram();
+        virtual Degree getDegreeProgram();
         virtual void print();
 
         /* destructor */
         ~Student();
 
     protected:
+
         string studentId;
         string firstName;
         string lastName;
