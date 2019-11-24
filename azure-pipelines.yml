@@ -10,7 +10,11 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: |
-    cd $(Agent.BuildDirectory)
-    make 
-  displayName: 'make'
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Write your commands here
+      pwd
+      ls -la 
+      make
