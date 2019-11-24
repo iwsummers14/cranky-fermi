@@ -5,6 +5,10 @@ C867 Scripting and Programming
 Student ID:
 
 */
+#pragma once
+#ifndef STUDENT_H_
+#define STUDENT_H_
+
 #include <string>
 using namespace std;
 
@@ -50,3 +54,5 @@ class Student
         int studentAge;
         int daysToComplete[3];
 };
+
+#endif

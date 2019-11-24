@@ -5,6 +5,7 @@
 */
 #include "student.h"
 #include <iostream>
+using namespace std;
 
 /* default constructor definition */
 Student::Student()
