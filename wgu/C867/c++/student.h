@@ -16,7 +16,7 @@ class Student
         Student();
 
         /* constructor with required parameters */
-        Student(string sId, string fName, string lName, string eAddress, int age, int* daysCourses );
+        Student(string sId, string fName, string lName, string eAddress, int age, int* daysCourses, int daysCoursesArraySize );
 
         /* accessor or 'getter' functions */
         string getStudentId() const;
@@ -49,6 +49,4 @@ class Student
         string emailAddress;
         int studentAge;
         int daysToComplete[3];
-
-
 };

@@ -4,6 +4,7 @@
   Student Id:
 */
 #include "student.h"
+#include <iostream>
 using namespace std;
 
 /* default constructor definition */
@@ -20,14 +21,17 @@ Student::Student()
 }
 
 /* constructor definition*/
-Student::Student(string sId, string fName, string lName, string eAddress, int age, int *daysCourses)
+Student::Student(string sId, string fName, string lName, string eAddress, int age, int* daysCourses, int daysCoursesArraySize)
 {
     this->studentId = sId;
     this->firstName = fName;
     this->lastName = lName;
     this->emailAddress = eAddress;
     this->studentAge = age;
-    this->daysToComplete = daysCourses;
+    for (int i = 0; int i < daysCoursesArraySize; i++){
+      this->daysToComplete[i] = daysCourses[i];
+    }
+
 }
 
 /* destructor definition */
