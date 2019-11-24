@@ -16,6 +16,6 @@ steps:
     script: |
       # Write your commands here
       pwd
-      cd wgu/C867/c++
+      cd wgu/C867
       ls -la 
       make

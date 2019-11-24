@@ -4,7 +4,7 @@ roster : roster.o student.o networkStudent.o securityStudent.o softwareStudent.o
 roster.o : roster.cpp roster.h
 	g++ -Wall -c roster.cpp
 
-student.o : student.cpp student.h
+student.o : student.cpp student.h degree.h
 	g++ -Wall -c student.cpp
 
 networkStudent.o : networkStudent.cpp networkStudent.h student.cpp student.h degree.h

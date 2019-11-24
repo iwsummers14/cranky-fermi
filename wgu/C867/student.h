@@ -5,10 +5,12 @@ C867 Scripting and Programming
 Student ID:
 
 */
+
 #pragma once
 #ifndef STUDENT_H_
 #define STUDENT_H_
 #include "degree.h"
+#include <string>
 
 using namespace std;
 
