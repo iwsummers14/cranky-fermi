@@ -36,7 +36,7 @@ class Student
         void setStudentDaysToComplete(int daysCourse1, int daysCourse2, int daysCourse3);
 
         /* virtual functions */
-        virtual getDegreeProgram();
+        virtual void getDegreeProgram();
         virtual void print();
 
         /* destructor */
@@ -51,4 +51,4 @@ class Student
         int daysToComplete[3];
 
 
-}
+};
