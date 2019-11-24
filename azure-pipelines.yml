@@ -11,5 +11,6 @@ pool:
 
 steps:
 - script: |
+    cd $(Agent.BuildDirectory)
     make 
   displayName: 'make'
