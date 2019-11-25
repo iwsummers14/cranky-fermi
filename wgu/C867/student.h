@@ -1,14 +1,12 @@
 /*
 
-Ian Summers
-C867 Scripting and Programming
-Student ID:
+	Ian Summers
+	C867 Scripting and Programming
+	Student ID: 000490659
 
 */
 
 #pragma once
-#ifndef STUDENT_H_
-#define STUDENT_H_
 #include "degree.h"
 #include <string>
 
@@ -28,8 +26,7 @@ class Student
           string lName,
           string eAddress,
           int age,
-          int* daysCourses,
-          int daysCoursesArraySize
+          int* daysCourses
         );
 
         /* accessor or 'getter' functions */
@@ -50,7 +47,7 @@ class Student
         void setStudentDaysToComplete(int daysCourse1, int daysCourse2, int daysCourse3);
 
         /* virtual functions */
-        virtual Degree getDegreeProgram();
+        virtual Degree getDegreeProgram() = 0; 
         virtual void print();
 
         /* destructor */
@@ -66,5 +63,3 @@ class Student
         int daysToComplete[3];
 
 };
-
-#endif
