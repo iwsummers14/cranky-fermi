@@ -230,7 +230,7 @@ void printHeading() {
 	cout << "==================================================================================\n\n";
 }
 
-void main() {
+int main() {
 
 	// print heading - item F.1
 	printHeading();
@@ -345,4 +345,5 @@ void main() {
 	cout << "\nDisposing of class roster object..";
 	delete classRoster;
 
+	return 0;
 }
