@@ -1,14 +1,17 @@
 /*
-  Ian Summers
-  C867
-  Student Id:
+
+	Ian Summers
+	C867 Scripting and Programming
+	Student ID: 000490659
+
 */
+
 #include "student.h"
 #include "degree.h"
 #include <iostream>
 #include <string>
 
-/* default constructor definition */
+// default constructor definition 
 Student::Student()
 {
     this->studentId = "Unknown";
@@ -21,22 +24,25 @@ Student::Student()
     this->daysToComplete[2]= -1;
 }
 
-/* constructor definition*/
-Student::Student(string sId, string fName, string lName, string eAddress, int age, int* daysCourses, int daysCoursesArraySize)
+// constructor definition
+Student::Student(string sId, string fName, string lName, string eAddress, int age, int* daysCourses)
 {
     this->studentId = sId;
     this->firstName = fName;
     this->lastName = lName;
     this->emailAddress = eAddress;
     this->studentAge = age;
-    for (int i = 0; i < daysCoursesArraySize; i++)
+	
+	int elementCount = (sizeof(daysToComplete) / sizeof(daysToComplete[0]));
+
+    for (int i = 0; i < elementCount; i++)
     {
       this->daysToComplete[i] = daysCourses[i];
     }
 
 }
 
-/* destructor definition */
+// destructor definition 
 
 Student::~Student(){
 
@@ -64,7 +70,7 @@ int Student::getStudentAge() const
 {
     return studentAge;
 }
-int *Student::getStudentDaysToComplete()
+int* Student::getStudentDaysToComplete()
 {
     return daysToComplete;
 }
@@ -98,15 +104,38 @@ void Student::setStudentDaysToComplete(int daysCourse1, int daysCourse2, int day
   this->daysToComplete[2] = daysCourse3;
 }
 
-/* print function */
+// print function 
 
 void Student::print(){
     
-      cout << getStudentId();
-      cout << "\tFirst Name: " << getStudentFirstName();
-      cout << "\tLast Name: " << getStudentLastName();
-      cout << "\tAge: " << getStudentAge();
-      cout << "\tdaysInCourse: " << getStudentDaysToComplete();
-      cout << "\tDegree Program:" << getDegreeProgram() << endl;
+      cout << "First Name: " << getStudentFirstName() << "\t";
+      cout << "Last Name: " << getStudentLastName() << "\t";
+      cout << "Age: " << getStudentAge() << "  \t";
 
+	  cout << "daysInCourse: {";
+	  int* days = getStudentDaysToComplete();
+	  for (int i = 0; i < 3; i++) {
+		  
+		  cout << days[i];
+
+		  if (i != 2) {
+			  cout << ", ";
+		  }
+
+	  }
+	  cout << "}";
+
+	  cout << "\tDegree Program: ";
+	  switch (getDegreeProgram()) {
+	  case 0:
+		  cout << "Security\n";
+		  break;
+	  case 1:
+		  cout << "Networking\n";
+		  break;
+	  case 2:
+		  cout << "Software\n";
+	  }
+	  
 }
+

@@ -15,7 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\wgu\C867\c++\Makefile" />
     <None Include="Makefile" />
   </ItemGroup>
   <ItemGroup>
