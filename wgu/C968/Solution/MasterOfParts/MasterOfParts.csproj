@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B67F93AF-518B-488A-A082-D2CD75DA573E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>MasterOfParts</RootNamespace>
+    <AssemblyName>MasterOfParts</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\Inhouse.cs" />
+    <Compile Include="Classes\Inventory.cs" />
+    <Compile Include="Classes\Outsourced.cs" />
+    <Compile Include="Classes\Part.cs" />
+    <Compile Include="Classes\Product.cs" />
+    <Compile Include="Forms\fPartAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\fPartAdd.Designer.cs">
+      <DependentUpon>fPartAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\fPartModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\fPartModify.Designer.cs">
+      <DependentUpon>fPartModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\fProductAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\fProductAdd.Designer.cs">
+      <DependentUpon>fProductAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\fProductModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\fProductModify.Designer.cs">
+      <DependentUpon>fProductModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\fHome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\fHome.Designer.cs">
+      <DependentUpon>fHome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\fPartAdd.resx">
+      <DependentUpon>fPartAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\fPartModify.resx">
+      <DependentUpon>fPartModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\fProductAdd.resx">
+      <DependentUpon>fProductAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\fProductModify.resx">
+      <DependentUpon>fProductModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\fHome.resx">
+      <DependentUpon>fHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
