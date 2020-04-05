@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MasterOfParts
 {
     // child class for inhouse part, inherits abstract class Part
-    class Inhouse : Part
+    public class Inhouse : Part
     {
         public int MachineId { get; set; }
 

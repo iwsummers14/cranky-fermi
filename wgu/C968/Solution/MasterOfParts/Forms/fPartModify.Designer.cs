@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fPartModify));
             this.ModifyPartTitle = new System.Windows.Forms.Label();
             this.ModifyPartCancel = new System.Windows.Forms.Button();
             this.ModifyPartSave = new System.Windows.Forms.Button();
@@ -38,15 +40,27 @@
             this.PartInventoryLabel = new System.Windows.Forms.Label();
             this.PartNameLabel = new System.Windows.Forms.Label();
             this.PartIDLabel = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.PartMin = new System.Windows.Forms.TextBox();
+            this.PartSupplement = new System.Windows.Forms.TextBox();
+            this.PartInventory = new System.Windows.Forms.TextBox();
+            this.PartCost = new System.Windows.Forms.TextBox();
+            this.PartMax = new System.Windows.Forms.TextBox();
+            this.PartName = new System.Windows.Forms.TextBox();
+            this.PartId = new System.Windows.Forms.TextBox();
             this.isOutsourcedRadio = new System.Windows.Forms.RadioButton();
             this.isInHouseRadio = new System.Windows.Forms.RadioButton();
+            this.errorProviderName = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderInventory = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderCost = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderMax = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderMin = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProviderSupplement = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderInventory)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderCost)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderMax)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderMin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderSupplement)).BeginInit();
             this.SuspendLayout();
             // 
             // ModifyPartTitle
@@ -65,30 +79,31 @@
             this.ModifyPartCancel.Location = new System.Drawing.Point(264, 326);
             this.ModifyPartCancel.Name = "ModifyPartCancel";
             this.ModifyPartCancel.Size = new System.Drawing.Size(75, 23);
-            this.ModifyPartCancel.TabIndex = 36;
+            this.ModifyPartCancel.TabIndex = 10;
             this.ModifyPartCancel.Text = "Cancel";
             this.ModifyPartCancel.UseVisualStyleBackColor = true;
+            this.ModifyPartCancel.Click += new System.EventHandler(this.ModifyPartCancel_Click);
             // 
             // ModifyPartSave
             // 
-            this.ModifyPartSave.Enabled = false;
             this.ModifyPartSave.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ModifyPartSave.Location = new System.Drawing.Point(182, 326);
             this.ModifyPartSave.Name = "ModifyPartSave";
             this.ModifyPartSave.Size = new System.Drawing.Size(75, 23);
-            this.ModifyPartSave.TabIndex = 35;
+            this.ModifyPartSave.TabIndex = 9;
             this.ModifyPartSave.Text = "Save";
             this.ModifyPartSave.UseVisualStyleBackColor = true;
+            this.ModifyPartSave.Click += new System.EventHandler(this.ModifyPartSave_Click);
             // 
             // PartTypeLabel
             // 
-            this.PartTypeLabel.AutoSize = true;
             this.PartTypeLabel.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PartTypeLabel.Location = new System.Drawing.Point(80, 281);
+            this.PartTypeLabel.Location = new System.Drawing.Point(40, 281);
             this.PartTypeLabel.Name = "PartTypeLabel";
-            this.PartTypeLabel.Size = new System.Drawing.Size(61, 13);
+            this.PartTypeLabel.Size = new System.Drawing.Size(101, 13);
             this.PartTypeLabel.TabIndex = 34;
             this.PartTypeLabel.Text = "MachineId";
+            this.PartTypeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // PartMaxLabel
             // 
@@ -150,62 +165,68 @@
             this.PartIDLabel.TabIndex = 28;
             this.PartIDLabel.Text = "ID";
             // 
-            // textBox7
+            // PartMin
             // 
-            this.textBox7.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox7.Location = new System.Drawing.Point(264, 235);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(60, 22);
-            this.textBox7.TabIndex = 27;
+            this.PartMin.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PartMin.Location = new System.Drawing.Point(264, 235);
+            this.PartMin.Name = "PartMin";
+            this.PartMin.Size = new System.Drawing.Size(60, 22);
+            this.PartMin.TabIndex = 7;
+            this.PartMin.Validating += new System.ComponentModel.CancelEventHandler(this.PartMin_Validating);
             // 
-            // textBox6
+            // PartSupplement
             // 
-            this.textBox6.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox6.Location = new System.Drawing.Point(143, 278);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(86, 22);
-            this.textBox6.TabIndex = 26;
+            this.PartSupplement.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PartSupplement.Location = new System.Drawing.Point(143, 278);
+            this.PartSupplement.Name = "PartSupplement";
+            this.PartSupplement.Size = new System.Drawing.Size(86, 22);
+            this.PartSupplement.TabIndex = 8;
+            this.PartSupplement.Validating += new System.ComponentModel.CancelEventHandler(this.PartSupplement_Validating);
             // 
-            // textBox5
+            // PartInventory
             // 
-            this.textBox5.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.Location = new System.Drawing.Point(143, 156);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(130, 22);
-            this.textBox5.TabIndex = 25;
+            this.PartInventory.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PartInventory.Location = new System.Drawing.Point(143, 156);
+            this.PartInventory.Name = "PartInventory";
+            this.PartInventory.Size = new System.Drawing.Size(130, 22);
+            this.PartInventory.TabIndex = 4;
+            this.PartInventory.Validating += new System.ComponentModel.CancelEventHandler(this.PartInventory_Validating);
             // 
-            // textBox4
+            // PartCost
             // 
-            this.textBox4.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(143, 194);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(130, 22);
-            this.textBox4.TabIndex = 24;
+            this.PartCost.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PartCost.Location = new System.Drawing.Point(143, 194);
+            this.PartCost.Name = "PartCost";
+            this.PartCost.Size = new System.Drawing.Size(130, 22);
+            this.PartCost.TabIndex = 5;
+            this.PartCost.Validating += new System.ComponentModel.CancelEventHandler(this.PartCost_Validating);
             // 
-            // textBox3
+            // PartMax
             // 
-            this.textBox3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(143, 235);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(59, 22);
-            this.textBox3.TabIndex = 23;
+            this.PartMax.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PartMax.Location = new System.Drawing.Point(143, 235);
+            this.PartMax.Name = "PartMax";
+            this.PartMax.Size = new System.Drawing.Size(59, 22);
+            this.PartMax.TabIndex = 6;
+            this.PartMax.Validating += new System.ComponentModel.CancelEventHandler(this.PartMax_Validating);
             // 
-            // textBox2
+            // PartName
             // 
-            this.textBox2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(143, 122);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(130, 22);
-            this.textBox2.TabIndex = 22;
+            this.PartName.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PartName.Location = new System.Drawing.Point(143, 122);
+            this.PartName.Name = "PartName";
+            this.PartName.Size = new System.Drawing.Size(130, 22);
+            this.PartName.TabIndex = 3;
+            this.PartName.Validating += new System.ComponentModel.CancelEventHandler(this.PartName_Validating);
             // 
-            // textBox1
+            // PartId
             // 
-            this.textBox1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(143, 91);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(130, 22);
-            this.textBox1.TabIndex = 21;
+            this.PartId.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PartId.Location = new System.Drawing.Point(143, 91);
+            this.PartId.Name = "PartId";
+            this.PartId.ReadOnly = true;
+            this.PartId.Size = new System.Drawing.Size(130, 22);
+            this.PartId.TabIndex = 21;
             // 
             // isOutsourcedRadio
             // 
@@ -214,10 +235,11 @@
             this.isOutsourcedRadio.Location = new System.Drawing.Point(193, 50);
             this.isOutsourcedRadio.Name = "isOutsourcedRadio";
             this.isOutsourcedRadio.Size = new System.Drawing.Size(86, 17);
-            this.isOutsourcedRadio.TabIndex = 20;
+            this.isOutsourcedRadio.TabIndex = 2;
             this.isOutsourcedRadio.TabStop = true;
             this.isOutsourcedRadio.Text = "Outsourced";
             this.isOutsourcedRadio.UseVisualStyleBackColor = true;
+            this.isOutsourcedRadio.CheckedChanged += new System.EventHandler(this.isOutsourcedRadio_CheckedChanged);
             // 
             // isInHouseRadio
             // 
@@ -226,10 +248,35 @@
             this.isInHouseRadio.Location = new System.Drawing.Point(116, 50);
             this.isInHouseRadio.Name = "isInHouseRadio";
             this.isInHouseRadio.Size = new System.Drawing.Size(72, 17);
-            this.isInHouseRadio.TabIndex = 19;
+            this.isInHouseRadio.TabIndex = 1;
             this.isInHouseRadio.TabStop = true;
             this.isInHouseRadio.Text = "In-House";
             this.isInHouseRadio.UseVisualStyleBackColor = true;
+            this.isInHouseRadio.CheckedChanged += new System.EventHandler(this.isInHouseRadio_CheckedChanged);
+            // 
+            // errorProviderName
+            // 
+            this.errorProviderName.ContainerControl = this;
+            // 
+            // errorProviderInventory
+            // 
+            this.errorProviderInventory.ContainerControl = this;
+            // 
+            // errorProviderCost
+            // 
+            this.errorProviderCost.ContainerControl = this;
+            // 
+            // errorProviderMax
+            // 
+            this.errorProviderMax.ContainerControl = this;
+            // 
+            // errorProviderMin
+            // 
+            this.errorProviderMin.ContainerControl = this;
+            // 
+            // errorProviderSupplement
+            // 
+            this.errorProviderSupplement.ContainerControl = this;
             // 
             // fPartModify
             // 
@@ -246,17 +293,25 @@
             this.Controls.Add(this.PartInventoryLabel);
             this.Controls.Add(this.PartNameLabel);
             this.Controls.Add(this.PartIDLabel);
-            this.Controls.Add(this.textBox7);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.PartMin);
+            this.Controls.Add(this.PartSupplement);
+            this.Controls.Add(this.PartInventory);
+            this.Controls.Add(this.PartCost);
+            this.Controls.Add(this.PartMax);
+            this.Controls.Add(this.PartName);
+            this.Controls.Add(this.PartId);
             this.Controls.Add(this.isOutsourcedRadio);
             this.Controls.Add(this.isInHouseRadio);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "fPartModify";
             this.Text = "fPartModify";
+            this.Load += new System.EventHandler(this.fPartModify_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderInventory)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderCost)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderMax)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderMin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderSupplement)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -274,14 +329,20 @@
         private System.Windows.Forms.Label PartInventoryLabel;
         private System.Windows.Forms.Label PartNameLabel;
         private System.Windows.Forms.Label PartIDLabel;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox PartMin;
+        private System.Windows.Forms.TextBox PartSupplement;
+        private System.Windows.Forms.TextBox PartInventory;
+        private System.Windows.Forms.TextBox PartCost;
+        private System.Windows.Forms.TextBox PartMax;
+        private System.Windows.Forms.TextBox PartName;
+        private System.Windows.Forms.TextBox PartId;
         private System.Windows.Forms.RadioButton isOutsourcedRadio;
         private System.Windows.Forms.RadioButton isInHouseRadio;
+        private System.Windows.Forms.ErrorProvider errorProviderName;
+        private System.Windows.Forms.ErrorProvider errorProviderInventory;
+        private System.Windows.Forms.ErrorProvider errorProviderCost;
+        private System.Windows.Forms.ErrorProvider errorProviderMax;
+        private System.Windows.Forms.ErrorProvider errorProviderMin;
+        private System.Windows.Forms.ErrorProvider errorProviderSupplement;
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MasterOfParts
 {
     // child class for outsourced part, inherits abstract class Part
-    class Outsourced : Part
+    public class Outsourced : Part
     {
         public string CompanyName { get; set; }
 

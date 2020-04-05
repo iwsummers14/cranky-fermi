@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MasterOfParts
 {
-    abstract class Part
+    public abstract class Part
     {
         public int PartID { get; set; }
 

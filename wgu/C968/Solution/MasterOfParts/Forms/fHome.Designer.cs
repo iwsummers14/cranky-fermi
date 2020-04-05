@@ -1,6 +1,6 @@
 ﻿namespace MasterOfParts
 {
-    partial class Form1
+    partial class fHome
     {
         /// <summary>
         /// Required designer variable.
@@ -28,24 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fHome));
             this.HomeTitle = new System.Windows.Forms.Label();
             this.SearchPartInput = new System.Windows.Forms.TextBox();
             this.SearchPart = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.PartsLabel = new System.Windows.Forms.Label();
             this.AddPart = new System.Windows.Forms.Button();
             this.ModifyPart = new System.Windows.Forms.Button();
             this.DeletePart = new System.Windows.Forms.Button();
             this.AddProduct = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.ProductsLabel = new System.Windows.Forms.Label();
             this.SearchProduct = new System.Windows.Forms.Button();
             this.ModifyProduct = new System.Windows.Forms.Button();
             this.DeleteProduct = new System.Windows.Forms.Button();
             this.SearchProductInput = new System.Windows.Forms.TextBox();
-            this.GridViewPart = new System.Windows.Forms.DataGridView();
-            this.ProductGridView = new System.Windows.Forms.DataGridView();
             this.ExitApp = new System.Windows.Forms.Button();
+            this.GridViewProduct = new System.Windows.Forms.DataGridView();
+            this.GridViewPart = new System.Windows.Forms.DataGridView();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            ((System.ComponentModel.ISupportInitialize)(this.GridViewProduct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridViewPart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // HomeTitle
@@ -77,15 +79,15 @@
             this.SearchPart.UseVisualStyleBackColor = true;
             this.SearchPart.Click += new System.EventHandler(this.SearchPart_Click);
             // 
-            // label1
+            // PartsLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(34, 116);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 25);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Parts";
+            this.PartsLabel.AutoSize = true;
+            this.PartsLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PartsLabel.Location = new System.Drawing.Point(34, 116);
+            this.PartsLabel.Name = "PartsLabel";
+            this.PartsLabel.Size = new System.Drawing.Size(53, 25);
+            this.PartsLabel.TabIndex = 3;
+            this.PartsLabel.Text = "Parts";
             // 
             // AddPart
             // 
@@ -118,6 +120,7 @@
             this.DeletePart.TabIndex = 6;
             this.DeletePart.Text = "Delete";
             this.DeletePart.UseVisualStyleBackColor = true;
+            this.DeletePart.Click += new System.EventHandler(this.DeletePart_Click);
             // 
             // AddProduct
             // 
@@ -130,15 +133,15 @@
             this.AddProduct.UseVisualStyleBackColor = true;
             this.AddProduct.Click += new System.EventHandler(this.AddProduct_Click);
             // 
-            // label2
+            // ProductsLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(567, 116);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 25);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "Products";
+            this.ProductsLabel.AutoSize = true;
+            this.ProductsLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ProductsLabel.Location = new System.Drawing.Point(567, 116);
+            this.ProductsLabel.Name = "ProductsLabel";
+            this.ProductsLabel.Size = new System.Drawing.Size(86, 25);
+            this.ProductsLabel.TabIndex = 8;
+            this.ProductsLabel.Text = "Products";
             // 
             // SearchProduct
             // 
@@ -180,26 +183,10 @@
             this.SearchProductInput.Size = new System.Drawing.Size(259, 20);
             this.SearchProductInput.TabIndex = 12;
             // 
-            // GridViewPart
-            // 
-            this.GridViewPart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GridViewPart.Location = new System.Drawing.Point(40, 143);
-            this.GridViewPart.Name = "GridViewPart";
-            this.GridViewPart.Size = new System.Drawing.Size(447, 256);
-            this.GridViewPart.TabIndex = 13;
-            // 
-            // ProductGridView
-            // 
-            this.ProductGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ProductGridView.Location = new System.Drawing.Point(572, 144);
-            this.ProductGridView.Name = "ProductGridView";
-            this.ProductGridView.Size = new System.Drawing.Size(457, 255);
-            this.ProductGridView.TabIndex = 14;
-            // 
             // ExitApp
             // 
             this.ExitApp.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExitApp.Location = new System.Drawing.Point(955, 488);
+            this.ExitApp.Location = new System.Drawing.Point(955, 457);
             this.ExitApp.Name = "ExitApp";
             this.ExitApp.Size = new System.Drawing.Size(74, 37);
             this.ExitApp.TabIndex = 15;
@@ -207,32 +194,66 @@
             this.ExitApp.UseVisualStyleBackColor = true;
             this.ExitApp.Click += new System.EventHandler(this.ExitApp_Click);
             // 
-            // Form1
+            // GridViewProduct
+            // 
+            this.GridViewProduct.AllowUserToAddRows = false;
+            this.GridViewProduct.AllowUserToDeleteRows = false;
+            this.GridViewProduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GridViewProduct.Location = new System.Drawing.Point(572, 144);
+            this.GridViewProduct.Name = "GridViewProduct";
+            this.GridViewProduct.ReadOnly = true;
+            this.GridViewProduct.Size = new System.Drawing.Size(457, 255);
+            this.GridViewProduct.TabIndex = 14;
+            // 
+            // GridViewPart
+            // 
+            this.GridViewPart.AllowUserToAddRows = false;
+            this.GridViewPart.AllowUserToDeleteRows = false;
+            this.GridViewPart.AllowUserToOrderColumns = true;
+            this.GridViewPart.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GridViewPart.Location = new System.Drawing.Point(40, 144);
+            this.GridViewPart.Name = "GridViewPart";
+            this.GridViewPart.ReadOnly = true;
+            this.GridViewPart.Size = new System.Drawing.Size(447, 256);
+            this.GridViewPart.TabIndex = 13;
+            // 
+            // splitter1
+            // 
+            this.splitter1.Location = new System.Drawing.Point(0, 0);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(3, 520);
+            this.splitter1.TabIndex = 16;
+            this.splitter1.TabStop = false;
+            // 
+            // fHome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1083, 544);
+            this.ClientSize = new System.Drawing.Size(1051, 520);
+            this.Controls.Add(this.splitter1);
             this.Controls.Add(this.ExitApp);
-            this.Controls.Add(this.ProductGridView);
+            this.Controls.Add(this.GridViewProduct);
             this.Controls.Add(this.GridViewPart);
             this.Controls.Add(this.SearchProductInput);
             this.Controls.Add(this.DeleteProduct);
             this.Controls.Add(this.ModifyProduct);
             this.Controls.Add(this.SearchProduct);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.ProductsLabel);
             this.Controls.Add(this.AddProduct);
             this.Controls.Add(this.DeletePart);
             this.Controls.Add(this.ModifyPart);
             this.Controls.Add(this.AddPart);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.PartsLabel);
             this.Controls.Add(this.SearchPart);
             this.Controls.Add(this.SearchPartInput);
             this.Controls.Add(this.HomeTitle);
-            this.Name = "Form1";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "fHome";
             this.Text = "MASTER OF PARTS";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.GridViewProduct)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridViewPart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ProductGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -243,19 +264,20 @@
         private System.Windows.Forms.Label HomeTitle;
         private System.Windows.Forms.TextBox SearchPartInput;
         private System.Windows.Forms.Button SearchPart;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label PartsLabel;
         private System.Windows.Forms.Button AddPart;
         private System.Windows.Forms.Button ModifyPart;
         private System.Windows.Forms.Button DeletePart;
         private System.Windows.Forms.Button AddProduct;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label ProductsLabel;
         private System.Windows.Forms.Button SearchProduct;
         private System.Windows.Forms.Button ModifyProduct;
         private System.Windows.Forms.Button DeleteProduct;
         private System.Windows.Forms.TextBox SearchProductInput;
-        private System.Windows.Forms.DataGridView GridViewPart;
-        private System.Windows.Forms.DataGridView ProductGridView;
         private System.Windows.Forms.Button ExitApp;
+        private System.Windows.Forms.DataGridView GridViewProduct;
+        private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.DataGridView GridViewPart;
     }
 }
 
