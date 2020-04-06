@@ -1,8 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\wgu"
+    "\\wgu",
+    "\\wgu\\C968",
+    "\\wgu\\C968\\Solution",
+    "\\wgu\\C968\\Solution\\MasterOfParts",
+    "\\wgu\\C968\\Solution\\MasterOfParts\\Resources"
   ],
-  "SelectedNode": "\\wgu\\C867.sln",
+  "SelectedNode": "\\wgu\\C968\\Solution\\MasterOfParts\\Forms",
   "PreviewInSolutionExplorer": false
 }
