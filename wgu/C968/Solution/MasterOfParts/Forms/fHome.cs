@@ -114,11 +114,6 @@ namespace MasterOfParts
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void AddPart_Click(object sender, EventArgs e)
         {
             // create an instance of the form and display it
@@ -169,6 +164,13 @@ namespace MasterOfParts
             }
             
         }
+
+        private void fModifyPart_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            GridViewProduct.Refresh();
+            GridViewPart.Refresh();
+        }
+        
         private void DeletePart_Click(object sender, EventArgs e)
         {
             // if a row was selected, delete the associated object
@@ -285,13 +287,7 @@ namespace MasterOfParts
             }
                         
         }
-
-        private void fModifyPart_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            GridViewProduct.Refresh();
-            GridViewPart.Refresh();
-        }
-
+        
         private void ExitApp_Click(object sender, EventArgs e)
         {
             // exit the application 
@@ -420,7 +416,7 @@ namespace MasterOfParts
                 // cast a currencymanager to allow for hiding rows
                 CurrencyManager cmProduct = (CurrencyManager)BindingContext[GridViewProduct.DataSource];
 
-                if (SearchPartInput.Text.Length < 1)
+                if (SearchProductInput.Text.Length < 1)
                 {
 
                     cmProduct.SuspendBinding();
@@ -506,6 +502,7 @@ namespace MasterOfParts
                 }
 
                 GridViewProduct.ClearSelection();
+                SearchProductInput.Text = "";
                 return;
             }
 
@@ -603,6 +600,7 @@ namespace MasterOfParts
                 }
 
                 GridViewPart.ClearSelection();
+                SearchPartInput.Text = "";
                 return;
             }
                            

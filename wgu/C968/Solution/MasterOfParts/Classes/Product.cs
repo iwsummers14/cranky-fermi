@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace MasterOfParts
 {
+    // Product class
     public class Product
     {
-
+        // BindingList with type Part
         public BindingList<Part> AssociatedParts = new BindingList<Part>();
 
         public int ProductID { get; set; }
@@ -24,16 +25,20 @@ namespace MasterOfParts
 
         public int Max { get; set; }
 
+        // method to add a Part to the AssociatedParts bindingList
+        // overload for Inhouse type
         public void addAssociatedPart(Inhouse newPart)
         {
             AssociatedParts.Add(newPart);
         }
-        
+
+        // overload for Outsourced type
         public void addAssociatedPart(Outsourced newPart)
         {
             AssociatedParts.Add(newPart);
         }
 
+        // method to remove a Part from the AssociatedParts bindingList
         public bool removeAssociatedPart(int lookupPartId)
         {
             try {
@@ -53,7 +58,7 @@ namespace MasterOfParts
             
         }
 
-
+        // method to lookup a part from the AssociatedParts bindingList
         public Part lookupAssociatedPart(int lookupPartId)
         {
 

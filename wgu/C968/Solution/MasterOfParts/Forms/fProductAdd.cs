@@ -66,7 +66,7 @@ namespace MasterOfParts.Forms
             GridViewAssociatedParts.AllowUserToOrderColumns = false;
             GridViewAssociatedParts.EditMode = DataGridViewEditMode.EditProgrammatically;
             GridViewAssociatedParts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            GridViewAssociatedParts.MultiSelect = false;
+            GridViewAssociatedParts.MultiSelect = true;
            
 
             // set column options on each Part gridview column
@@ -215,6 +215,7 @@ namespace MasterOfParts.Forms
                 }
 
                 GridViewAllParts.ClearSelection();
+                SearchPartInput.Text = "";
                 return;
             }
         }
@@ -331,7 +332,7 @@ namespace MasterOfParts.Forms
             catch (FormatException fException)
             {
                 // show a generic error if a format exception was caught
-                MessageBox.Show($"Error message: {fException.Message}", "Input error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Expected numeric input in one or more fields. \nSee error indicators on form for more information.", "Input error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             
         }

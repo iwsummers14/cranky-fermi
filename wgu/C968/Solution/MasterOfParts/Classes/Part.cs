@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MasterOfParts
 {
+    // abstract class Part; parent to Inhouse and Outsourced classes
     public abstract class Part
     {
         public int PartID { get; set; }

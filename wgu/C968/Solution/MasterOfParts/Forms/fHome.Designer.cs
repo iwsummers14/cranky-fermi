@@ -59,7 +59,6 @@
             this.HomeTitle.Size = new System.Drawing.Size(349, 32);
             this.HomeTitle.TabIndex = 0;
             this.HomeTitle.Text = "Inventory Management System";
-            this.HomeTitle.Click += new System.EventHandler(this.label1_Click);
             // 
             // SearchPartInput
             // 
@@ -250,7 +249,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "fHome";
-            this.Text = "MASTER OF PARTS";
+            this.Text = "MASTER OF PARTS - Home";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.GridViewProduct)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridViewPart)).EndInit();

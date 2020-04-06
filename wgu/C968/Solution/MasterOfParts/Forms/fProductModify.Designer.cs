@@ -321,7 +321,7 @@
             this.Controls.Add(this.ProductId);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "fProductModify";
-            this.Text = "Modify Product";
+            this.Text = "MASTER OF PARTS - Modify Product";
             this.Load += new System.EventHandler(this.fProductModify_Load);
             ((System.ComponentModel.ISupportInitialize)(this.GridViewAssociatedParts)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GridViewAllParts)).EndInit();

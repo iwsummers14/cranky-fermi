@@ -126,7 +126,9 @@ namespace MasterOfParts.Forms
                 }
                 catch (FormatException fException)
                 {
-                    MessageBox.Show($"Error message: {fException.Message}", "Input error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // show a generic error if a format exception was caught
+                    MessageBox.Show($"Expected numeric input in one or more fields. \nSee error indicators on form for more information.", "Input error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 }
 
 
@@ -177,7 +179,9 @@ namespace MasterOfParts.Forms
                 }
                 catch (FormatException fException)
                 {
-                    MessageBox.Show($"Error message: {fException.Message}", "Input error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // show a generic error if a format exception was caught
+                    MessageBox.Show($"Expected numeric input in one or more fields. \nSee error indicators on form for more information.", "Input error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 }
 
             }

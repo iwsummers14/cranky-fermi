@@ -304,7 +304,7 @@
             this.Controls.Add(this.isInHouseRadio);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "fPartModify";
-            this.Text = "fPartModify";
+            this.Text = "MASTER OF PARTS - Modify Part";
             this.Load += new System.EventHandler(this.fPartModify_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProviderInventory)).EndInit();
