@@ -50,6 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\DataModels\Appointment.cs" />
+    <Compile Include="Classes\DataModels\Customer.cs" />
+    <Compile Include="Classes\DataModels\CustomerAddress.cs" />
+    <Compile Include="Classes\DataModels\CustomerCity.cs" />
+    <Compile Include="Classes\DataModels\CustomerCountry.cs" />
     <Compile Include="Classes\DatabaseConnection.cs" />
     <Compile Include="Classes\EventLogger.cs" />
     <Compile Include="Classes\LoginResponse.cs" />
@@ -60,6 +65,18 @@
     <Compile Include="Forms\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\NewAppointment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NewAppointment.Designer.cs">
+      <DependentUpon>NewAppointment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NewCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NewCustomer.Designer.cs">
+      <DependentUpon>NewCustomer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UserLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +85,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\NewCustomer.resx">
+      <DependentUpon>NewCustomer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserLogin.en-GB.resx">
       <DependentUpon>UserLogin.cs</DependentUpon>
     </EmbeddedResource>

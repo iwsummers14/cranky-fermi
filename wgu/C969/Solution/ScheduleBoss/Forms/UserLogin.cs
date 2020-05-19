@@ -23,13 +23,20 @@ namespace ScheduleBoss.Forms
 
         public int LoginAttempts { get; set; } = 0;
 
+        public LoginResponse LoginResponse { get; set; }
 
-        public UserLogin(CultureInfo culture, DatabaseConnection DbConn)
+        public EventLogger EventLogger { get; set; }
+
+        public UserLogin(CultureInfo culture, DatabaseConnection DbConn, ref EventLogger Logger)
         {
             InitializeComponent();
 
             // set this form's connection object to the passed connection
             this.Connection = DbConn;
+
+            // set this form's logger object to the passed eventlogger
+            this.EventLogger = Logger;
+            this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [INFO] Processing user login");
 
             // set the current ui culture based on the passed culture info
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture.Name);
@@ -43,13 +50,12 @@ namespace ScheduleBoss.Forms
 
         private void btn_Login_Click(object sender, EventArgs e)
         {
-            
+            // get username and password entered by user
+            string Username = mTextBox_username.Text;
+            string Password = mTextBox_password.Text;
+
             if (this.LoginAttempts < 3)
             {
-
-                // get username and password entered by user
-                string Username = mTextBox_username.Text;
-                string Password = mTextBox_password.Text;
 
                 // create the login query with parameters to prevent injection
                 MySqlCommand query = this.Connection.SqlConnection.CreateCommand();
@@ -69,8 +75,27 @@ namespace ScheduleBoss.Forms
                         MessageBoxIcon.Information
                     );
 
+                    // initialize the login response property
+                    this.LoginResponse = new LoginResponse();
+
+                    // read the query data
+                    queryReader.Read();
+
+                    // assign login response fields from query data
+                    this.LoginResponse.UserId = queryReader.GetInt32(0);
+                    this.LoginResponse.Username = queryReader.GetString(1);
+                    this.LoginResponse.IsActive = queryReader.GetBoolean(3);
+                    this.LoginResponse.CreateDate = queryReader.GetDateTime(4);
+                    this.LoginResponse.CreatedBy = queryReader.GetString(5);
+                    this.LoginResponse.LastUpdate = queryReader.GetDateTime(6);
+                    this.LoginResponse.LastUpdateBy = queryReader.GetString(7);
+                    
                     queryReader.Close();
 
+                    // log the event
+                    this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [INFO] User {Username} authenticated successfully.");
+
+                    // set property and exit
                     this.IsAuthenticated = true;
                     this.Close();
                 }
@@ -83,8 +108,14 @@ namespace ScheduleBoss.Forms
                         MessageBoxIcon.Warning
                     );
 
+                    // log the event
+                    this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [WARN] User {Username} failed to authenticate.");
+
                     // increment the attempt counter
                     this.LoginAttempts++;
+
+                    // log the attempt counter
+                    this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [INFO] User {Username} has attempted authentication {LoginAttempts.ToString()} times.");
 
                     queryReader.Close();
                 }
@@ -102,8 +133,11 @@ namespace ScheduleBoss.Forms
                        MessageBoxIcon.Error
                    );
 
-                // close 
+                // log that the attempt counter max was reached
+                this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [ERROR] User {Username} has failed authentication {LoginAttempts.ToString()} times.");
+                this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [INFO] Application exiting due to repeated login failures.");
                 
+                // close 
                 this.Close();
             }
             

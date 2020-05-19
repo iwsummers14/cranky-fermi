@@ -7,28 +7,31 @@ using System.IO;
 
 namespace ScheduleBoss.Classes
 {
-    public class EventLogger : IDisposable
+    public class EventLogger
     {
         
-        public StreamWriter Writer;
+        public StreamWriter Writer { get; set; }
 
-        public FileStream LogFileStream;
+        public FileStream LogFileStream { get; set; }
 
-        public string LogFilePath;
+        public string LogFilePath { get; set; }
 
-        EventLogger(string LogFilePath)
+        public EventLogger(string FilePath)
         {
+            // set the logfilepath property
+            this.LogFilePath = FilePath;
+
+            // open the log file in append mode and set the LogFileStream property to this filestream
+            this.LogFileStream = File.Open(this.LogFilePath, FileMode.Append, FileAccess.Write, FileShare.Read);
             
-            this.LogFilePath = LogFilePath;
+            // establish a stream writer to the log file and set it to auto-flush the buffer
+            this.Writer = new StreamWriter(LogFileStream, Encoding.UTF8, 4096);
+            this.Writer.AutoFlush = true;
 
-            if (File.Exists(this.LogFilePath) == false)
-            {
-                File.Create(LogFilePath);
-            }
-
-            this.LogFileStream = File.OpenWrite(this.LogFilePath);
-            this.Writer = new StreamWriter(LogFileStream);
-
+        }
+        public void WriteLog(FormattableString message)
+        {
+            this.Writer.WriteLine(message);
         }
 
         public void Dispose()
@@ -36,6 +39,7 @@ namespace ScheduleBoss.Classes
 
             try
             {
+                
                 this.Writer.Dispose();
                 this.LogFileStream.Close();
             }
@@ -47,10 +51,7 @@ namespace ScheduleBoss.Classes
 
         }
 
-        public void WriteLog(string message)
-        {
-            this.Writer.WriteLine(message);
-        }
+        
 
     }
 }
