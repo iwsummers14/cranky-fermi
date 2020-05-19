@@ -6,19 +6,21 @@ using System.Threading.Tasks;
 
 namespace ScheduleBoss.Classes
 {
-    internal class LoginResponse
+    public class LoginResponse
     {
-        public int userId { get; set; }
+        public int UserId { get; set; }
 
-        public int active { get; set; }
+        public string Username { get; set; }
 
-        public DateTime createDate { get; set; }
+        public bool IsActive { get; set; }
 
-        public string createdBy { get; set; }
+        public DateTime CreateDate { get; set; }
 
-        public DateTime lastUpdate { get; set; }
+        public string CreatedBy { get; set; }
 
-        public string lastUpdateBy { get; set; }
+        public DateTime LastUpdate { get; set; }
+
+        public string LastUpdateBy { get; set; }
 
     }
 }

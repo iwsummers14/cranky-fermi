@@ -177,7 +177,7 @@
     <value>$this</value>
   </data>
   <data name="Label_LoginBanner.Size" type="System.Drawing.Size, System.Drawing">
-    <value>295, 45</value>
+    <value>302, 47</value>
   </data>
   <data name="&gt;&gt;label_username.Name" xml:space="preserve">
     <value>label_username</value>
@@ -241,7 +241,7 @@
     <value>mTextBox_password</value>
   </data>
   <data name="Label_LoginBanner.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Tai Le, 26.25pt, style=Bold, Italic</value>
+    <value>Segoe UI Black, 26.25pt, style=Bold, Italic</value>
   </data>
   <data name="&gt;&gt;btn_Login.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

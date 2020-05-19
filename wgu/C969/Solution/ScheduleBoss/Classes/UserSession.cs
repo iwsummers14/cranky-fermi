@@ -8,27 +8,15 @@ using System.Security;
 
 namespace ScheduleBoss.Classes
 {
-    internal class UserSession
+    public class UserSession
     {
-        public bool IsAuthenticated;
-
-        public string SessionId;
-
-        public TimeZone UserTimeZone = TimeZone.CurrentTimeZone;
-
-        public LoginResponse AuthenticateUser(string Username, string Password, DatabaseConnection dbconn)
-        {
-            LoginResponse lResp = new LoginResponse();
-            return lResp;
-        }
-
-
-        public void SetAuthentication(LoginResponse lResponse)
-        {
-            this.IsAuthenticated = true;
-        }
-
+        public bool IsAuthenticated { get; set; }
         
+        public DateTime UserLoginTime { get; set; }
+
+        public TimeZone UserTimeZone { get; }  = TimeZone.CurrentTimeZone;
+
+        public LoginResponse UserLoginInfo { get; set; }
 
     }
 
