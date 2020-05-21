@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Globalization;
 using System.Threading;
 using ScheduleBoss.Classes;
-using MySql.Data.MySqlClient;
+using ScheduleBoss.Enums;
 
 namespace ScheduleBoss.Forms
 {
@@ -27,7 +27,9 @@ namespace ScheduleBoss.Forms
 
         public EventLogger EventLogger { get; set; }
 
-        public UserLogin(CultureInfo culture, DatabaseConnection DbConn, ref EventLogger Logger)
+        public DataProcessor DataProcessor { get; set; }
+
+        public UserLogin(CultureInfo culture, DatabaseConnection DbConn, EventLogger Logger)
         {
             InitializeComponent();
 
@@ -38,8 +40,13 @@ namespace ScheduleBoss.Forms
             this.EventLogger = Logger;
             this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [INFO] Processing user login");
 
+            // initialize the data processor 
+            this.DataProcessor = new DataProcessor(this.Connection);
+
             // set the current ui culture based on the passed culture info
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture.Name);
+
+            
             
         }
 
@@ -56,56 +63,36 @@ namespace ScheduleBoss.Forms
 
             if (this.LoginAttempts < 3)
             {
-
-                // create the login query with parameters to prevent injection
-                MySqlCommand query = this.Connection.SqlConnection.CreateCommand();
-                query.CommandText = "SELECT * FROM user WHERE username = @username AND password = @password";
-                query.Parameters.AddWithValue("@username", Username);
-                query.Parameters.AddWithValue("@password", Password);
-
-                // execute the query and read results
-                MySqlDataReader queryReader = query.ExecuteReader();
-
-                if (queryReader.HasRows)
-                {
-                    MessageBox.Show(
-                        $"User {Username} was authenticated successfully!",
-                        "Authentication successful.",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information
-                    );
-
-                    // initialize the login response property
-                    this.LoginResponse = new LoginResponse();
-
-                    // read the query data
-                    queryReader.Read();
-
-                    // assign login response fields from query data
-                    this.LoginResponse.UserId = queryReader.GetInt32(0);
-                    this.LoginResponse.Username = queryReader.GetString(1);
-                    this.LoginResponse.IsActive = queryReader.GetBoolean(3);
-                    this.LoginResponse.CreateDate = queryReader.GetDateTime(4);
-                    this.LoginResponse.CreatedBy = queryReader.GetString(5);
-                    this.LoginResponse.LastUpdate = queryReader.GetDateTime(6);
-                    this.LoginResponse.LastUpdateBy = queryReader.GetString(7);
-                    
-                    queryReader.Close();
+                // attempt to authenticate the user 
+                this.LoginResponse = this.DataProcessor.AuthenticateUser(Username, Password);
+                
+                if (this.LoginResponse != null) {
 
                     // log the event
                     this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [INFO] User {Username} authenticated successfully.");
 
+                    // notify the user
+                    MessageBox.Show(
+                       $"User {Username} was authenticated successfully!",
+                       "Authentication successful.",
+                       MessageBoxButtons.OK,
+                       MessageBoxIcon.Information
+                   );
+
                     // set property and exit
                     this.IsAuthenticated = true;
                     this.Close();
+
                 }
+
                 else
                 {
+                    // notify the user of the failure
                     MessageBox.Show(
-                        $"The username or password was incorrect. Please check your entries and try again.",
-                        "Authentication failed.",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Warning
+                       $"The username or password was incorrect. Please check your entries and try again.",
+                       "Authentication failed.",
+                       MessageBoxButtons.OK,
+                       MessageBoxIcon.Warning
                     );
 
                     // log the event
@@ -116,10 +103,8 @@ namespace ScheduleBoss.Forms
 
                     // log the attempt counter
                     this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [INFO] User {Username} has attempted authentication {LoginAttempts.ToString()} times.");
-
-                    queryReader.Close();
                 }
-
+                
             }
                   
             else

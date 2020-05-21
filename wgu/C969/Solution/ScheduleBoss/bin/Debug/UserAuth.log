@@ -66,3 +66,96 @@
 5/18/2020 10:00:21 PM [INFO] Processing user login
 5/18/2020 10:00:28 PM [INFO] Application started
 5/18/2020 10:00:28 PM [INFO] Processing user login
+5/19/2020 1:00:49 PM [INFO] Application started
+5/19/2020 1:00:49 PM [INFO] Processing user login
+5/19/2020 3:11:04 PM [INFO] Application started
+5/19/2020 3:11:04 PM [INFO] Processing user login
+5/19/2020 3:11:09 PM [WARN] User test failed to authenticate.
+5/19/2020 3:11:09 PM [INFO] User test has attempted authentication 1 times.
+5/19/2020 3:11:12 PM [INFO] User test authenticated successfully.
+5/19/2020 3:11:59 PM [INFO] Application started
+5/19/2020 3:11:59 PM [INFO] Processing user login
+5/19/2020 3:12:04 PM [INFO] User test authenticated successfully.
+5/19/2020 3:12:48 PM [INFO] Application started
+5/19/2020 3:12:48 PM [INFO] Processing user login
+5/19/2020 3:12:52 PM [INFO] User test authenticated successfully.
+5/19/2020 3:13:13 PM [INFO] Application started
+5/19/2020 3:13:13 PM [INFO] Processing user login
+5/19/2020 3:13:19 PM [INFO] User test authenticated successfully.
+5/19/2020 3:30:06 PM [INFO] Application started
+5/19/2020 3:30:06 PM [INFO] Processing user login
+5/19/2020 3:30:11 PM [INFO] User test authenticated successfully.
+5/20/2020 7:11:39 PM [INFO] Application started
+5/20/2020 7:11:39 PM [INFO] Processing user login
+5/20/2020 7:11:43 PM [WARN] User joe failed to authenticate.
+5/20/2020 7:11:43 PM [INFO] User joe has attempted authentication 1 times.
+5/20/2020 7:11:46 PM [WARN] User joe failed to authenticate.
+5/20/2020 7:11:46 PM [INFO] User joe has attempted authentication 2 times.
+5/20/2020 7:11:49 PM [INFO] User test authenticated successfully.
+5/20/2020 7:13:01 PM [INFO] Application started
+5/20/2020 7:13:01 PM [INFO] Processing user login
+5/20/2020 7:13:08 PM [WARN] User jeff failed to authenticate.
+5/20/2020 7:13:08 PM [INFO] User jeff has attempted authentication 1 times.
+5/20/2020 7:13:12 PM [INFO] User test authenticated successfully.
+5/20/2020 7:40:20 PM [INFO] Application started
+5/20/2020 7:40:20 PM [INFO] Processing user login
+5/20/2020 7:40:25 PM [INFO] User test authenticated successfully.
+5/20/2020 7:52:06 PM [INFO] Application started
+5/20/2020 7:52:06 PM [INFO] Processing user login
+5/20/2020 7:52:08 PM [INFO] User test authenticated successfully.
+5/20/2020 8:40:04 PM [INFO] Application started
+5/20/2020 8:40:04 PM [INFO] Processing user login
+5/20/2020 8:40:06 PM [INFO] User test authenticated successfully.
+5/20/2020 8:41:50 PM [INFO] Application started
+5/20/2020 8:41:50 PM [INFO] Processing user login
+5/20/2020 8:41:54 PM [INFO] User test authenticated successfully.
+5/20/2020 8:43:04 PM [INFO] Application started
+5/20/2020 8:43:04 PM [INFO] Processing user login
+5/20/2020 8:43:06 PM [INFO] User test authenticated successfully.
+5/20/2020 8:47:26 PM [INFO] Application started
+5/20/2020 8:47:26 PM [INFO] Processing user login
+5/20/2020 8:47:28 PM [INFO] User test authenticated successfully.
+5/20/2020 8:54:25 PM [INFO] Application started
+5/20/2020 8:54:25 PM [INFO] Processing user login
+5/20/2020 8:54:28 PM [INFO] User test authenticated successfully.
+5/20/2020 9:22:19 PM [INFO] Application started
+5/20/2020 9:22:19 PM [INFO] Processing user login
+5/20/2020 9:22:22 PM [INFO] User test authenticated successfully.
+5/20/2020 10:06:45 PM [INFO] Application started
+5/20/2020 10:06:45 PM [INFO] Processing user login
+5/20/2020 10:06:48 PM [INFO] User test authenticated successfully.
+5/20/2020 10:11:27 PM [INFO] Application started
+5/20/2020 10:11:27 PM [INFO] Processing user login
+5/20/2020 10:11:29 PM [INFO] User test authenticated successfully.
+5/20/2020 10:14:38 PM [INFO] Application started
+5/20/2020 10:14:38 PM [INFO] Processing user login
+5/20/2020 10:14:41 PM [INFO] User test authenticated successfully.
+5/20/2020 10:16:50 PM [INFO] Application started
+5/20/2020 10:16:50 PM [INFO] Processing user login
+5/20/2020 10:16:52 PM [INFO] User test authenticated successfully.
+5/20/2020 10:21:03 PM [INFO] Application started
+5/20/2020 10:21:03 PM [INFO] Processing user login
+5/20/2020 10:21:06 PM [INFO] User test authenticated successfully.
+5/20/2020 10:21:44 PM [INFO] Application started
+5/20/2020 10:21:44 PM [INFO] Processing user login
+5/20/2020 10:21:47 PM [INFO] User test authenticated successfully.
+5/20/2020 10:22:52 PM [INFO] Application started
+5/20/2020 10:22:52 PM [INFO] Processing user login
+5/20/2020 10:22:55 PM [INFO] User test authenticated successfully.
+5/20/2020 10:26:33 PM [INFO] Application started
+5/20/2020 10:26:33 PM [INFO] Processing user login
+5/20/2020 10:26:36 PM [WARN] User test failed to authenticate.
+5/20/2020 10:26:36 PM [INFO] User test has attempted authentication 1 times.
+5/20/2020 10:26:38 PM [INFO] User test authenticated successfully.
+5/20/2020 10:27:35 PM [INFO] Application started
+5/20/2020 10:27:35 PM [INFO] Processing user login
+5/20/2020 10:27:37 PM [INFO] User test authenticated successfully.
+5/20/2020 10:28:55 PM [INFO] Application started
+5/20/2020 10:28:55 PM [INFO] Processing user login
+5/20/2020 10:28:57 PM [INFO] User test authenticated successfully.
+5/20/2020 10:29:43 PM [INFO] Application started
+5/20/2020 10:29:43 PM [INFO] Processing user login
+5/20/2020 10:29:48 PM [INFO] User test authenticated successfully.
+5/20/2020 10:34:25 PM [INFO] Application started
+5/20/2020 10:34:25 PM [INFO] Processing user login
+5/20/2020 10:34:30 PM [INFO] User test authenticated successfully.

@@ -51,14 +51,14 @@
             // 
             // mTextBox_username
             // 
-            resources.ApplyResources(this.mTextBox_username, "mTextBox_username");
             this.mTextBox_username.Culture = new System.Globalization.CultureInfo("");
+            resources.ApplyResources(this.mTextBox_username, "mTextBox_username");
             this.mTextBox_username.Name = "mTextBox_username";
             // 
             // mTextBox_password
             // 
-            resources.ApplyResources(this.mTextBox_password, "mTextBox_password");
             this.mTextBox_password.Culture = new System.Globalization.CultureInfo("");
+            resources.ApplyResources(this.mTextBox_password, "mTextBox_password");
             this.mTextBox_password.Name = "mTextBox_password";
             this.mTextBox_password.PasswordChar = '*';
             // 
@@ -71,8 +71,8 @@
             // 
             // btn_Cancel
             // 
-            resources.ApplyResources(this.btn_Cancel, "btn_Cancel");
             this.btn_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            resources.ApplyResources(this.btn_Cancel, "btn_Cancel");
             this.btn_Cancel.Name = "btn_Cancel";
             this.btn_Cancel.UseVisualStyleBackColor = true;
             this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);

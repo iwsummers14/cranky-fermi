@@ -22,6 +22,8 @@ namespace ScheduleBoss
 
         public DatabaseConnection Database { get; set; }
 
+        public EventLogger Logger { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -31,15 +33,15 @@ namespace ScheduleBoss
             var connected = Database.ConnectToDatabase();
 
             // establish a logger
-            EventLogger Logger = new EventLogger(".\\UserAuth.log");
-            Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Application started");
+            this.Logger = new EventLogger(".\\UserAuth.log");
+            this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Application started");
 
             // get the current culture of the user's system
             CultureInfo CurrentCulture = Thread.CurrentThread.CurrentCulture; 
 
             // launch the user login form using the culture information and database connection,
             // with an event handler to deal with the login status
-            UserLogin LoginPrompt = new Forms.UserLogin(CurrentCulture, Database, ref Logger );
+            UserLogin LoginPrompt = new Forms.UserLogin(CurrentCulture, this.Database, this.Logger );
             LoginPrompt.FormClosed += new FormClosedEventHandler(LoginPrompt_FormClosed);
             LoginPrompt.Show();
             
@@ -64,6 +66,9 @@ namespace ScheduleBoss
 
         private void btn_AddCustomer_Click(object sender, EventArgs e)
         {
+            Form NewCust = new NewCustomer( this.Database, this.Logger );
+            NewCust.FormClosed += new FormClosedEventHandler(Cust_FormClosed);
+            NewCust.Show();
 
         }
 
@@ -115,6 +120,11 @@ namespace ScheduleBoss
         }
 
         private void Appt_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+        }
+
+        private void Cust_FormClosed(object sender, FormClosedEventArgs e)
         {
 
         }
