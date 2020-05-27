@@ -159,3 +159,34 @@
 5/20/2020 10:34:25 PM [INFO] Application started
 5/20/2020 10:34:25 PM [INFO] Processing user login
 5/20/2020 10:34:30 PM [INFO] User test authenticated successfully.
+5/20/2020 10:41:03 PM [INFO] Application started
+5/20/2020 10:41:03 PM [INFO] Processing user login
+5/20/2020 10:41:07 PM [INFO] User test authenticated successfully.
+5/21/2020 8:44:13 AM [INFO] Application started
+5/21/2020 8:44:13 AM [INFO] Processing user login
+5/21/2020 8:44:17 AM [INFO] User test authenticated successfully.
+5/26/2020 9:28:12 PM [INFO] Application started
+5/26/2020 9:28:12 PM [INFO] Processing user login
+5/26/2020 9:28:15 PM [INFO] User test authenticated successfully.
+5/26/2020 9:57:41 PM [INFO] Application started
+5/26/2020 9:57:41 PM [INFO] Processing user login
+5/26/2020 9:57:47 PM [INFO] User test authenticated successfully.
+5/26/2020 10:02:04 PM [INFO] Application started
+5/26/2020 10:02:04 PM [INFO] Processing user login
+5/26/2020 10:02:07 PM [INFO] User test authenticated successfully.
+5/26/2020 10:45:46 PM [INFO] Application started
+5/26/2020 10:45:46 PM [INFO] Processing user login
+5/26/2020 10:45:49 PM [INFO] User test authenticated successfully.
+5/26/2020 10:47:18 PM [ERROR] Input error - Parameter: Name Message: Name line contains invalid characters. Letters, hyphens, and spaces are allowed.
+Parameter name: Name
+5/26/2020 10:48:55 PM [INFO] Application started
+5/26/2020 10:48:55 PM [INFO] Processing user login
+5/26/2020 10:48:58 PM [INFO] User test authenticated successfully.
+5/26/2020 10:49:38 PM [ERROR] Input error - Parameter: Name Message: Name line contains invalid characters. Letters, hyphens, and spaces are allowed.
+Parameter name: Name
+5/26/2020 10:49:49 PM [ERROR] Input error - Parameter: Address Message: Address line contains invalid characters. Alphanumerics, hyphens, and spaces are allowed.
+Parameter name: Address
+5/26/2020 10:49:51 PM [ERROR] Input error - Parameter: Address Message: Address line contains invalid characters. Alphanumerics, hyphens, and spaces are allowed.
+Parameter name: Address
+5/26/2020 10:49:56 PM [ERROR] Input error - Parameter: Address 2 Message: Address line 2 contains invalid characters. Alphanumerics, hyphens, and spaces are allowed.
+Parameter name: Address 2

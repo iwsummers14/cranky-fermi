@@ -52,6 +52,7 @@
             this.mbox_CustomerPostalCode = new System.Windows.Forms.MaskedTextBox();
             this.cbox_Country = new System.Windows.Forms.ComboBox();
             this.lbl_Country = new System.Windows.Forms.Label();
+            this.chk_IsActive = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -69,7 +70,7 @@
             // lbl_CustName
             // 
             this.lbl_CustName.AutoSize = true;
-            this.lbl_CustName.Location = new System.Drawing.Point(32, 66);
+            this.lbl_CustName.Location = new System.Drawing.Point(32, 64);
             this.lbl_CustName.Name = "lbl_CustName";
             this.lbl_CustName.Size = new System.Drawing.Size(91, 13);
             this.lbl_CustName.TabIndex = 1;
@@ -104,6 +105,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.chk_IsActive);
             this.panel1.Controls.Add(this.mbox_CustomerName);
             this.panel1.Controls.Add(this.lbl_PanelCustomer);
             this.panel1.Controls.Add(this.tbox_CustomerId);
@@ -111,7 +113,7 @@
             this.panel1.Controls.Add(this.lbl_CustName);
             this.panel1.Location = new System.Drawing.Point(16, 56);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(539, 100);
+            this.panel1.Size = new System.Drawing.Size(539, 119);
             this.panel1.TabIndex = 5;
             // 
             // panel2
@@ -129,7 +131,7 @@
             this.panel2.Controls.Add(this.lbl_PostalCode);
             this.panel2.Controls.Add(this.lbl_CustAddress);
             this.panel2.Controls.Add(this.lbl_CustAddress2);
-            this.panel2.Location = new System.Drawing.Point(16, 162);
+            this.panel2.Location = new System.Drawing.Point(16, 181);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(540, 124);
             this.panel2.TabIndex = 6;
@@ -163,11 +165,12 @@
             // 
             // tbox_CustomerId
             // 
-            this.tbox_CustomerId.Location = new System.Drawing.Point(129, 35);
+            this.tbox_CustomerId.Location = new System.Drawing.Point(129, 33);
             this.tbox_CustomerId.Name = "tbox_CustomerId";
             this.tbox_CustomerId.ReadOnly = true;
             this.tbox_CustomerId.Size = new System.Drawing.Size(190, 22);
             this.tbox_CustomerId.TabIndex = 3;
+            this.tbox_CustomerId.TabStop = false;
             // 
             // lbl_PanelCustomer
             // 
@@ -194,21 +197,22 @@
             this.mbox_CustomerAddress.Location = new System.Drawing.Point(129, 24);
             this.mbox_CustomerAddress.Name = "mbox_CustomerAddress";
             this.mbox_CustomerAddress.Size = new System.Drawing.Size(190, 22);
-            this.mbox_CustomerAddress.TabIndex = 8;
+            this.mbox_CustomerAddress.TabIndex = 5;
             // 
             // mbox_CustomerAddress2
             // 
             this.mbox_CustomerAddress2.Location = new System.Drawing.Point(129, 51);
             this.mbox_CustomerAddress2.Name = "mbox_CustomerAddress2";
             this.mbox_CustomerAddress2.Size = new System.Drawing.Size(190, 22);
-            this.mbox_CustomerAddress2.TabIndex = 9;
+            this.mbox_CustomerAddress2.TabIndex = 6;
             // 
             // mbox_CustomerPhone
             // 
             this.mbox_CustomerPhone.Location = new System.Drawing.Point(129, 80);
+            this.mbox_CustomerPhone.Mask = "000-0000";
             this.mbox_CustomerPhone.Name = "mbox_CustomerPhone";
             this.mbox_CustomerPhone.Size = new System.Drawing.Size(190, 22);
-            this.mbox_CustomerPhone.TabIndex = 10;
+            this.mbox_CustomerPhone.TabIndex = 9;
             // 
             // btn_Save
             // 
@@ -216,7 +220,7 @@
             this.btn_Save.Location = new System.Drawing.Point(302, 311);
             this.btn_Save.Name = "btn_Save";
             this.btn_Save.Size = new System.Drawing.Size(114, 36);
-            this.btn_Save.TabIndex = 7;
+            this.btn_Save.TabIndex = 11;
             this.btn_Save.Text = "Save";
             this.btn_Save.UseVisualStyleBackColor = true;
             this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
@@ -227,7 +231,7 @@
             this.btn_Cancel.Location = new System.Drawing.Point(440, 311);
             this.btn_Cancel.Name = "btn_Cancel";
             this.btn_Cancel.Size = new System.Drawing.Size(113, 36);
-            this.btn_Cancel.TabIndex = 8;
+            this.btn_Cancel.TabIndex = 12;
             this.btn_Cancel.Text = "Cancel";
             this.btn_Cancel.UseVisualStyleBackColor = true;
             this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
@@ -238,22 +242,24 @@
             this.cbox_City.Location = new System.Drawing.Point(405, 25);
             this.cbox_City.Name = "cbox_City";
             this.cbox_City.Size = new System.Drawing.Size(132, 21);
-            this.cbox_City.TabIndex = 11;
+            this.cbox_City.TabIndex = 7;
             this.cbox_City.SelectedIndexChanged += new System.EventHandler(this.cbox_City_SelectedIndexChanged);
             // 
             // mbox_CustomerName
             // 
-            this.mbox_CustomerName.Location = new System.Drawing.Point(129, 63);
+            this.mbox_CustomerName.Location = new System.Drawing.Point(129, 61);
             this.mbox_CustomerName.Name = "mbox_CustomerName";
             this.mbox_CustomerName.Size = new System.Drawing.Size(190, 22);
-            this.mbox_CustomerName.TabIndex = 12;
+            this.mbox_CustomerName.TabIndex = 3;
             // 
             // mbox_CustomerPostalCode
             // 
             this.mbox_CustomerPostalCode.Location = new System.Drawing.Point(405, 80);
+            this.mbox_CustomerPostalCode.Mask = "00000";
             this.mbox_CustomerPostalCode.Name = "mbox_CustomerPostalCode";
             this.mbox_CustomerPostalCode.Size = new System.Drawing.Size(132, 22);
-            this.mbox_CustomerPostalCode.TabIndex = 12;
+            this.mbox_CustomerPostalCode.TabIndex = 10;
+            this.mbox_CustomerPostalCode.ValidatingType = typeof(int);
             // 
             // cbox_Country
             // 
@@ -261,7 +267,7 @@
             this.cbox_Country.Location = new System.Drawing.Point(405, 52);
             this.cbox_Country.Name = "cbox_Country";
             this.cbox_Country.Size = new System.Drawing.Size(132, 21);
-            this.cbox_Country.TabIndex = 14;
+            this.cbox_Country.TabIndex = 8;
             // 
             // lbl_Country
             // 
@@ -271,6 +277,19 @@
             this.lbl_Country.Size = new System.Drawing.Size(51, 13);
             this.lbl_Country.TabIndex = 13;
             this.lbl_Country.Text = "Country:";
+            // 
+            // chk_IsActive
+            // 
+            this.chk_IsActive.AutoSize = true;
+            this.chk_IsActive.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chk_IsActive.Checked = true;
+            this.chk_IsActive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chk_IsActive.Location = new System.Drawing.Point(83, 89);
+            this.chk_IsActive.Name = "chk_IsActive";
+            this.chk_IsActive.Size = new System.Drawing.Size(59, 17);
+            this.chk_IsActive.TabIndex = 4;
+            this.chk_IsActive.Text = "Active:";
+            this.chk_IsActive.UseVisualStyleBackColor = true;
             // 
             // NewCustomer
             // 
@@ -322,5 +341,6 @@
         private System.Windows.Forms.Button btn_Cancel;
         private System.Windows.Forms.ComboBox cbox_Country;
         private System.Windows.Forms.Label lbl_Country;
+        private System.Windows.Forms.CheckBox chk_IsActive;
     }
 }

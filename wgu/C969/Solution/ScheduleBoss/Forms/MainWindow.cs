@@ -66,7 +66,7 @@ namespace ScheduleBoss
 
         private void btn_AddCustomer_Click(object sender, EventArgs e)
         {
-            Form NewCust = new NewCustomer( this.Database, this.Logger );
+            Form NewCust = new NewCustomer( this.Database, this.Logger, this.Session );
             NewCust.FormClosed += new FormClosedEventHandler(Cust_FormClosed);
             NewCust.Show();
 

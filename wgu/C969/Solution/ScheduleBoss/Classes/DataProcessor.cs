@@ -65,12 +65,98 @@ namespace ScheduleBoss.Classes
             return IsValid;
         }
 
-        public bool InsertData(object Data) 
+        public bool InsertData(object Data, DatabaseEntries entryType) 
         {
             // declare local variable to track status
             bool IsInserted = false;
 
+            // create a command object
+            MySqlCommand InsertCommand = this.Database.SqlConnection.CreateCommand();
+                        
+            // create a transaction object
+            MySqlTransaction InsertTransaction = this.Database.SqlConnection.BeginTransaction();
 
+            // assign the transaction to the command object
+            InsertCommand.Transaction = InsertTransaction;
+
+
+            try
+            {
+
+                switch (entryType)
+                {
+                    case DatabaseEntries.Address:
+                        CustomerAddress Address = Data as CustomerAddress;
+                        InsertCommand.CommandText = "INSERT INTO address VALUES ( @addressId, @address, @address2, @cityId, @postalCode, @phone, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
+                        InsertCommand.Parameters.AddWithValue("@addressId", Address.AddressId);
+                        InsertCommand.Parameters.AddWithValue("@address", Address.Address);
+                        InsertCommand.Parameters.AddWithValue("@address2", Address.Address2);
+                        InsertCommand.Parameters.AddWithValue("@cityId", Address.CityId);
+                        InsertCommand.Parameters.AddWithValue("@postalCode", Address.PostalCode);
+                        InsertCommand.Parameters.AddWithValue("@phone", Address.Phone);
+                        InsertCommand.Parameters.AddWithValue("@createDate", Address.CreateDate);
+                        InsertCommand.Parameters.AddWithValue("@createdBy", Address.CreatedBy);
+                        InsertCommand.Parameters.AddWithValue("@lastUpdate", Address.UpdateDate);
+                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", Address.UpdatedBy);
+                        break;
+
+                    case DatabaseEntries.Appointment:
+                        Appointment Appt = Data as Appointment;
+                        InsertCommand.CommandText = "INSERT INTO appointment VALUES ( @appointmentId, @customerId, @userId, @title, @description, @location, @contact, @type, @url, @start, @end, @createDate, @createdBy, @lastUpdate, @lastUpdateBy )";
+                        InsertCommand.Parameters.AddWithValue("@appointmentId", Appt.AppointmentId);
+                        InsertCommand.Parameters.AddWithValue("@customerId", Appt.CustomerId);
+                        InsertCommand.Parameters.AddWithValue("@userId", Appt.UserId);
+                        InsertCommand.Parameters.AddWithValue("@title", Appt.Title);
+                        InsertCommand.Parameters.AddWithValue("@description", Appt.Description);
+                        InsertCommand.Parameters.AddWithValue("@location", Appt.Location);
+                        InsertCommand.Parameters.AddWithValue("@contact", Appt.Contact);
+                        InsertCommand.Parameters.AddWithValue("@type", Appt.Type);
+                        InsertCommand.Parameters.AddWithValue("@url", Appt.Url);
+                        InsertCommand.Parameters.AddWithValue("@start", Appt.Start);
+                        InsertCommand.Parameters.AddWithValue("@end", Appt.End);
+                        InsertCommand.Parameters.AddWithValue("@createDate", Appt.CreateDate);
+                        InsertCommand.Parameters.AddWithValue("@createdBy", Appt.CreatedBy);
+                        InsertCommand.Parameters.AddWithValue("@lastUpdate", Appt.UpdateDate);
+                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", Appt.UpdatedBy);
+                        break;
+
+                    case DatabaseEntries.City:
+                        break;
+
+                    case DatabaseEntries.Country:
+                        break;
+
+                    case DatabaseEntries.Customer:
+                        Customer Cust = Data as Customer;
+                        InsertCommand.CommandText = "INSERT INTO customer VALUES ( @customerId, @customerName, @addressId, @active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
+                        InsertCommand.Parameters.AddWithValue("@customerId", Cust.CustomerId);
+                        InsertCommand.Parameters.AddWithValue("@customerName", Cust.CustomerName);
+                        InsertCommand.Parameters.AddWithValue("@addressId", Cust.AddressId);
+                        InsertCommand.Parameters.AddWithValue("@active", Cust.IsActive);
+                        InsertCommand.Parameters.AddWithValue("@createDate", Cust.CreateDate);
+                        InsertCommand.Parameters.AddWithValue("@createdBy", Cust.CreatedBy);
+                        InsertCommand.Parameters.AddWithValue("@lastUpdate", Cust.UpdateDate);
+                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", Cust.UpdatedBy);
+                        break;
+
+
+                }
+
+            // execute the query and commit the transaction    
+            InsertCommand.ExecuteNonQuery();
+            InsertTransaction.Commit();
+
+            IsInserted = true;
+
+            }
+
+            catch 
+            {
+                
+                InsertTransaction.Rollback();
+                
+            }
+            
 
             return IsInserted;
         }
