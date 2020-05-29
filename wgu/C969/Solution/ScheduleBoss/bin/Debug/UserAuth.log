@@ -190,3 +190,194 @@ Parameter name: Address
 Parameter name: Address
 5/26/2020 10:49:56 PM [ERROR] Input error - Parameter: Address 2 Message: Address line 2 contains invalid characters. Alphanumerics, hyphens, and spaces are allowed.
 Parameter name: Address 2
+5/27/2020 3:29:54 PM [INFO] Application started
+5/27/2020 3:29:54 PM [INFO] Processing user login
+5/27/2020 3:29:57 PM [INFO] User test authenticated successfully.
+5/27/2020 3:35:00 PM [INFO] Application started
+5/27/2020 3:35:00 PM [INFO] Processing user login
+5/27/2020 3:35:02 PM [INFO] User test authenticated successfully.
+5/27/2020 3:35:06 PM [INFO] Address record inserted with AddressId:6
+5/27/2020 3:35:06 PM [INFO] Customer record inserted with CustomerId:6
+5/27/2020 3:40:38 PM [INFO] Application started
+5/27/2020 3:40:38 PM [INFO] Processing user login
+5/27/2020 3:40:41 PM [INFO] User test authenticated successfully.
+5/27/2020 3:40:48 PM [ERROR] Input error - Parameter: CustomerName Message: All fields must contain an entry.
+Parameter name: CustomerName
+5/27/2020 3:40:54 PM [ERROR] Input error - Parameter: CustomerName Message: All fields must contain an entry.
+Parameter name: CustomerName
+5/27/2020 3:42:06 PM [ERROR] Input error - Parameter: CustomerName Message: All fields must contain an entry.
+Parameter name: CustomerName
+5/27/2020 3:45:42 PM [INFO] Application started
+5/27/2020 3:45:42 PM [INFO] Processing user login
+5/27/2020 3:45:45 PM [INFO] User test authenticated successfully.
+5/27/2020 3:45:54 PM [ERROR] Input error - Parameter: Customer Name Message: All fields must contain an entry.
+Parameter name: Customer Name
+5/27/2020 3:49:13 PM [INFO] Application started
+5/27/2020 3:49:13 PM [INFO] Processing user login
+5/27/2020 3:49:17 PM [INFO] User test authenticated successfully.
+5/27/2020 3:49:41 PM [ERROR] Input error - Parameter: All fields must contain an entry. Please enter data in the Customer Name field. Message: Specified argument was out of the range of valid values.
+Parameter name: All fields must contain an entry. Please enter data in the Customer Name field.
+5/27/2020 3:53:19 PM [INFO] Application started
+5/27/2020 3:53:20 PM [INFO] Processing user login
+5/27/2020 3:53:22 PM [INFO] User test authenticated successfully.
+5/27/2020 3:53:38 PM [ERROR] Input error - Parameter: Customer Name Message: All fields must contain an entry. Please enter data in the Customer Name field.
+Parameter name: Customer Name
+5/27/2020 3:55:12 PM [ERROR] Input error - Parameter: Customer Name Message: All fields must contain an entry. Please enter data in the Customer Name field.
+Parameter name: Customer Name
+5/27/2020 8:14:57 PM [INFO] Application started
+5/27/2020 8:14:57 PM [INFO] Processing user login
+5/27/2020 8:15:04 PM [INFO] User test authenticated successfully.
+5/27/2020 8:15:29 PM [ERROR] Input error - Parameter: Customer Name Message: Input in the Customer Name field contains invalid characters. Letters, hyphens, and spaces are allowed.
+Parameter name: Customer Name
+5/27/2020 8:15:37 PM [INFO] Address record inserted with AddressId:7
+5/27/2020 8:15:37 PM [INFO] Customer record inserted with CustomerId:4
+5/27/2020 8:30:24 PM [INFO] Application started
+5/27/2020 8:30:24 PM [INFO] Processing user login
+5/27/2020 8:30:29 PM [INFO] User test authenticated successfully.
+5/27/2020 8:31:05 PM [INFO] Address record inserted with AddressId:8
+5/27/2020 8:31:05 PM [INFO] Customer record inserted with CustomerId:5
+5/27/2020 8:53:13 PM [ERROR] Input error: All fields must contain an entry. Please enter data in the Address Line 2 field.
+Parameter name: Address Line 2
+5/27/2020 8:53:17 PM [INFO] Address record inserted with AddressId:9
+5/27/2020 8:53:17 PM [INFO] Customer record inserted with CustomerId:6
+5/27/2020 8:59:02 PM [INFO] Application started
+5/27/2020 8:59:02 PM [INFO] Processing user login
+5/27/2020 8:59:05 PM [INFO] User test authenticated successfully.
+5/27/2020 8:59:25 PM [INFO] Address record inserted with AddressId:10
+5/27/2020 8:59:26 PM [INFO] Customer record inserted with CustomerId:7
+5/27/2020 9:06:04 PM [INFO] Application started
+5/27/2020 9:06:04 PM [INFO] Processing user login
+5/27/2020 9:06:07 PM [INFO] User test authenticated successfully.
+5/27/2020 9:06:38 PM [ERROR] Input error: Input in the Customer Name field contains invalid characters or is incomplete. Only numbers are allowed.
+Parameter name: Telephone
+5/27/2020 9:06:45 PM [ERROR] Input error: Input in the Customer Name field contains invalid characters or is incomplete. Only numbers are allowed.
+Parameter name: Postal Code
+5/27/2020 9:47:33 PM [INFO] Application started
+5/27/2020 9:47:33 PM [INFO] Processing user login
+5/27/2020 9:47:36 PM [INFO] User test authenticated successfully.
+5/27/2020 9:54:42 PM [INFO] Application started
+5/27/2020 9:54:42 PM [INFO] Processing user login
+5/27/2020 9:54:48 PM [INFO] User test authenticated successfully.
+5/27/2020 9:58:40 PM [INFO] Application started
+5/27/2020 9:58:40 PM [INFO] Processing user login
+5/27/2020 9:58:44 PM [INFO] User test authenticated successfully.
+5/27/2020 11:15:01 PM [INFO] Application started
+5/27/2020 11:15:01 PM [INFO] Processing user login
+5/27/2020 11:15:05 PM [INFO] User test authenticated successfully.
+5/28/2020 9:56:57 PM [INFO] Application started
+5/28/2020 9:56:57 PM [INFO] Processing user login
+5/28/2020 9:57:00 PM [INFO] User test authenticated successfully.
+5/28/2020 9:57:36 PM [INFO] Application started
+5/28/2020 9:57:36 PM [INFO] Processing user login
+5/28/2020 9:57:41 PM [WARN] User test failed to authenticate.
+5/28/2020 9:57:41 PM [INFO] User test has attempted authentication 1 times.
+5/28/2020 9:57:42 PM [INFO] User test authenticated successfully.
+5/28/2020 10:03:05 PM [INFO] Application started
+5/28/2020 10:03:05 PM [INFO] Processing user login
+5/28/2020 10:03:10 PM [WARN] User test failed to authenticate.
+5/28/2020 10:03:10 PM [INFO] User test has attempted authentication 1 times.
+5/28/2020 10:03:11 PM [INFO] User test authenticated successfully.
+5/28/2020 10:08:15 PM [INFO] Application started
+5/28/2020 10:08:15 PM [INFO] Processing user login
+5/28/2020 10:08:21 PM [INFO] User test authenticated successfully.
+5/28/2020 10:12:35 PM [INFO] Application started
+5/28/2020 10:12:35 PM [INFO] Processing user login
+5/28/2020 10:12:38 PM [INFO] User test authenticated successfully.
+5/28/2020 10:12:59 PM [INFO] Application started
+5/28/2020 10:12:59 PM [INFO] Processing user login
+5/28/2020 10:13:03 PM [INFO] User test authenticated successfully.
+5/28/2020 10:14:08 PM [INFO] Application started
+5/28/2020 10:14:08 PM [INFO] Processing user login
+5/28/2020 10:14:11 PM [INFO] User test authenticated successfully.
+5/28/2020 10:15:06 PM [INFO] Application started
+5/28/2020 10:15:06 PM [INFO] Processing user login
+5/28/2020 10:15:09 PM [INFO] User test authenticated successfully.
+5/28/2020 10:20:43 PM [INFO] Application started
+5/28/2020 10:20:43 PM [INFO] Processing user login
+5/28/2020 10:20:46 PM [INFO] User test authenticated successfully.
+5/28/2020 10:29:04 PM [INFO] Application started
+5/28/2020 10:29:04 PM [INFO] Processing user login
+5/28/2020 10:29:13 PM [INFO] User test authenticated successfully.
+5/28/2020 10:30:28 PM [INFO] Application started
+5/28/2020 10:30:28 PM [INFO] Processing user login
+5/28/2020 10:30:31 PM [INFO] User test authenticated successfully.
+5/28/2020 10:34:33 PM [INFO] Application started
+5/28/2020 10:34:33 PM [INFO] Processing user login
+5/28/2020 10:34:36 PM [INFO] User test authenticated successfully.
+5/28/2020 10:40:02 PM [INFO] Application started
+5/28/2020 10:40:02 PM [INFO] Processing user login
+5/28/2020 10:40:05 PM [INFO] User test authenticated successfully.
+5/28/2020 10:41:10 PM [INFO] Application started
+5/28/2020 10:41:10 PM [INFO] Processing user login
+5/28/2020 10:41:13 PM [INFO] User test authenticated successfully.
+5/28/2020 10:44:38 PM [INFO] Application started
+5/28/2020 10:44:39 PM [INFO] Processing user login
+5/28/2020 10:44:42 PM [INFO] User test authenticated successfully.
+5/28/2020 10:51:54 PM [INFO] Application started
+5/28/2020 10:51:54 PM [INFO] Processing user login
+5/28/2020 10:51:58 PM [INFO] User test authenticated successfully.
+5/28/2020 10:53:43 PM [INFO] Application started
+5/28/2020 10:53:43 PM [INFO] Processing user login
+5/28/2020 10:53:46 PM [INFO] User test authenticated successfully.
+5/28/2020 10:54:24 PM [INFO] Application started
+5/28/2020 10:54:24 PM [INFO] Processing user login
+5/28/2020 10:54:27 PM [INFO] User test authenticated successfully.
+5/28/2020 10:55:18 PM [INFO] Application started
+5/28/2020 10:55:18 PM [INFO] Processing user login
+5/28/2020 10:55:21 PM [INFO] User test authenticated successfully.
+5/28/2020 11:03:14 PM [INFO] Application started
+5/28/2020 11:03:14 PM [INFO] Processing user login
+5/28/2020 11:03:17 PM [INFO] User test authenticated successfully.
+5/28/2020 11:04:53 PM [INFO] Address record inserted with AddressId:4
+5/28/2020 11:04:53 PM [INFO] Customer record inserted with CustomerId:4
+5/28/2020 11:05:17 PM [INFO] Address record updated with AddressId:0
+5/28/2020 11:05:17 PM [INFO] Customer record updated with CustomerId:4
+5/28/2020 11:06:42 PM [INFO] Application started
+5/28/2020 11:06:42 PM [INFO] Processing user login
+5/28/2020 11:06:46 PM [INFO] User test authenticated successfully.
+5/28/2020 11:07:02 PM [INFO] Address record updated with AddressId:4
+5/28/2020 11:07:03 PM [INFO] Customer record updated with CustomerId:4
+5/28/2020 11:09:06 PM [INFO] Application started
+5/28/2020 11:09:06 PM [INFO] Processing user login
+5/28/2020 11:09:09 PM [INFO] User test authenticated successfully.
+5/28/2020 11:09:26 PM [INFO] Address record updated with AddressId:4
+5/28/2020 11:09:26 PM [INFO] Customer record updated with CustomerId:4
+5/28/2020 11:10:59 PM [INFO] Application started
+5/28/2020 11:10:59 PM [INFO] Processing user login
+5/28/2020 11:11:03 PM [INFO] User test authenticated successfully.
+5/28/2020 11:15:57 PM [INFO] Application started
+5/28/2020 11:15:57 PM [INFO] Processing user login
+5/28/2020 11:16:01 PM [INFO] User test authenticated successfully.
+5/28/2020 11:16:28 PM [INFO] Address record updated with AddressId:4
+5/28/2020 11:17:37 PM [INFO] Customer record updated with CustomerId:4
+5/28/2020 11:17:44 PM [INFO] Address record updated with AddressId:4
+5/28/2020 11:26:53 PM [INFO] Customer record updated with CustomerId:4
+5/28/2020 11:26:59 PM [INFO] Application started
+5/28/2020 11:26:59 PM [INFO] Processing user login
+5/28/2020 11:27:03 PM [INFO] User test authenticated successfully.
+5/28/2020 11:27:19 PM [INFO] Address record updated with AddressId:4
+5/28/2020 11:27:20 PM [INFO] Customer record updated with CustomerId:4
+5/28/2020 11:27:28 PM [INFO] Address record updated with AddressId:4
+5/28/2020 11:27:29 PM [INFO] Customer record updated with CustomerId:4
+5/28/2020 11:28:53 PM [INFO] Application started
+5/28/2020 11:28:53 PM [INFO] Processing user login
+5/28/2020 11:28:57 PM [INFO] User test authenticated successfully.
+5/28/2020 11:29:07 PM [INFO] Address record updated with AddressId:4
+5/28/2020 11:29:08 PM [INFO] Customer record updated with CustomerId:4
+5/28/2020 11:29:47 PM [INFO] Application started
+5/28/2020 11:29:47 PM [INFO] Processing user login
+5/28/2020 11:29:50 PM [INFO] User test authenticated successfully.
+5/28/2020 11:29:59 PM [INFO] Address record updated with AddressId:4
+5/28/2020 11:30:00 PM [INFO] Customer record updated with CustomerId:4
+5/28/2020 11:31:16 PM [INFO] Application started
+5/28/2020 11:31:16 PM [INFO] Processing user login
+5/28/2020 11:31:19 PM [INFO] User test authenticated successfully.
+5/28/2020 11:31:36 PM [INFO] Address record updated with AddressId:4
+5/28/2020 11:31:37 PM [INFO] Customer record updated with CustomerId:4
+5/28/2020 11:36:45 PM [INFO] Application started
+5/28/2020 11:36:45 PM [INFO] Processing user login
+5/28/2020 11:36:50 PM [INFO] User test authenticated successfully.
+5/28/2020 11:37:00 PM [INFO] Address record updated with AddressId:4
+5/28/2020 11:37:00 PM [INFO] Customer record updated with CustomerId:4
+5/28/2020 11:37:09 PM [INFO] Address record updated with AddressId:4
+5/28/2020 11:37:09 PM [INFO] Customer record updated with CustomerId:4

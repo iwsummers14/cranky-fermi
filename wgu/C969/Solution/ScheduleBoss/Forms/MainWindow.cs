@@ -30,7 +30,7 @@ namespace ScheduleBoss
 
             // establish a database connection
             this.Database = new DatabaseConnection();
-            var connected = Database.ConnectToDatabase();
+            //var connected = Database.ConnectToDatabase();
 
             // establish a logger
             this.Logger = new EventLogger(".\\UserAuth.log");
@@ -66,7 +66,7 @@ namespace ScheduleBoss
 
         private void btn_AddCustomer_Click(object sender, EventArgs e)
         {
-            Form NewCust = new NewCustomer( this.Database, this.Logger, this.Session );
+            NewCustomer NewCust = new NewCustomer( this.Database, this.Logger, this.Session );
             NewCust.FormClosed += new FormClosedEventHandler(Cust_FormClosed);
             NewCust.Show();
 
@@ -74,12 +74,13 @@ namespace ScheduleBoss
 
         private void btn_ModifyCustomer_Click(object sender, EventArgs e)
         {
-
+            CustomerList CustList = new CustomerList(this.Database, this.Logger, this.Session);
+            CustList.Show();
         }
 
         private void btn_Logout_Click(object sender, EventArgs e)
         {
-            this.Database.DisconnectFromDatabase();
+            //this.Database.DisconnectFromDatabase();
             this.Close();
         }
 

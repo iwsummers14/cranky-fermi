@@ -166,7 +166,7 @@
             this.panel2.Controls.Add(this.btn_ModifyCustomer);
             this.panel2.Location = new System.Drawing.Point(1101, 250);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(180, 182);
+            this.panel2.Size = new System.Drawing.Size(180, 202);
             this.panel2.TabIndex = 8;
             // 
             // lbl_Contacts

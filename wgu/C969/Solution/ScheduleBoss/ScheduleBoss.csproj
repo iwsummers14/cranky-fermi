@@ -61,6 +61,12 @@
     <Compile Include="Classes\LoginResponse.cs" />
     <Compile Include="Classes\UserSession.cs" />
     <Compile Include="Enums\DatabaseEntries.cs" />
+    <Compile Include="Forms\CustomerList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CustomerList.Designer.cs">
+      <DependentUpon>CustomerList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +78,12 @@
     </Compile>
     <Compile Include="Forms\NewAppointment.Designer.cs">
       <DependentUpon>NewAppointment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModifyCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModifyCustomer.Designer.cs">
+      <DependentUpon>ModifyCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\NewCustomer.cs">
       <SubType>Form</SubType>
@@ -87,8 +99,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\CustomerList.resx">
+      <DependentUpon>CustomerList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewAppointment.resx">
       <DependentUpon>NewAppointment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModifyCustomer.resx">
+      <DependentUpon>ModifyCustomer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewCustomer.resx">
       <DependentUpon>NewCustomer.cs</DependentUpon>

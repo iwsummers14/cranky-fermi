@@ -21,54 +21,117 @@ namespace ScheduleBoss.Classes
            this.Database = DbConn;
         }
 
-        public bool ValidateData(DatabaseEntries entryType, object Data)
+        public object GetRecordById(int recordId, DatabaseEntries entryType)
         {
-            // declare local variable to track validation
-            bool IsValid = false;
+            // set up a dataTable object
+            var Records = new DataTable();
 
+            // set up return object
+            Object Record = new Object();
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+            
             switch (entryType)
             {
                 case DatabaseEntries.Address:
+                    
+                    // build the query
+                    query.CommandText = "SELECT * FROM address WHERE addressId = @addressId";
+                    query.Parameters.AddWithValue("@addressId", recordId);
 
-                    try
+                    // execute the query 
+                    using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
                     {
-                        CustomerAddress addressTemp = Data as CustomerAddress;
-
-                        IsValid = true;
-
+                        dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                        dataAdapter.Fill(Records);
                     }
 
-                    catch (InvalidCastException icEx)
-                    {
-                        // display exception message to user
-                        MessageBox.Show(icEx.Message, "Invalid Data Entry", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                    }
-
+                    // generate a new object using the datarow
+                    Record = new CustomerAddress(Records.Rows[0]);
                     break;
 
                 case DatabaseEntries.Appointment:
+
+                    // build the query
+                    query.CommandText = "SELECT * FROM appointment WHERE appointmentId = @appointmentId";
+                    query.Parameters.AddWithValue("@appointmentId", recordId);
+
+                    // execute the query 
+                    using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+                    {
+                        dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                        dataAdapter.Fill(Records);
+                    }
+
+                    // generate a new object using the datarow
+                    Record = new Appointment(Records.Rows[0]);
+
                     break;
 
-                case DatabaseEntries.City:
+                /*
+                 * case DatabaseEntries.City:
+
+                    // build the query
+                    query.CommandText = "SELECT * FROM city WHERE cityId = @cityId";
+                    query.Parameters.AddWithValue("@cityId", recordId);
+
+                    // execute the query 
+                    using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+                    {
+                        dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                        dataAdapter.Fill(Records);
+                    }
+
+                    // generate a new object using the datarow
+                    Record = new CustomerCity(Records.Rows[0]);
+
                     break;
 
                 case DatabaseEntries.Country:
+
+                    // build the query
+                    query.CommandText = "SELECT * FROM country WHERE countryId = @countryId";
+                    query.Parameters.AddWithValue("@countryId", recordId);
+                    CustomerCountry RecordCtry = new CustomerCountry();
                     break;
+                */
 
                 case DatabaseEntries.Customer:
+
+                    // build the query
+                    query.CommandText = "SELECT * FROM customer WHERE customerId = @customerId";
+                    query.Parameters.AddWithValue("@customerId", recordId);
+
+                    // execute the query 
+                    using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+                    {
+                        dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                        dataAdapter.Fill(Records);
+                    }
+
+                    // generate a new object using the datarow
+                    Record = new Customer(Records.Rows[0]);
                     break;
 
             }
 
-            // return the tracking value
-            return IsValid;
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            return Record;
         }
 
         public bool InsertData(object Data, DatabaseEntries entryType) 
         {
             // declare local variable to track status
             bool IsInserted = false;
+
+            // open connection
+            this.Database.ConnectToDatabase();
 
             // create a command object
             MySqlCommand InsertCommand = this.Database.SqlConnection.CreateCommand();
@@ -88,36 +151,36 @@ namespace ScheduleBoss.Classes
                     case DatabaseEntries.Address:
                         CustomerAddress Address = Data as CustomerAddress;
                         InsertCommand.CommandText = "INSERT INTO address VALUES ( @addressId, @address, @address2, @cityId, @postalCode, @phone, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
-                        InsertCommand.Parameters.AddWithValue("@addressId", Address.AddressId);
-                        InsertCommand.Parameters.AddWithValue("@address", Address.Address);
-                        InsertCommand.Parameters.AddWithValue("@address2", Address.Address2);
-                        InsertCommand.Parameters.AddWithValue("@cityId", Address.CityId);
-                        InsertCommand.Parameters.AddWithValue("@postalCode", Address.PostalCode);
-                        InsertCommand.Parameters.AddWithValue("@phone", Address.Phone);
-                        InsertCommand.Parameters.AddWithValue("@createDate", Address.CreateDate);
-                        InsertCommand.Parameters.AddWithValue("@createdBy", Address.CreatedBy);
-                        InsertCommand.Parameters.AddWithValue("@lastUpdate", Address.UpdateDate);
-                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", Address.UpdatedBy);
+                        InsertCommand.Parameters.AddWithValue("@addressId", Address.addressId);
+                        InsertCommand.Parameters.AddWithValue("@address", Address.address);
+                        InsertCommand.Parameters.AddWithValue("@address2", Address.address2);
+                        InsertCommand.Parameters.AddWithValue("@cityId", Address.cityId);
+                        InsertCommand.Parameters.AddWithValue("@postalCode", Address.postalCode);
+                        InsertCommand.Parameters.AddWithValue("@phone", Address.phone);
+                        InsertCommand.Parameters.AddWithValue("@createDate", Address.createDate);
+                        InsertCommand.Parameters.AddWithValue("@createdBy", Address.createdBy);
+                        InsertCommand.Parameters.AddWithValue("@lastUpdate", Address.lastUpdate);
+                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", Address.lastUpdateBy);
                         break;
 
                     case DatabaseEntries.Appointment:
                         Appointment Appt = Data as Appointment;
                         InsertCommand.CommandText = "INSERT INTO appointment VALUES ( @appointmentId, @customerId, @userId, @title, @description, @location, @contact, @type, @url, @start, @end, @createDate, @createdBy, @lastUpdate, @lastUpdateBy )";
-                        InsertCommand.Parameters.AddWithValue("@appointmentId", Appt.AppointmentId);
-                        InsertCommand.Parameters.AddWithValue("@customerId", Appt.CustomerId);
-                        InsertCommand.Parameters.AddWithValue("@userId", Appt.UserId);
-                        InsertCommand.Parameters.AddWithValue("@title", Appt.Title);
-                        InsertCommand.Parameters.AddWithValue("@description", Appt.Description);
-                        InsertCommand.Parameters.AddWithValue("@location", Appt.Location);
-                        InsertCommand.Parameters.AddWithValue("@contact", Appt.Contact);
-                        InsertCommand.Parameters.AddWithValue("@type", Appt.Type);
-                        InsertCommand.Parameters.AddWithValue("@url", Appt.Url);
-                        InsertCommand.Parameters.AddWithValue("@start", Appt.Start);
-                        InsertCommand.Parameters.AddWithValue("@end", Appt.End);
-                        InsertCommand.Parameters.AddWithValue("@createDate", Appt.CreateDate);
-                        InsertCommand.Parameters.AddWithValue("@createdBy", Appt.CreatedBy);
-                        InsertCommand.Parameters.AddWithValue("@lastUpdate", Appt.UpdateDate);
-                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", Appt.UpdatedBy);
+                        InsertCommand.Parameters.AddWithValue("@appointmentId", Appt.appointmentId);
+                        InsertCommand.Parameters.AddWithValue("@customerId", Appt.customerId);
+                        InsertCommand.Parameters.AddWithValue("@userId", Appt.userId);
+                        InsertCommand.Parameters.AddWithValue("@title", Appt.title);
+                        InsertCommand.Parameters.AddWithValue("@description", Appt.description);
+                        InsertCommand.Parameters.AddWithValue("@location", Appt.location);
+                        InsertCommand.Parameters.AddWithValue("@contact", Appt.contact);
+                        InsertCommand.Parameters.AddWithValue("@type", Appt.type);
+                        InsertCommand.Parameters.AddWithValue("@url", Appt.url);
+                        InsertCommand.Parameters.AddWithValue("@start", Appt.start);
+                        InsertCommand.Parameters.AddWithValue("@end", Appt.end);
+                        InsertCommand.Parameters.AddWithValue("@createDate", Appt.createDate);
+                        InsertCommand.Parameters.AddWithValue("@createdBy", Appt.createdBy);
+                        InsertCommand.Parameters.AddWithValue("@lastUpdate", Appt.lastUpdate);
+                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", Appt.lastUpdateBy);
                         break;
 
                     case DatabaseEntries.City:
@@ -129,14 +192,14 @@ namespace ScheduleBoss.Classes
                     case DatabaseEntries.Customer:
                         Customer Cust = Data as Customer;
                         InsertCommand.CommandText = "INSERT INTO customer VALUES ( @customerId, @customerName, @addressId, @active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
-                        InsertCommand.Parameters.AddWithValue("@customerId", Cust.CustomerId);
-                        InsertCommand.Parameters.AddWithValue("@customerName", Cust.CustomerName);
-                        InsertCommand.Parameters.AddWithValue("@addressId", Cust.AddressId);
-                        InsertCommand.Parameters.AddWithValue("@active", Cust.IsActive);
-                        InsertCommand.Parameters.AddWithValue("@createDate", Cust.CreateDate);
-                        InsertCommand.Parameters.AddWithValue("@createdBy", Cust.CreatedBy);
-                        InsertCommand.Parameters.AddWithValue("@lastUpdate", Cust.UpdateDate);
-                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", Cust.UpdatedBy);
+                        InsertCommand.Parameters.AddWithValue("@customerId", Cust.customerId);
+                        InsertCommand.Parameters.AddWithValue("@customerName", Cust.customerName);
+                        InsertCommand.Parameters.AddWithValue("@addressId", Cust.addressId);
+                        InsertCommand.Parameters.AddWithValue("@active", Cust.active);
+                        InsertCommand.Parameters.AddWithValue("@createDate", Cust.createDate);
+                        InsertCommand.Parameters.AddWithValue("@createdBy", Cust.createdBy);
+                        InsertCommand.Parameters.AddWithValue("@lastUpdate", Cust.lastUpdate);
+                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", Cust.lastUpdateBy);
                         break;
 
 
@@ -156,17 +219,118 @@ namespace ScheduleBoss.Classes
                 InsertTransaction.Rollback();
                 
             }
-            
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
 
             return IsInserted;
         }
 
-        public bool UpdateData(object Data)
+        public bool UpdateData(object Data, DatabaseEntries entryType)
         {
             // declare local variable to track status
             bool IsUpdated = false;
 
+            // open connection
+            this.Database.ConnectToDatabase();
 
+            // create a command object
+            MySqlCommand UpdateCommand = this.Database.SqlConnection.CreateCommand();
+
+            // create a transaction object
+            MySqlTransaction UpdateTransaction = this.Database.SqlConnection.BeginTransaction();
+
+            // assign the transaction to the command object
+            UpdateCommand.Transaction = UpdateTransaction;
+
+            try
+            {
+
+                switch (entryType)
+                {
+                    case DatabaseEntries.Address:
+                        CustomerAddress Address = Data as CustomerAddress;
+                        UpdateCommand.CommandText = "UPDATE address SET address = @address, address2 = @address2, cityId = @cityId, postalCode = @postalCode, phone = @phone, lastUpdate = @lastUpdate, lastUpdateBy = @lastUpdateBy WHERE addressId = @addressId";
+                        UpdateCommand.Parameters.AddWithValue("@addressId", Address.addressId);
+                        UpdateCommand.Parameters.AddWithValue("@address", Address.address);
+                        UpdateCommand.Parameters.AddWithValue("@address2", Address.address2);
+                        UpdateCommand.Parameters.AddWithValue("@cityId", Address.cityId);
+                        UpdateCommand.Parameters.AddWithValue("@postalCode", Address.postalCode);
+                        UpdateCommand.Parameters.AddWithValue("@phone", Address.phone);
+                        UpdateCommand.Parameters.AddWithValue("@lastUpdate", Address.lastUpdate);
+                        UpdateCommand.Parameters.AddWithValue("@lastUpdateBy", Address.lastUpdateBy);
+                        break;
+
+                    case DatabaseEntries.Appointment:
+                        Appointment Appt = Data as Appointment;
+                        UpdateCommand.CommandText = "" +
+                            "UPDATE appointment" +
+                            "SET  customerId = @customerId, " +
+                            "     userId = @userId, " +
+                            "     title = @title, " +
+                            "     description = @description, " +
+                            "     location = @location, " +
+                            "     contact = @contact, " +
+                            "     type = @type, " +
+                            "     url = @url, " +
+                            "     start = @start, " +
+                            "     end = @end, " +
+                            "     lastUpdate = @lastUpdate, " +
+                            "     lastUpdateBy = @lastUpdateBy" +
+                            "WHERE appointmentId = @appointmentId";
+                        UpdateCommand.Parameters.AddWithValue("@appointmentId", Appt.appointmentId);
+                        UpdateCommand.Parameters.AddWithValue("@customerId", Appt.customerId);
+                        UpdateCommand.Parameters.AddWithValue("@userId", Appt.userId);
+                        UpdateCommand.Parameters.AddWithValue("@title", Appt.title);
+                        UpdateCommand.Parameters.AddWithValue("@description", Appt.description);
+                        UpdateCommand.Parameters.AddWithValue("@location", Appt.location);
+                        UpdateCommand.Parameters.AddWithValue("@contact", Appt.contact);
+                        UpdateCommand.Parameters.AddWithValue("@type", Appt.type);
+                        UpdateCommand.Parameters.AddWithValue("@url", Appt.url);
+                        UpdateCommand.Parameters.AddWithValue("@start", Appt.start);
+                        UpdateCommand.Parameters.AddWithValue("@end", Appt.end);
+                        UpdateCommand.Parameters.AddWithValue("@lastUpdate", Appt.lastUpdate);
+                        UpdateCommand.Parameters.AddWithValue("@lastUpdateBy", Appt.lastUpdateBy);
+                        break;
+
+                    case DatabaseEntries.City:
+                        break;
+
+                    case DatabaseEntries.Country:
+                        break;
+
+                    case DatabaseEntries.Customer:
+                        Customer Cust = Data as Customer;
+                        UpdateCommand.CommandText = "UPDATE customer SET customerName = @customerName, active = @active, lastUpdate = @lastUpdate, lastUpdateBy = @lastUpdateBy WHERE customerId = @customerId";
+                            
+                        UpdateCommand.Parameters.AddWithValue("@customerId", Cust.customerId);
+                        UpdateCommand.Parameters.AddWithValue("@customerName", Cust.customerName);
+                        UpdateCommand.Parameters.AddWithValue("@active", Cust.active);
+                        UpdateCommand.Parameters.AddWithValue("@lastUpdate", Cust.lastUpdate);
+                        UpdateCommand.Parameters.AddWithValue("@lastUpdateBy", Cust.lastUpdateBy);
+                        break;
+
+
+                }
+
+                // execute the query and commit the transaction    
+                UpdateCommand.ExecuteNonQuery();
+                UpdateTransaction.Commit();
+
+                IsUpdated = true;
+
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "SQL Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    
+                UpdateTransaction.Rollback();
+
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
 
             return IsUpdated;
         }
@@ -174,6 +338,9 @@ namespace ScheduleBoss.Classes
         public DataTable GetAllTableValues(DatabaseEntries entryType)
         {
             var AllRecords = new DataTable();
+
+            // open connection
+            this.Database.ConnectToDatabase();
 
             // create the query
             MySqlCommand query = this.Database.SqlConnection.CreateCommand();
@@ -209,6 +376,9 @@ namespace ScheduleBoss.Classes
                 dataAdapter.Fill(AllRecords);
             }
 
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
             return AllRecords;
             
         }
@@ -218,6 +388,9 @@ namespace ScheduleBoss.Classes
         {
             // create variable for return value
             int nextId = 0;
+
+            // open connection
+            this.Database.ConnectToDatabase();
 
             // create the query
             MySqlCommand query = this.Database.SqlConnection.CreateCommand();
@@ -257,12 +430,19 @@ namespace ScheduleBoss.Classes
                 queryReader.Close();
             }
 
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
             return nextId;
         }
 
         // method to authenticate a user
         public LoginResponse AuthenticateUser( string username, string password)
         {
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
             // create the login query with parameters 
             MySqlCommand query = this.Database.SqlConnection.CreateCommand();
             query.CommandText = "SELECT * FROM user WHERE username = @username AND password = @password";
@@ -292,10 +472,16 @@ namespace ScheduleBoss.Classes
 
                 queryReader.Close();
 
+                // close connection
+                this.Database.DisconnectFromDatabase();
+
                 return Response;
             }
             else
             {
+                
+                // close connection
+                this.Database.DisconnectFromDatabase();
 
                 queryReader.Close();
                 return null;

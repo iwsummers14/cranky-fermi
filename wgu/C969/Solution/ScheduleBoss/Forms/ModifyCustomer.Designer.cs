@@ -1,6 +1,6 @@
 ﻿namespace ScheduleBoss.Forms
 {
-    partial class NewCustomer
+    partial class ModifyCustomer
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewCustomer));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModifyCustomer));
             this.lbl_NewCustomer = new System.Windows.Forms.Label();
             this.btn_Save = new System.Windows.Forms.Button();
             this.btn_Cancel = new System.Windows.Forms.Button();
@@ -60,9 +60,9 @@
             this.lbl_NewCustomer.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_NewCustomer.Location = new System.Drawing.Point(12, 9);
             this.lbl_NewCustomer.Name = "lbl_NewCustomer";
-            this.lbl_NewCustomer.Size = new System.Drawing.Size(137, 21);
+            this.lbl_NewCustomer.Size = new System.Drawing.Size(161, 21);
             this.lbl_NewCustomer.TabIndex = 0;
-            this.lbl_NewCustomer.Text = "NEW CUSTOMER";
+            this.lbl_NewCustomer.Text = "MODIFY CUSTOMER";
             // 
             // btn_Save
             // 
@@ -275,7 +275,7 @@
             this.custPanel.Size = new System.Drawing.Size(540, 258);
             this.custPanel.TabIndex = 6;
             // 
-            // NewCustomer
+            // ModifyCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -287,9 +287,9 @@
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "NewCustomer";
+            this.Name = "ModifyCustomer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SCHEDULE BOSS - New Customer";
+            this.Text = "SCHEDULE BOSS - Modify Customer";
             this.custPanel.ResumeLayout(false);
             this.custPanel.PerformLayout();
             this.ResumeLayout(false);

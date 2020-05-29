@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,36 +10,44 @@ namespace ScheduleBoss.Classes
     public class Appointment
     {
 
-        public int AppointmentId { get; set; }
+        public int appointmentId { get; set; }
 
-        public int CustomerId { get; set; }
+        public int customerId { get; set; }
 
-        public int UserId { get; set; }
+        public int userId { get; set; }
 
-        public string Title { get; set; }
+        public string title { get; set; }
 
-        public string Description { get; set; }
+        public string description { get; set; }
 
-        public string Location { get; set; }
+        public string location { get; set; }
 
-        public string Contact { get; set; }
+        public string contact { get; set; }
 
-        public string Type { get; set; }
+        public string type { get; set; }
 
-        public string Url { get; set; }
+        public string url { get; set; }
 
-        public DateTime Start { get; set; }
+        public DateTime start { get; set; }
 
-        public DateTime End { get; set; }
+        public DateTime end { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public DateTime createDate { get; set; }
 
-        public string CreatedBy { get; set; }
+        public string createdBy { get; set; }
 
-        public DateTime UpdateDate { get; set; }
+        public DateTime lastUpdate { get; set; }
 
-        public string UpdatedBy { get; set; }
+        public string lastUpdateBy { get; set; }
 
+        public Appointment() { }
 
+        public Appointment(DataRow row)
+        {
+            this.appointmentId = int.Parse(row["appointmentId"].ToString());
+            this.customerId = int.Parse(row["customerId"].ToString());
+            this.userId = int.Parse(row["userId"].ToString());
+            this.title = row["title"].ToString();
+        }
     }
 }

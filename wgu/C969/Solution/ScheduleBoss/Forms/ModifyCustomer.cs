@@ -13,7 +13,7 @@ using ScheduleBoss.Enums;
 
 namespace ScheduleBoss.Forms
 {
-    public partial class NewCustomer : Form
+    public partial class ModifyCustomer : Form
     {
 
         public DatabaseConnection Database { get; set; }
@@ -27,8 +27,12 @@ namespace ScheduleBoss.Forms
         public DataTable Cities { get; set; }
 
         public DataTable Countries { get; set; }
+
+        public Customer Customer { get; set; }
+
+        public CustomerAddress Address { get; set; }
         
-        public NewCustomer(DatabaseConnection db, EventLogger log, UserSession sess)
+        public ModifyCustomer(DatabaseConnection db, EventLogger log, UserSession sess, Customer cust, CustomerAddress addr)
         {
             InitializeComponent();
 
@@ -36,6 +40,8 @@ namespace ScheduleBoss.Forms
             this.Database = db;
             this.Logger = log;
             this.Session = sess;
+            this.Customer = cust;
+            this.Address = addr;
 
             // initialize the data processor object 
             this.DataProc = new DataProcessor(this.Database);
@@ -51,12 +57,19 @@ namespace ScheduleBoss.Forms
             cbox_City.DataSource = this.Cities.DefaultView;
             cbox_City.DisplayMember = "city";
             cbox_City.ValueMember = "cityId";
-            
             cbox_Country.DataSource = this.Countries.DefaultView;
             cbox_Country.DisplayMember = "country";
             cbox_Country.ValueMember = "countryId";
 
-
+            // set field values from loaded objects
+            tbox_CustomerId.Text = this.Customer.customerId.ToString();
+            mbox_CustomerName.Text = this.Customer.customerName;
+            chk_IsActive.Checked = (this.Customer.active == true) ? true : false;
+            mbox_CustomerAddress.Text = this.Address.address;
+            mbox_CustomerAddress2.Text = this.Address.address2;
+            mbox_CustomerPhone.Text = this.Address.phone;
+            mbox_CustomerPostalCode.Text = this.Address.postalCode;
+            cbox_City.SelectedValue = this.Address.cityId;
         }
 
         private void btn_Cancel_Click(object sender, EventArgs e)
@@ -67,16 +80,14 @@ namespace ScheduleBoss.Forms
         private void btn_Save_Click(object sender, EventArgs e)
         {
             // initialize a new customer object and address object
-            Customer NewCust = new Customer();
-            CustomerAddress NewAddr = new CustomerAddress();
+            Customer ModCust = new Customer();
+            CustomerAddress ModAddr = new CustomerAddress();
 
             // set up data validation regexes
             Regex AddressValidator = new Regex("[^a-zA-Z0-9\\-\\s]");
             Regex NameValidator = new Regex("[^a-zA-Z\\s\\-]");
             Regex PhoneValidator = new Regex("[^0-9\\-]");
             Regex PostalValidator = new Regex("[^0-9]");
-            
-
 
             try
             {
@@ -116,11 +127,11 @@ namespace ScheduleBoss.Forms
                 {
                     throw new ArgumentOutOfRangeException($"{mbox_CustomerAddress2.Tag.ToString()}", $"Input in the {mbox_CustomerAddress2.Tag.ToString()} field contains invalid characters. Alphanumerics, hyphens, and spaces are allowed.");
                 }
-                
+
 
                 if (PhoneValidator.IsMatch(mbox_CustomerPhone.Text))
                 {
-                    throw new ArgumentOutOfRangeException($"{mbox_CustomerPhone.Tag.ToString()}",$"Input in the {mbox_CustomerPhone.Tag.ToString()} field contains invalid characters or is incomplete. Only numbers are allowed.");
+                    throw new ArgumentOutOfRangeException($"{mbox_CustomerPhone.Tag.ToString()}", $"Input in the {mbox_CustomerPhone.Tag.ToString()} field contains invalid characters or is incomplete. Only numbers are allowed.");
                 }
 
                 // validate the phone and postal code fields
@@ -133,26 +144,27 @@ namespace ScheduleBoss.Forms
                 // process the address object
 
                 // get next ID value for address table
-                NewAddr.addressId = this.DataProc.GetNextId(DatabaseEntries.Address);
+                ModAddr.addressId = this.Address.addressId;
                 
+
                 // process address lines 1 and 2
-                NewAddr.address = mbox_CustomerAddress.Text;
-                NewAddr.address2 = (mbox_CustomerAddress2.Text.Length > 0) ? mbox_CustomerAddress2.Text : String.Empty;
+                ModAddr.address = mbox_CustomerAddress.Text;
+                ModAddr.address2 = (mbox_CustomerAddress2.Text.Length > 0) ? mbox_CustomerAddress2.Text : String.Empty;
 
                 // get the selected city from the combo box
-                NewAddr.cityId = int.Parse(cbox_City.SelectedValue.ToString());
+                ModAddr.cityId = int.Parse(cbox_City.SelectedValue.ToString());
 
                 // get the phone and postal code - masked fields
-                NewAddr.phone = mbox_CustomerPhone.Text;
-                NewAddr.postalCode = mbox_CustomerPostalCode.Text;
+                ModAddr.phone = mbox_CustomerPhone.Text;
+                ModAddr.postalCode = mbox_CustomerPostalCode.Text;
 
                 // set the user and timestamp fields for create and update - this is a new record
                 // datetime values are UTC 
-                NewAddr.createdBy = NewAddr.lastUpdateBy = this.Session.UserLoginInfo.Username;
-                NewAddr.createDate = NewAddr.lastUpdate = DateTime.UtcNow;
+                ModAddr.lastUpdateBy = this.Session.UserLoginInfo.Username;
+                ModAddr.lastUpdate = DateTime.UtcNow;
 
                 // insert the data - possbily make this async/awaitable
-                bool AddressInsert = this.DataProc.InsertData(NewAddr, DatabaseEntries.Address);
+                bool AddressInsert = this.DataProc.UpdateData(ModAddr, DatabaseEntries.Address);
 
                 if (AddressInsert == false)
                 {
@@ -160,32 +172,32 @@ namespace ScheduleBoss.Forms
                 }
 
                 // log the operation
-                this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Address record inserted with AddressId:{NewAddr.addressId.ToString()}");
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Address record updated with AddressId:{ModAddr.addressId.ToString()}");
 
                 // process the customer object
 
                 // get customerId value from text field (generated on form load)
-                NewCust.customerId = int.Parse(tbox_CustomerId.Text);
+                ModCust.customerId = this.Customer.customerId;
                 
                 // get entered name 
-                NewCust.customerName = mbox_CustomerName.Text;
+                ModCust.customerName = mbox_CustomerName.Text;
 
                 // handle the checkbox for isActive
-                NewCust.active = chk_IsActive.Checked ? true : false;
+                ModCust.active = chk_IsActive.Checked ? true : false;
                 
                 // assign the addressId of the new address
-                NewCust.addressId = NewAddr.addressId;
+                ModCust.addressId = ModAddr.addressId;
 
                 // set the user and timestamp fields for create and update - this is a new record
                 // datetime values are UTC 
-                NewCust.createdBy = NewCust.lastUpdateBy = this.Session.UserLoginInfo.Username;
-                NewCust.createDate = NewCust.lastUpdate = DateTime.UtcNow;
+                ModCust.lastUpdateBy = this.Session.UserLoginInfo.Username;
+                ModCust.lastUpdate = DateTime.UtcNow;
 
                 // insert the data 
-                bool CustInsert = this.DataProc.InsertData(NewCust, DatabaseEntries.Customer);
+                bool CustUpdate = this.DataProc.UpdateData(ModCust, DatabaseEntries.Customer);
 
                 // log the operation
-                this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Customer record inserted with CustomerId:{NewCust.customerId.ToString()}");
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Customer record updated with CustomerId:{ModCust.customerId.ToString()}");
 
 
                 this.Close();
