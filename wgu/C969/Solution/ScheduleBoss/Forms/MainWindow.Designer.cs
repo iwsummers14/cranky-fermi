@@ -253,6 +253,7 @@
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SCHEDULE BOSS - Home";
+            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabThisWeek.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWeek)).EndInit();

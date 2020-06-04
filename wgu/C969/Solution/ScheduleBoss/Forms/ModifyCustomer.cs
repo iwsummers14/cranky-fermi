@@ -44,7 +44,7 @@ namespace ScheduleBoss.Forms
             this.Address = addr;
 
             // initialize the data processor object 
-            this.DataProc = new DataProcessor(this.Database);
+            this.DataProc = new DataProcessor(this.Database, this.Logger);
 
             // get the next customer ID and assign it to the text box
             tbox_CustomerId.Text = this.DataProc.GetNextId(DatabaseEntries.Customer).ToString();

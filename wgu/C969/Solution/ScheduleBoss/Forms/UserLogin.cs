@@ -25,11 +25,11 @@ namespace ScheduleBoss.Forms
 
         public LoginResponse LoginResponse { get; set; }
 
-        public EventLogger EventLogger { get; set; }
+        public EventLogger Logger { get; set; }
 
         public DataProcessor DataProcessor { get; set; }
 
-        public UserLogin(CultureInfo culture, DatabaseConnection DbConn, EventLogger Logger)
+        public UserLogin(CultureInfo culture, DatabaseConnection DbConn, EventLogger Log)
         {
             InitializeComponent();
 
@@ -37,11 +37,11 @@ namespace ScheduleBoss.Forms
             this.Connection = DbConn;
 
             // set this form's logger object to the passed eventlogger
-            this.EventLogger = Logger;
-            this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [INFO] Processing user login");
+            this.Logger = Log;
+            this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Processing user login");
 
             // initialize the data processor 
-            this.DataProcessor = new DataProcessor(this.Connection);
+            this.DataProcessor = new DataProcessor(this.Connection, this.Logger);
 
             // set the current ui culture based on the passed culture info
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture.Name);
@@ -69,7 +69,7 @@ namespace ScheduleBoss.Forms
                 if (this.LoginResponse != null) {
 
                     // log the event
-                    this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [INFO] User {Username} authenticated successfully.");
+                    this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] User {Username} authenticated successfully.");
 
                     // notify the user
                     MessageBox.Show(
@@ -96,13 +96,13 @@ namespace ScheduleBoss.Forms
                     );
 
                     // log the event
-                    this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [WARN] User {Username} failed to authenticate.");
+                    this.Logger.WriteLog($"{DateTime.Now.ToString()} [WARN] User {Username} failed to authenticate.");
 
                     // increment the attempt counter
                     this.LoginAttempts++;
 
                     // log the attempt counter
-                    this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [INFO] User {Username} has attempted authentication {LoginAttempts.ToString()} times.");
+                    this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] User {Username} has attempted authentication {LoginAttempts.ToString()} times.");
                 }
                 
             }
@@ -119,8 +119,8 @@ namespace ScheduleBoss.Forms
                    );
 
                 // log that the attempt counter max was reached
-                this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [ERROR] User {Username} has failed authentication {LoginAttempts.ToString()} times.");
-                this.EventLogger.WriteLog($"{DateTime.Now.ToString()} [INFO] Application exiting due to repeated login failures.");
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [ERROR] User {Username} has failed authentication {LoginAttempts.ToString()} times.");
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Application exiting due to repeated login failures.");
                 
                 // close 
                 this.Close();

@@ -13,14 +13,206 @@ namespace ScheduleBoss.Classes
 {
     public class DataProcessor
     {
-        
-        public DatabaseConnection Database {get; set;}
 
-        public DataProcessor( DatabaseConnection DbConn)
+        public DatabaseConnection Database { get; set; }
+
+        public EventLogger Logger { get; set;}
+
+        public DataProcessor( DatabaseConnection DbConn, EventLogger Log)
         {
-           this.Database = DbConn;
+            this.Database = DbConn;
+            this.Logger = Log;
         }
 
+        // method to authenticate a user
+        public LoginResponse AuthenticateUser(string username, string password)
+        {
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the login query with parameters 
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+            query.CommandText = "SELECT * FROM user WHERE username = @username AND password = @password";
+            query.Parameters.AddWithValue("@username", username);
+            query.Parameters.AddWithValue("@password", password);
+
+            // execute the query and read results
+            MySqlDataReader queryReader = query.ExecuteReader();
+
+            if (queryReader.HasRows)
+            {
+
+                // initialize the login response property
+                LoginResponse Response = new LoginResponse();
+
+                // read the query data
+                queryReader.Read();
+
+                // assign login response fields from query data
+                Response.UserId = queryReader.GetInt32(0);
+                Response.Username = queryReader.GetString(1);
+                Response.IsActive = queryReader.GetBoolean(3);
+                Response.CreateDate = queryReader.GetDateTime(4);
+                Response.CreatedBy = queryReader.GetString(5);
+                Response.LastUpdate = queryReader.GetDateTime(6);
+                Response.LastUpdateBy = queryReader.GetString(7);
+
+                queryReader.Close();
+
+                // close connection
+                this.Database.DisconnectFromDatabase();
+
+                return Response;
+            }
+            else
+            {
+
+                // close connection
+                this.Database.DisconnectFromDatabase();
+
+                queryReader.Close();
+                return null;
+
+            }
+
+
+
+        }
+
+        // method to get the value of the next 'id' for a given entry type
+        public int GetNextId(DatabaseEntries entryType)
+        {
+            // create variable for return value
+            int nextId = 0;
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+
+            switch (entryType)
+            {
+                case DatabaseEntries.Address:
+                    query.CommandText = "SELECT MAX(addressId) FROM address";
+                    break;
+
+                case DatabaseEntries.Appointment:
+                    query.CommandText = "SELECT MAX(appointmentId) FROM appointment";
+                    break;
+
+                case DatabaseEntries.City:
+                    query.CommandText = "SELECT MAX(cityId) FROM city";
+                    break;
+
+                case DatabaseEntries.Country:
+                    query.CommandText = "SELECT MAX(countryId) FROM country";
+                    break;
+
+                case DatabaseEntries.Customer:
+                    query.CommandText = "SELECT MAX(customerId) FROM customer";
+                    break;
+
+            }
+
+            // execute the query
+            MySqlDataReader queryReader = query.ExecuteReader();
+
+            if (queryReader.HasRows)
+            {
+                // read the record, increment it by 1 to generate the next id value, and close the query reader
+                queryReader.Read();
+                nextId = queryReader.GetInt32(0) + 1;
+                queryReader.Close();
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            return nextId;
+        }
+
+        // method to return all table values for an entry type
+        public DataTable GetAllTableValues(DatabaseEntries entryType)
+        {
+            var AllRecords = new DataTable();
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+
+            switch (entryType)
+            {
+                case DatabaseEntries.Address:
+                    query.CommandText = "SELECT * FROM address";
+                    break;
+
+                case DatabaseEntries.Appointment:
+                    query.CommandText = "SELECT * FROM appointment";
+                    break;
+
+                case DatabaseEntries.City:
+                    query.CommandText = "SELECT * FROM city";
+                    break;
+
+                case DatabaseEntries.Country:
+                    query.CommandText = "SELECT * FROM country";
+                    break;
+
+                case DatabaseEntries.Customer:
+                    query.CommandText = "SELECT * FROM customer";
+                    break;
+
+            }
+
+            // execute the query 
+            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+            {
+                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                dataAdapter.Fill(AllRecords);
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            return AllRecords;
+
+        }
+
+        // method to return all table values for an entry type
+        public DataTable GetAppointmentsForUserWithDate(string user, DateTime filterStartDate, DateTime filterEndDate)
+        {
+            var AllRecords = new DataTable();
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+
+            query.CommandText = "SELECT * FROM appointment WHERE start >= @filterStartDate AND start <= @filterEndDate";
+            query.Parameters.AddWithValue("@filterStartDate", filterStartDate);
+            query.Parameters.AddWithValue("@filterEndDate", filterEndDate);
+
+
+            // execute the query 
+            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+            {
+                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                dataAdapter.Fill(AllRecords);
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            return AllRecords;
+
+        }
+
+        // method to get a single record by its ID value (primary key)
         public object GetRecordById(int recordId, DatabaseEntries entryType)
         {
             // set up a dataTable object
@@ -72,8 +264,7 @@ namespace ScheduleBoss.Classes
 
                     break;
 
-                /*
-                 * case DatabaseEntries.City:
+                case DatabaseEntries.City:
 
                     // build the query
                     query.CommandText = "SELECT * FROM city WHERE cityId = @cityId";
@@ -96,9 +287,18 @@ namespace ScheduleBoss.Classes
                     // build the query
                     query.CommandText = "SELECT * FROM country WHERE countryId = @countryId";
                     query.Parameters.AddWithValue("@countryId", recordId);
-                    CustomerCountry RecordCtry = new CustomerCountry();
+
+                    // execute the query 
+                    using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+                    {
+                        dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                        dataAdapter.Fill(Records);
+                    }
+
+                    // generate a new object using the datarow
+                    Record = new CustomerCountry(Records.Rows[0]);
                     break;
-                */
+                
 
                 case DatabaseEntries.Customer:
 
@@ -125,6 +325,91 @@ namespace ScheduleBoss.Classes
             return Record;
         }
 
+        // method to delete a record
+        public bool DeleteRecord(int recordId, DatabaseEntries entryType)
+        {
+            // set up a bool return variable
+            var IsDeleted = false;
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the query
+            MySqlCommand DeleteCommand = this.Database.SqlConnection.CreateCommand();
+
+            // create a transaction object
+            MySqlTransaction DeleteTransaction = this.Database.SqlConnection.BeginTransaction();
+
+            // assign the transaction to the command object
+            DeleteCommand.Transaction = DeleteTransaction;
+
+            try { 
+
+                switch (entryType)
+                {
+                    case DatabaseEntries.Address:
+
+                        // build the query
+                        DeleteCommand.CommandText = "DELETE FROM address WHERE addressId = @addressId";
+                        DeleteCommand.Parameters.AddWithValue("@addressId", recordId);
+                        break;
+
+                    case DatabaseEntries.Appointment:
+
+                        // build the query
+                        DeleteCommand.CommandText = "DELETE FROM appointment WHERE appointmentId = @appointmentId";
+                        DeleteCommand.Parameters.AddWithValue("@appointmentId", recordId);
+                        break;
+
+                    case DatabaseEntries.City:
+
+                        // build the query
+                        DeleteCommand.CommandText = "DELETE FROM city WHERE cityId = @cityId";
+                        DeleteCommand.Parameters.AddWithValue("@cityId", recordId);
+                        break;
+
+                    case DatabaseEntries.Country:
+
+                        // build the query
+                        DeleteCommand.CommandText = "DELETE FROM country WHERE countryId = @countryId";
+                        DeleteCommand.Parameters.AddWithValue("@countryId", recordId);
+                        break;
+
+
+                    case DatabaseEntries.Customer:
+
+                        // build the query
+                        DeleteCommand.CommandText = "DELETE FROM customer WHERE customerId = @customerId";
+                        DeleteCommand.Parameters.AddWithValue("@customerId", recordId);
+                        break;
+
+                }
+
+
+            // execute the query and commit the transaction    
+            DeleteCommand.ExecuteNonQuery();
+            DeleteTransaction.Commit();
+
+            IsDeleted = true;
+
+            }
+
+            catch (Exception ex)
+            {
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [ERROR] Error during DELETE operation: {ex.Message}");
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Rolling back Database transaction.");
+                DeleteTransaction.Rollback();
+                
+            }
+
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            return IsDeleted;
+        }
+
+        // method to insert a record
         public bool InsertData(object Data, DatabaseEntries entryType) 
         {
             // declare local variable to track status
@@ -213,9 +498,10 @@ namespace ScheduleBoss.Classes
 
             }
 
-            catch 
+            catch (Exception ex)
             {
-                
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [ERROR] Error during INSERT operation: {ex.Message}");
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Rolling back Database transaction.");
                 InsertTransaction.Rollback();
                 
             }
@@ -226,6 +512,7 @@ namespace ScheduleBoss.Classes
             return IsInserted;
         }
 
+        // method to update a record 
         public bool UpdateData(object Data, DatabaseEntries entryType)
         {
             // declare local variable to track status
@@ -323,8 +610,8 @@ namespace ScheduleBoss.Classes
 
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "SQL Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [ERROR] Error during UPDATE operation: {ex.Message}");
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Rolling back Database transaction.");
                 UpdateTransaction.Rollback();
 
             }
@@ -333,163 +620,6 @@ namespace ScheduleBoss.Classes
             this.Database.DisconnectFromDatabase();
 
             return IsUpdated;
-        }
-
-        public DataTable GetAllTableValues(DatabaseEntries entryType)
-        {
-            var AllRecords = new DataTable();
-
-            // open connection
-            this.Database.ConnectToDatabase();
-
-            // create the query
-            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
-
-            switch (entryType)
-            {
-                case DatabaseEntries.Address:
-                    query.CommandText = "SELECT * FROM address";
-                    break;
-
-                case DatabaseEntries.Appointment:
-                    query.CommandText = "SELECT * FROM appointment";
-                    break;
-
-                case DatabaseEntries.City:
-                    query.CommandText = "SELECT * FROM city";
-                    break;
-
-                case DatabaseEntries.Country:
-                    query.CommandText = "SELECT * FROM country";
-                    break;
-
-                case DatabaseEntries.Customer:
-                    query.CommandText = "SELECT * FROM customer";
-                    break;
-
-            }
-
-            // execute the query 
-            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
-            {
-                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-                dataAdapter.Fill(AllRecords);
-            }
-
-            // close connection
-            this.Database.DisconnectFromDatabase();
-
-            return AllRecords;
-            
-        }
-
-        // method to get the value of the next 'id' for a given entry type
-        public int GetNextId(DatabaseEntries entryType)
-        {
-            // create variable for return value
-            int nextId = 0;
-
-            // open connection
-            this.Database.ConnectToDatabase();
-
-            // create the query
-            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
-            
-            switch (entryType)
-            {
-                case DatabaseEntries.Address:
-                    query.CommandText = "SELECT MAX(addressId) FROM address"; 
-                    break;
-
-                case DatabaseEntries.Appointment:
-                    query.CommandText = "SELECT MAX(appointmentId) FROM appointment";
-                    break;
-
-                case DatabaseEntries.City:
-                    query.CommandText = "SELECT MAX(cityId) FROM city";
-                    break;
-
-                case DatabaseEntries.Country:
-                    query.CommandText = "SELECT MAX(countryId) FROM country";
-                    break;
-
-                case DatabaseEntries.Customer:
-                    query.CommandText = "SELECT MAX(customerId) FROM customer";
-                    break;
-
-            }
-
-            // execute the query
-            MySqlDataReader queryReader = query.ExecuteReader();
-
-            if (queryReader.HasRows)
-            {
-                // read the record, increment it by 1 to generate the next id value, and close the query reader
-                queryReader.Read();
-                nextId = queryReader.GetInt32(0) + 1;
-                queryReader.Close();
-            }
-
-            // close connection
-            this.Database.DisconnectFromDatabase();
-
-            return nextId;
-        }
-
-        // method to authenticate a user
-        public LoginResponse AuthenticateUser( string username, string password)
-        {
-
-            // open connection
-            this.Database.ConnectToDatabase();
-
-            // create the login query with parameters 
-            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
-            query.CommandText = "SELECT * FROM user WHERE username = @username AND password = @password";
-            query.Parameters.AddWithValue("@username", username);
-            query.Parameters.AddWithValue("@password", password);
-
-            // execute the query and read results
-            MySqlDataReader queryReader = query.ExecuteReader();
-
-            if (queryReader.HasRows)
-            {
-               
-                // initialize the login response property
-                LoginResponse Response = new LoginResponse();
-
-                // read the query data
-                queryReader.Read();
-
-                // assign login response fields from query data
-                Response.UserId = queryReader.GetInt32(0);
-                Response.Username = queryReader.GetString(1);
-                Response.IsActive = queryReader.GetBoolean(3);
-                Response.CreateDate = queryReader.GetDateTime(4);
-                Response.CreatedBy = queryReader.GetString(5);
-                Response.LastUpdate = queryReader.GetDateTime(6);
-                Response.LastUpdateBy = queryReader.GetString(7);
-
-                queryReader.Close();
-
-                // close connection
-                this.Database.DisconnectFromDatabase();
-
-                return Response;
-            }
-            else
-            {
-                
-                // close connection
-                this.Database.DisconnectFromDatabase();
-
-                queryReader.Close();
-                return null;
-                
-            }
-
-            
-
         }
 
     }

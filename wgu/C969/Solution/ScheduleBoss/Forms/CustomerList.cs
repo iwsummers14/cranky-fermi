@@ -37,7 +37,7 @@ namespace ScheduleBoss.Forms
             this.Session = sess;
 
             // initialize a data processor
-            this.DataProc = new DataProcessor(this.Database);
+            this.DataProc = new DataProcessor(this.Database, this.Logger);
 
             // set up datatable for binding source on grid view
             this.Customers = this.DataProc.GetAllTableValues(DatabaseEntries.Customer);
@@ -101,7 +101,7 @@ namespace ScheduleBoss.Forms
             if (dgv_Customers.SelectedRows.Count > 0)
             {
 
-                // this code does not work
+                // cast the selected row as a DataRowView and extract the row from it
                 DataRow row = ((DataRowView)dgv_Customers.CurrentRow.DataBoundItem).Row;
                 int custId = int.Parse(row[0].ToString());
                 int addrId = int.Parse(row[2].ToString());
@@ -129,6 +129,61 @@ namespace ScheduleBoss.Forms
         private void btn_Delete_Click(object sender, EventArgs e)
         {
 
+            // if a row was selected, get the underlying object to modify
+            if (dgv_Customers.SelectedRows.Count > 0)
+            {
+
+                // cast the selected row as a DataRowView and extract the row from it
+                DataRow row = ((DataRowView)dgv_Customers.CurrentRow.DataBoundItem).Row;
+                int custId = int.Parse(row[0].ToString());
+                int addrId = int.Parse(row[2].ToString());
+
+                Customer Cust = this.DataProc.GetRecordById(custId, DatabaseEntries.Customer) as Customer;
+                CustomerAddress Addr = this.DataProc.GetRecordById(addrId, DatabaseEntries.Address) as CustomerAddress;
+
+                DialogResult DeleteConfirmation = MessageBox.Show($"Are you sure you wish to delete the customer {Cust.customerName}?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                
+                if (DeleteConfirmation == DialogResult.Yes)
+                {
+                    // delete the address and customer records
+                    bool custDeleted = this.DataProc.DeleteRecord(Cust.customerId, DatabaseEntries.Customer);
+                    bool addrDeleted = this.DataProc.DeleteRecord(Addr.addressId, DatabaseEntries.Address);
+                    
+                    // show confirmation if everything was successful and log it, otherwise direct the user to the logs if an error occurred.  
+                    if (addrDeleted == true && custDeleted == true)
+                    {
+                        MessageBox.Show($"Customer {Cust.customerName} has been deleted from the system.", "Customer deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Deleted customer record {Cust.customerId}");
+                        this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Deleted address record {Addr.addressId}");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Customer {Cust.customerName} was not fully deleted from the system. Please review the logs for more information.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+
+                    // refresh datatable for binding source on grid view 
+                    this.Customers = this.DataProc.GetAllTableValues(DatabaseEntries.Customer);
+                    this.ViewSource.DataSource = this.Customers;
+                    dgv_Customers.Refresh();
+
+                }
+
+                else
+                {
+                    return;
+                }
+
+            }
+
+            // do nothing if nothing was selected
+            else
+            {
+
+                return;
+
+            }
+
+            
         }
 
         private void btn_Cancel_Click(object sender, EventArgs e)
@@ -138,10 +193,9 @@ namespace ScheduleBoss.Forms
 
         private void ModCust_FormClosed(object sender, FormClosedEventArgs e) 
         {
-            // refresh datatable for binding source on grid view - DOESNT WORK
+            // refresh datatable for binding source on grid view
             this.Customers = this.DataProc.GetAllTableValues(DatabaseEntries.Customer);
             this.ViewSource.DataSource = this.Customers;
-//            this.ViewSource.ResetBindings(false);
             dgv_Customers.Refresh();
         }
        
