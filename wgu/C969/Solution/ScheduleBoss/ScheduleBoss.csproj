@@ -56,9 +56,17 @@
     <Compile Include="Classes\DataModels\CustomerCity.cs" />
     <Compile Include="Classes\DataModels\CustomerCountry.cs" />
     <Compile Include="Classes\DatabaseConnection.cs" />
+    <Compile Include="Classes\DataProcessor.cs" />
     <Compile Include="Classes\EventLogger.cs" />
     <Compile Include="Classes\LoginResponse.cs" />
     <Compile Include="Classes\UserSession.cs" />
+    <Compile Include="Enums\DatabaseEntries.cs" />
+    <Compile Include="Forms\CustomerList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CustomerList.Designer.cs">
+      <DependentUpon>CustomerList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +78,12 @@
     </Compile>
     <Compile Include="Forms\NewAppointment.Designer.cs">
       <DependentUpon>NewAppointment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModifyCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModifyCustomer.Designer.cs">
+      <DependentUpon>ModifyCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\NewCustomer.cs">
       <SubType>Form</SubType>
@@ -85,6 +99,15 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\CustomerList.resx">
+      <DependentUpon>CustomerList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NewAppointment.resx">
+      <DependentUpon>NewAppointment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModifyCustomer.resx">
+      <DependentUpon>ModifyCustomer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewCustomer.resx">
       <DependentUpon>NewCustomer.cs</DependentUpon>
     </EmbeddedResource>
@@ -127,8 +150,27 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configuration\" />
-    <Folder Include="Enums\" />
-    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\account_box_fill.ico" />
+    <Content Include="Resources\account_circle_fill.ico" />
+    <Content Include="Resources\alarm_fill.ico" />
+    <Content Include="Resources\building_fill.ico" />
+    <Content Include="Resources\calendar_2_fill.ico" />
+    <Content Include="Resources\calendar_event_fill.ico" />
+    <Content Include="Resources\calendar_event_line.ico" />
+    <Content Include="Resources\calendar_fill.ico" />
+    <Content Include="Resources\computer-fill.svg" />
+    <Content Include="Resources\contacts_book_2_fill.ico" />
+    <Content Include="Resources\contacts_book_fill.ico" />
+    <Content Include="Resources\contacts_fill.ico" />
+    <Content Include="Resources\phone_fill.ico" />
+    <Content Include="Resources\question_fill.ico" />
+    <Content Include="Resources\team_fill.ico" />
+    <Content Include="Resources\time_fill.ico" />
+    <Content Include="Resources\user_3_fill.ico" />
+    <Content Include="Resources\user_add_fill.ico" />
+    <Content Include="Resources\windows_fill.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

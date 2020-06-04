@@ -22,31 +22,50 @@ namespace ScheduleBoss
 
         public DatabaseConnection Database { get; set; }
 
+        public EventLogger Logger { get; set; }
+
+        public DataProcessor DataProc { get; set; }
+
+        public CultureInfo CurrentCulture { get; set; }
+
+        public DataTable WeekAppointments { get; set; }
+
+        public BindingSource WeekViewSource { get; set; } = new BindingSource();
+
+        public DataTable MonthAppointments { get; set; }
+
+        public BindingSource MonthViewSource { get; set; } = new BindingSource();
+
         public MainWindow()
         {
             InitializeComponent();
 
             // establish a database connection
             this.Database = new DatabaseConnection();
-            var connected = Database.ConnectToDatabase();
 
             // establish a logger
-            EventLogger Logger = new EventLogger(".\\UserAuth.log");
-            Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Application started");
+            this.Logger = new EventLogger(".\\UserAuth.log");
+            this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Application started");
+
+            // initialize a data processor
+            this.DataProc = new DataProcessor(this.Database, this.Logger);
 
             // get the current culture of the user's system
-            CultureInfo CurrentCulture = Thread.CurrentThread.CurrentCulture; 
-
-            // launch the user login form using the culture information and database connection,
-            // with an event handler to deal with the login status
-            UserLogin LoginPrompt = new Forms.UserLogin(CurrentCulture, Database, ref Logger );
-            LoginPrompt.FormClosed += new FormClosedEventHandler(LoginPrompt_FormClosed);
-            LoginPrompt.Show();
+            this.CurrentCulture = Thread.CurrentThread.CurrentCulture; 
+           
             
-                        
         }
 
-        
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            // launch the user login form using the culture information and database connection,
+            // with an event handler to deal with the login status
+            UserLogin LoginPrompt = new Forms.UserLogin(this.CurrentCulture, this.Database, this.Logger);
+            LoginPrompt.FormClosed += new FormClosedEventHandler(LoginPrompt_FormClosed);
+            LoginPrompt.Show();
+
+        }
+
 
         private void btn_AddAppointment_Click(object sender, EventArgs e)
         {
@@ -64,17 +83,21 @@ namespace ScheduleBoss
 
         private void btn_AddCustomer_Click(object sender, EventArgs e)
         {
+            NewCustomer NewCust = new NewCustomer( this.Database, this.Logger, this.Session );
+            NewCust.FormClosed += new FormClosedEventHandler(Cust_FormClosed);
+            NewCust.Show();
 
         }
 
         private void btn_ModifyCustomer_Click(object sender, EventArgs e)
         {
-
+            CustomerList CustList = new CustomerList(this.Database, this.Logger, this.Session);
+            CustList.Show();
         }
 
         private void btn_Logout_Click(object sender, EventArgs e)
         {
-            this.Database.DisconnectFromDatabase();
+            //this.Database.DisconnectFromDatabase();
             this.Close();
         }
 
@@ -105,6 +128,18 @@ namespace ScheduleBoss
                 // set status bar text
                 this.toolStripSessionLabel.Text = $"User: {this.Session.UserLoginInfo.Username} | Login Time: {this.Session.UserLoginTime.ToString()} | Current Time Zone: {this.Session.UserTimeZone.StandardName}";
 
+                // get the appointments for next 7 and next 30 days
+                DateTime FilterStart = DateTime.Now;
+                DateTime WeekFilterEnd = DateTime.Now.AddDays(7);
+                DateTime MonthFilterEnd = DateTime.Now.AddDays(31);
+
+                this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.Username, FilterStart, WeekFilterEnd);
+
+                // set data binding on gridview
+                this.WeekViewSource.DataSource = this.WeekAppointments;
+                dataGridWeek.DataSource = this.WeekViewSource;
+
+
             }
             else
             {
@@ -118,6 +153,13 @@ namespace ScheduleBoss
         {
 
         }
+
+        private void Cust_FormClosed(object sender, FormClosedEventArgs e)
+        {
+
+        }
+
+        
 
         // END FORM CLOSE EVENT HANDLERS
 

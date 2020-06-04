@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.btn_AddAppointment = new System.Windows.Forms.Button();
             this.btn_ModifyAppointment = new System.Windows.Forms.Button();
             this.btn_AddCustomer = new System.Windows.Forms.Button();
@@ -165,7 +166,7 @@
             this.panel2.Controls.Add(this.btn_ModifyCustomer);
             this.panel2.Location = new System.Drawing.Point(1101, 250);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(180, 182);
+            this.panel2.Size = new System.Drawing.Size(180, 202);
             this.panel2.TabIndex = 8;
             // 
             // lbl_Contacts
@@ -248,9 +249,11 @@
             this.Controls.Add(this.tabControl1);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SCHEDULE BOSS - Home";
+            this.Load += new System.EventHandler(this.MainWindow_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabThisWeek.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWeek)).EndInit();
