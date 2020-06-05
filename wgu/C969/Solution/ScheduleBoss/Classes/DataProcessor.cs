@@ -166,6 +166,11 @@ namespace ScheduleBoss.Classes
                     query.CommandText = "SELECT * FROM customer";
                     break;
 
+                // special case to not select passwords for the user table 
+                case DatabaseEntries.User:
+                    query.CommandText = "SELECT userId, username, active, createDate, createdBy, lastUpdate, lastUpdateBy FROM user";
+                    break;
+
             }
 
             // execute the query 

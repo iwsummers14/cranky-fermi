@@ -69,7 +69,7 @@ namespace ScheduleBoss
 
         private void btn_AddAppointment_Click(object sender, EventArgs e)
         {
-            Form NewAppt = new NewAppointment();
+            Form NewAppt = new NewAppointment(this.Database, this.Logger, this.Session);
             NewAppt.FormClosed += new FormClosedEventHandler(Appt_FormClosed);
             NewAppt.Show();
         }
