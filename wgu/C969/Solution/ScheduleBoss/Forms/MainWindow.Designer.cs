@@ -33,7 +33,7 @@
             this.btn_ModifyAppointment = new System.Windows.Forms.Button();
             this.btn_AddCustomer = new System.Windows.Forms.Button();
             this.btn_ModifyCustomer = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControlAppts = new System.Windows.Forms.TabControl();
             this.tabThisWeek = new System.Windows.Forms.TabPage();
             this.dataGridWeek = new System.Windows.Forms.DataGridView();
             this.tabThisMonth = new System.Windows.Forms.TabPage();
@@ -47,13 +47,16 @@
             this.toolStripSessionLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.lbl_Exit = new System.Windows.Forms.Label();
-            this.tabControl1.SuspendLayout();
+            this.dataGridMonth = new System.Windows.Forms.DataGridView();
+            this.tabControlAppts.SuspendLayout();
             this.tabThisWeek.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWeek)).BeginInit();
+            this.tabThisMonth.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridMonth)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_AddAppointment
@@ -100,15 +103,15 @@
             this.btn_ModifyCustomer.UseVisualStyleBackColor = true;
             this.btn_ModifyCustomer.Click += new System.EventHandler(this.btn_ModifyCustomer_Click);
             // 
-            // tabControl1
+            // tabControlAppts
             // 
-            this.tabControl1.Controls.Add(this.tabThisWeek);
-            this.tabControl1.Controls.Add(this.tabThisMonth);
-            this.tabControl1.Location = new System.Drawing.Point(20, 81);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1076, 621);
-            this.tabControl1.TabIndex = 5;
+            this.tabControlAppts.Controls.Add(this.tabThisWeek);
+            this.tabControlAppts.Controls.Add(this.tabThisMonth);
+            this.tabControlAppts.Location = new System.Drawing.Point(20, 81);
+            this.tabControlAppts.Name = "tabControlAppts";
+            this.tabControlAppts.SelectedIndex = 0;
+            this.tabControlAppts.Size = new System.Drawing.Size(1305, 621);
+            this.tabControlAppts.TabIndex = 5;
             // 
             // tabThisWeek
             // 
@@ -116,7 +119,7 @@
             this.tabThisWeek.Location = new System.Drawing.Point(4, 22);
             this.tabThisWeek.Name = "tabThisWeek";
             this.tabThisWeek.Padding = new System.Windows.Forms.Padding(3);
-            this.tabThisWeek.Size = new System.Drawing.Size(1068, 595);
+            this.tabThisWeek.Size = new System.Drawing.Size(1297, 595);
             this.tabThisWeek.TabIndex = 0;
             this.tabThisWeek.Text = "This Week";
             this.tabThisWeek.UseVisualStyleBackColor = true;
@@ -126,15 +129,16 @@
             this.dataGridWeek.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridWeek.Location = new System.Drawing.Point(6, 6);
             this.dataGridWeek.Name = "dataGridWeek";
-            this.dataGridWeek.Size = new System.Drawing.Size(1056, 583);
+            this.dataGridWeek.Size = new System.Drawing.Size(1285, 583);
             this.dataGridWeek.TabIndex = 0;
             // 
             // tabThisMonth
             // 
+            this.tabThisMonth.Controls.Add(this.dataGridMonth);
             this.tabThisMonth.Location = new System.Drawing.Point(4, 22);
             this.tabThisMonth.Name = "tabThisMonth";
             this.tabThisMonth.Padding = new System.Windows.Forms.Padding(3);
-            this.tabThisMonth.Size = new System.Drawing.Size(1068, 595);
+            this.tabThisMonth.Size = new System.Drawing.Size(1297, 595);
             this.tabThisMonth.TabIndex = 1;
             this.tabThisMonth.Text = "This Month";
             this.tabThisMonth.UseVisualStyleBackColor = true;
@@ -154,7 +158,7 @@
             this.panel1.Controls.Add(this.btn_ModifyAppointment);
             this.panel1.Controls.Add(this.label_Appointments);
             this.panel1.Controls.Add(this.btn_AddAppointment);
-            this.panel1.Location = new System.Drawing.Point(1101, 103);
+            this.panel1.Location = new System.Drawing.Point(1346, 103);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(180, 141);
             this.panel1.TabIndex = 7;
@@ -164,7 +168,7 @@
             this.panel2.Controls.Add(this.lbl_Contacts);
             this.panel2.Controls.Add(this.btn_AddCustomer);
             this.panel2.Controls.Add(this.btn_ModifyCustomer);
-            this.panel2.Location = new System.Drawing.Point(1101, 250);
+            this.panel2.Location = new System.Drawing.Point(1346, 250);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(180, 202);
             this.panel2.TabIndex = 8;
@@ -206,7 +210,7 @@
             this.toolStripSessionLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 703);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1304, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1538, 22);
             this.statusStrip1.SizingGrip = false;
             this.statusStrip1.TabIndex = 11;
             this.statusStrip1.Text = "statusStrip1";
@@ -221,7 +225,7 @@
             // 
             this.panel3.Controls.Add(this.lbl_Exit);
             this.panel3.Controls.Add(this.btn_Logout);
-            this.panel3.Location = new System.Drawing.Point(1098, 608);
+            this.panel3.Location = new System.Drawing.Point(1346, 608);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(180, 84);
             this.panel3.TabIndex = 12;
@@ -236,17 +240,25 @@
             this.lbl_Exit.TabIndex = 8;
             this.lbl_Exit.Text = "Exit";
             // 
+            // dataGridMonth
+            // 
+            this.dataGridMonth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridMonth.Location = new System.Drawing.Point(6, 6);
+            this.dataGridMonth.Name = "dataGridMonth";
+            this.dataGridMonth.Size = new System.Drawing.Size(1285, 583);
+            this.dataGridMonth.TabIndex = 1;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1304, 725);
+            this.ClientSize = new System.Drawing.Size(1538, 725);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControlAppts);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -254,9 +266,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SCHEDULE BOSS - Home";
             this.Load += new System.EventHandler(this.MainWindow_Load);
-            this.tabControl1.ResumeLayout(false);
+            this.tabControlAppts.ResumeLayout(false);
             this.tabThisWeek.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWeek)).EndInit();
+            this.tabThisMonth.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -265,6 +278,7 @@
             this.statusStrip1.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridMonth)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -276,7 +290,7 @@
         private System.Windows.Forms.Button btn_ModifyAppointment;
         private System.Windows.Forms.Button btn_AddCustomer;
         private System.Windows.Forms.Button btn_ModifyCustomer;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControlAppts;
         private System.Windows.Forms.TabPage tabThisWeek;
         private System.Windows.Forms.DataGridView dataGridWeek;
         private System.Windows.Forms.TabPage tabThisMonth;
@@ -290,6 +304,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripSessionLabel;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label lbl_Exit;
+        private System.Windows.Forms.DataGridView dataGridMonth;
     }
 }
 

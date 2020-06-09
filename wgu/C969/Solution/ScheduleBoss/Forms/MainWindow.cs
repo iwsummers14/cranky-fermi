@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Threading;
 using ScheduleBoss.Classes;
 using ScheduleBoss.Forms;
+using ScheduleBoss.Enums;
 
 
 namespace ScheduleBoss
@@ -27,6 +28,10 @@ namespace ScheduleBoss
         public DataProcessor DataProc { get; set; }
 
         public CultureInfo CurrentCulture { get; set; }
+
+        public DataTable Customers { get; set; }
+
+        public DataTable Users { get; set; }
 
         public DataTable WeekAppointments { get; set; }
 
@@ -128,17 +133,135 @@ namespace ScheduleBoss
                 // set status bar text
                 this.toolStripSessionLabel.Text = $"User: {this.Session.UserLoginInfo.Username} | Login Time: {this.Session.UserLoginTime.ToString()} | Current Time Zone: {this.Session.UserTimeZone.StandardName}";
 
+                // get user and customer datatables
+                this.Customers = DataProc.GetAllTableValues(DatabaseEntries.Customer);
+                this.Users = DataProc.GetAllTableValues(DatabaseEntries.User);
+
                 // get the appointments for next 7 and next 30 days
-                DateTime FilterStart = DateTime.Now;
-                DateTime WeekFilterEnd = DateTime.Now.AddDays(7);
-                DateTime MonthFilterEnd = DateTime.Now.AddDays(31);
+                DateTime FilterStart = Session.ConvertDateTimeToUtc(DateTime.Now);
+                DateTime WeekFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(7));
+                DateTime MonthFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(31));
 
                 this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.Username, FilterStart, WeekFilterEnd);
+                this.MonthAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.Username, FilterStart, MonthFilterEnd);
 
-                // set data binding on gridview
+
+
+                /* create a dataset - this may need to be a new function in DataProcessor
+                DataSet GridViewDataSetWeek = new DataSet();
+                GridViewDataSetWeek.Tables.AddRange(this.Customers, this.Users, this.WeekAppointments);
+
+                var DataTableWeek =
+                    from rows in GridViewDataSetWeek.Tables["appointment"].AsEnumerable()
+                    join rows2 in GridViewDataSetWeek.Tables["customer"].AsEnumerable()
+                    on rows.Field<int>("customerId") equals rows2.Field<int>("customerId") into jointable
+                    from joinedrows in jointable.DefaultIfEmpty()
+                    select tableResult.LoadDataRow(new object[] 
+                    {
+                        
+                    
+                    });
+                */
+
+
+                // set data binding on gridviews
                 this.WeekViewSource.DataSource = this.WeekAppointments;
                 dataGridWeek.DataSource = this.WeekViewSource;
 
+                this.MonthViewSource.DataSource = this.MonthAppointments;
+                dataGridMonth.DataSource = this.MonthViewSource;
+
+                // set gridview display options
+
+                // set gridview options for both views - lambda expressions used to reduce repetitive code.
+                // first lambda is for the tab pages in the tab control; this adds the DataGridViews to the global list
+                var TabPages = tabControlAppts.TabPages.OfType<TabPage>().ToList();
+                var DataGridList = new List<DataGridView>();
+
+                // add all DataGridView controls to the global list
+                TabPages.ForEach(
+                        p => DataGridList.AddRange(
+                            p.Controls.OfType<DataGridView>()
+                        )
+                    );
+                
+                // second lambda sets the same options across both gridviews since they have the same data but for different ranges
+                // set standard options on all datagrid views for this form
+                DataGridList.ForEach( 
+                    v => {
+                        // set options
+                        v.RowHeadersVisible = false;
+                        v.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                        v.AllowUserToAddRows = false;
+                        v.AllowUserToDeleteRows = false;
+                        v.AllowUserToResizeRows = false;
+                        v.AllowUserToOrderColumns = false;
+                        v.EditMode = DataGridViewEditMode.EditProgrammatically;
+                        v.MultiSelect = false;
+                        
+                        // set column display options
+                        v.Columns["appointmentId"].HeaderText = "Appointment ID";
+                        v.Columns["appointmentId"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["appointmentId"].DisplayIndex = 0;
+                        
+                        v.Columns["customerId"].HeaderText = "Customer ID";
+                        v.Columns["customerId"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["customerId"].DisplayIndex = 1;
+
+                        v.Columns["userId"].HeaderText = "User ID";
+                        v.Columns["userId"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["userId"].DisplayIndex = 2;
+
+                        v.Columns["title"].HeaderText = "Title";
+                        v.Columns["title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        v.Columns["title"].DisplayIndex = 3;
+
+                        v.Columns["description"].HeaderText = "Description";
+                        v.Columns["description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["description"].DisplayIndex = 4;
+
+                        v.Columns["location"].HeaderText = "Location";
+                        v.Columns["location"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["location"].DisplayIndex = 5;
+
+                        v.Columns["contact"].HeaderText = "Contact";
+                        v.Columns["contact"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["contact"].DisplayIndex = 6;
+
+                        v.Columns["type"].HeaderText = "Type";
+                        v.Columns["type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["type"].DisplayIndex = 7;
+
+                        v.Columns["url"].HeaderText = "URL";
+                        v.Columns["url"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["url"].DisplayIndex = 8;
+
+                        v.Columns["start"].HeaderText = "Starts";
+                        v.Columns["start"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["start"].DisplayIndex = 9;
+
+                        v.Columns["end"].HeaderText = "Ends";
+                        v.Columns["end"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["end"].DisplayIndex = 10;
+
+                        v.Columns["createDate"].HeaderText = "Create Date";
+                        v.Columns["createDate"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["createDate"].DisplayIndex = 11;
+
+                        v.Columns["createdBy"].HeaderText = "Created By";
+                        v.Columns["createdBy"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["createdBy"].DisplayIndex = 12;
+
+                        v.Columns["lastUpdate"].HeaderText = "Last Update";
+                        v.Columns["lastUpdate"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["lastUpdate"].DisplayIndex = 13;
+
+                        v.Columns["lastUpdateBy"].HeaderText = "Updated By";
+                        v.Columns["lastUpdateBy"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        v.Columns["lastUpdateBy"].DisplayIndex = 14;
+                    }
+                );
+               
 
             }
             else
