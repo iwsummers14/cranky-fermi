@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MySql.Data.MySqlClient;
 using ScheduleBoss.Enums;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using System.ComponentModel;
+using System;
 using System.Data;
 
 namespace ScheduleBoss.Classes
@@ -198,7 +192,11 @@ namespace ScheduleBoss.Classes
             // create the query
             MySqlCommand query = this.Database.SqlConnection.CreateCommand();
 
-            query.CommandText = "SELECT * FROM appointment WHERE start >= @filterStartDate AND start <= @filterEndDate";
+            string queryTmp = "SELECT a.appointmentId, c.customerName, a.title, a.description, a.location, a.contact, a.type, a.url, a.start, a.end";
+            queryTmp += " FROM appointment a INNER JOIN customer c ON a.customerId = c.customerId";
+            queryTmp += " WHERE start >= @filterStartDate AND start <= @filterEndDate";
+
+            query.CommandText = queryTmp;
             query.Parameters.AddWithValue("@filterStartDate", filterStartDate);
             query.Parameters.AddWithValue("@filterEndDate", filterEndDate);
 
@@ -209,7 +207,7 @@ namespace ScheduleBoss.Classes
                 dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
                 dataAdapter.Fill(AllRecords);
             }
-
+                       
             // close connection
             this.Database.DisconnectFromDatabase();
 

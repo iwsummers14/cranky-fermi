@@ -21,9 +21,9 @@ namespace ScheduleBoss.Classes
 
         public LoginResponse UserLoginInfo { get; set; }
 
-        public DateTime WorkDayStart { get; private set; }
+        public TimeSpan WorkDayStart { get; private set; }
 
-        public DateTime WorkDayEnd { get; private set; }
+        public TimeSpan WorkDayEnd { get; private set; }
 
         public List<string> WorkDays { get; private set; }
 
@@ -41,8 +41,8 @@ namespace ScheduleBoss.Classes
             this.WorkDays = AppSettings["WorkDays"].Split(',').ToList<string>();
             
             // read workday information in from app.config
-            this.WorkDayStart = DateTime.Parse(AppSettings["WorkDayStart"]);
-            this.WorkDayEnd = DateTime.Parse(AppSettings["WorkDayEnd"]);
+            this.WorkDayStart = TimeSpan.Parse(AppSettings["WorkDayStart"]);
+            this.WorkDayEnd = TimeSpan.Parse(AppSettings["WorkDayEnd"]);
                 
         }
         

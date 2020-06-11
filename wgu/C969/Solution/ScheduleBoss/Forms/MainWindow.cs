@@ -29,10 +29,6 @@ namespace ScheduleBoss
 
         public CultureInfo CurrentCulture { get; set; }
 
-        public DataTable Customers { get; set; }
-
-        public DataTable Users { get; set; }
-
         public DataTable WeekAppointments { get; set; }
 
         public BindingSource WeekViewSource { get; set; } = new BindingSource();
@@ -81,9 +77,41 @@ namespace ScheduleBoss
 
         private void btn_ModifyAppointment_Click(object sender, EventArgs e)
         {
-           // Form ModAppt = new ModifyAppointment();
-           // ModAppt.FormClosed += new FormClosedEventHandler(Appt_FormClosed);
-           // ModAppt.Show();
+            // Form ModAppt = new ModifyAppointment();
+            // ModAppt.FormClosed += new FormClosedEventHandler(Appt_FormClosed);
+            // ModAppt.Show();
+
+            /*
+            
+            // if a row was selected, get the underlying object to modify
+            if (dgv_Customers.SelectedRows.Count > 0)
+            {
+
+                // cast the selected row as a DataRowView and extract the row from it
+                DataRow row = ((DataRowView)dgv_Customers.CurrentRow.DataBoundItem).Row;
+                int custId = int.Parse(row[0].ToString());
+                int addrId = int.Parse(row[2].ToString());
+
+                Customer Cust = this.DataProc.GetRecordById(custId, DatabaseEntries.Customer) as Customer;    
+                CustomerAddress Addr = this.DataProc.GetRecordById(addrId, DatabaseEntries.Address) as CustomerAddress;
+
+                // create an instance of the form and display it
+                ModifyCustomer ModCust = new ModifyCustomer(this.Database, this.Logger, this.Session, Cust, Addr);
+                ModCust.FormClosed += new FormClosedEventHandler(ModCust_FormClosed);
+                ModCust.Show();
+               
+                  
+            } 
+
+            // do nothing if nothing was selected
+            else
+            {
+
+                return;
+
+            }
+             * 
+             */
         }
 
         private void btn_AddCustomer_Click(object sender, EventArgs e)
@@ -133,10 +161,6 @@ namespace ScheduleBoss
                 // set status bar text
                 this.toolStripSessionLabel.Text = $"User: {this.Session.UserLoginInfo.Username} | Login Time: {this.Session.UserLoginTime.ToString()} | Current Time Zone: {this.Session.UserTimeZone.StandardName}";
 
-                // get user and customer datatables
-                this.Customers = DataProc.GetAllTableValues(DatabaseEntries.Customer);
-                this.Users = DataProc.GetAllTableValues(DatabaseEntries.User);
-
                 // get the appointments for next 7 and next 30 days
                 DateTime FilterStart = Session.ConvertDateTimeToUtc(DateTime.Now);
                 DateTime WeekFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(7));
@@ -144,24 +168,6 @@ namespace ScheduleBoss
 
                 this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.Username, FilterStart, WeekFilterEnd);
                 this.MonthAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.Username, FilterStart, MonthFilterEnd);
-
-
-
-                /* create a dataset - this may need to be a new function in DataProcessor
-                DataSet GridViewDataSetWeek = new DataSet();
-                GridViewDataSetWeek.Tables.AddRange(this.Customers, this.Users, this.WeekAppointments);
-
-                var DataTableWeek =
-                    from rows in GridViewDataSetWeek.Tables["appointment"].AsEnumerable()
-                    join rows2 in GridViewDataSetWeek.Tables["customer"].AsEnumerable()
-                    on rows.Field<int>("customerId") equals rows2.Field<int>("customerId") into jointable
-                    from joinedrows in jointable.DefaultIfEmpty()
-                    select tableResult.LoadDataRow(new object[] 
-                    {
-                        
-                    
-                    });
-                */
 
 
                 // set data binding on gridviews
@@ -198,67 +204,43 @@ namespace ScheduleBoss
                         v.AllowUserToOrderColumns = false;
                         v.EditMode = DataGridViewEditMode.EditProgrammatically;
                         v.MultiSelect = false;
-                        
-                        // set column display options
-                        v.Columns["appointmentId"].HeaderText = "Appointment ID";
-                        v.Columns["appointmentId"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
+                        // set DataGridView display options
+                        v.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+                        v.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                        v.EnableHeadersVisualStyles = true;
+
+                        v.Columns["appointmentId"].HeaderText = "ID";
                         v.Columns["appointmentId"].DisplayIndex = 0;
                         
-                        v.Columns["customerId"].HeaderText = "Customer ID";
-                        v.Columns["customerId"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        v.Columns["customerId"].DisplayIndex = 1;
-
-                        v.Columns["userId"].HeaderText = "User ID";
-                        v.Columns["userId"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        v.Columns["userId"].DisplayIndex = 2;
-
+                        v.Columns["customerName"].HeaderText = "Meeting With";
+                        v.Columns["customerName"].DisplayIndex = 1;
+                                                
                         v.Columns["title"].HeaderText = "Title";
-                        v.Columns["title"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                        v.Columns["title"].DisplayIndex = 3;
+                        v.Columns["title"].DisplayIndex = 2;
 
                         v.Columns["description"].HeaderText = "Description";
-                        v.Columns["description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        v.Columns["description"].DisplayIndex = 4;
+                        v.Columns["description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        v.Columns["description"].DisplayIndex = 3;
 
                         v.Columns["location"].HeaderText = "Location";
-                        v.Columns["location"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        v.Columns["location"].DisplayIndex = 5;
+                        v.Columns["location"].DisplayIndex = 4;
 
                         v.Columns["contact"].HeaderText = "Contact";
-                        v.Columns["contact"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        v.Columns["contact"].DisplayIndex = 6;
+                        v.Columns["contact"].DisplayIndex = 5;
 
                         v.Columns["type"].HeaderText = "Type";
-                        v.Columns["type"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        v.Columns["type"].DisplayIndex = 7;
+                        v.Columns["type"].DisplayIndex = 6;
 
                         v.Columns["url"].HeaderText = "URL";
-                        v.Columns["url"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        v.Columns["url"].DisplayIndex = 8;
+                        v.Columns["url"].DisplayIndex = 7;
 
                         v.Columns["start"].HeaderText = "Starts";
-                        v.Columns["start"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        v.Columns["start"].DisplayIndex = 9;
+                        v.Columns["start"].DisplayIndex = 8;
 
                         v.Columns["end"].HeaderText = "Ends";
-                        v.Columns["end"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        v.Columns["end"].DisplayIndex = 10;
+                        v.Columns["end"].DisplayIndex = 9;
 
-                        v.Columns["createDate"].HeaderText = "Create Date";
-                        v.Columns["createDate"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        v.Columns["createDate"].DisplayIndex = 11;
-
-                        v.Columns["createdBy"].HeaderText = "Created By";
-                        v.Columns["createdBy"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        v.Columns["createdBy"].DisplayIndex = 12;
-
-                        v.Columns["lastUpdate"].HeaderText = "Last Update";
-                        v.Columns["lastUpdate"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        v.Columns["lastUpdate"].DisplayIndex = 13;
-
-                        v.Columns["lastUpdateBy"].HeaderText = "Updated By";
-                        v.Columns["lastUpdateBy"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        v.Columns["lastUpdateBy"].DisplayIndex = 14;
                     }
                 );
                
@@ -274,7 +256,24 @@ namespace ScheduleBoss
 
         private void Appt_FormClosed(object sender, FormClosedEventArgs e)
         {
+            // refresh the appointments for next 7 and next 30 days
+            DateTime FilterStart = Session.ConvertDateTimeToUtc(DateTime.Now);
+            DateTime WeekFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(7));
+            DateTime MonthFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(31));
 
+            this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.Username, FilterStart, WeekFilterEnd);
+            this.MonthAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.Username, FilterStart, MonthFilterEnd);
+
+            // reset data binding on gridviews
+            this.WeekViewSource.DataSource = this.WeekAppointments;
+            dataGridWeek.DataSource = this.WeekViewSource;
+
+            this.MonthViewSource.DataSource = this.MonthAppointments;
+            dataGridMonth.DataSource = this.MonthViewSource;
+
+            // refresh the controls
+            dataGridWeek.Refresh();
+            dataGridMonth.Refresh();
         }
 
         private void Cust_FormClosed(object sender, FormClosedEventArgs e)
@@ -282,7 +281,25 @@ namespace ScheduleBoss
 
         }
 
-        
+        private void dataGridWeek_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.Value is DateTime)
+            {
+                DateTime CellValue = (DateTime)e.Value;
+                e.Value = this.Session.ConvertDateTimeFromUtc(CellValue);
+            }
+        }
+
+        private void dataGridMonth_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.Value is DateTime)
+            {
+                DateTime CellValue = (DateTime)e.Value;
+                e.Value = this.Session.ConvertDateTimeFromUtc(CellValue);
+            }
+        }
+
+
 
         // END FORM CLOSE EVENT HANDLERS
 

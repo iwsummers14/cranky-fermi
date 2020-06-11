@@ -476,3 +476,70 @@ Parameter name: Postal Code
 6/8/2020 10:11:37 PM [INFO] Application started
 6/8/2020 10:11:37 PM [INFO] Processing user login
 6/8/2020 10:11:41 PM [INFO] User test authenticated successfully.
+6/10/2020 4:19:49 PM [INFO] Application started
+6/10/2020 4:19:49 PM [INFO] Processing user login
+6/10/2020 4:19:54 PM [INFO] User test authenticated successfully.
+6/10/2020 8:23:29 PM [INFO] Application started
+6/10/2020 8:23:29 PM [INFO] Processing user login
+6/10/2020 8:23:33 PM [INFO] User test authenticated successfully.
+6/10/2020 8:24:06 PM [INFO] Application started
+6/10/2020 8:24:06 PM [INFO] Processing user login
+6/10/2020 8:24:10 PM [INFO] User test authenticated successfully.
+6/10/2020 8:29:47 PM [INFO] Application started
+6/10/2020 8:29:47 PM [INFO] Processing user login
+6/10/2020 8:29:50 PM [INFO] User test authenticated successfully.
+6/10/2020 8:31:45 PM [INFO] Application started
+6/10/2020 8:31:45 PM [INFO] Processing user login
+6/10/2020 8:31:48 PM [INFO] User test authenticated successfully.
+6/10/2020 8:34:41 PM [INFO] Application started
+6/10/2020 8:34:41 PM [INFO] Processing user login
+6/10/2020 8:35:00 PM [INFO] User test authenticated successfully.
+6/10/2020 8:43:59 PM [INFO] Application started
+6/10/2020 8:43:59 PM [INFO] Processing user login
+6/10/2020 8:44:02 PM [INFO] User test authenticated successfully.
+6/10/2020 8:48:59 PM [INFO] Application started
+6/10/2020 8:48:59 PM [INFO] Processing user login
+6/10/2020 8:49:02 PM [INFO] User test authenticated successfully.
+6/10/2020 8:50:10 PM [INFO] Application started
+6/10/2020 8:50:10 PM [INFO] Processing user login
+6/10/2020 8:50:13 PM [INFO] User test authenticated successfully.
+6/10/2020 8:51:45 PM [INFO] Application started
+6/10/2020 8:51:45 PM [INFO] Processing user login
+6/10/2020 8:51:48 PM [INFO] User test authenticated successfully.
+6/10/2020 9:56:29 PM [INFO] Application started
+6/10/2020 9:56:29 PM [INFO] Processing user login
+6/10/2020 9:56:32 PM [INFO] User test authenticated successfully.
+6/10/2020 9:57:00 PM [ERROR] Input error: All fields must contain an entry. Please enter data in the Description field.
+Parameter name: Description
+6/10/2020 9:57:04 PM [ERROR] Input error: Input in the Location field contains invalid characters. Letters, numbers, commas, periods, parentheses, semicolons, single quotes, and forward slashes are allowed.
+Parameter name: Location
+6/10/2020 9:57:10 PM [ERROR] Input error: Input in the Appointment Title field contains invalid characters. Letters, numbers, commas, periods, parentheses, semicolons, single quotes, and forward slashes are allowed.
+Parameter name: Appointment Title
+6/10/2020 9:57:18 PM [ERROR] Input error: Input in the URL field must start with http:// or https://.
+Parameter name: URL
+6/10/2020 9:57:29 PM [ERROR] Input error: Appointment Start time is outside of normal business hours. Normal business hours are 08:00:00 to 17:00:00.
+Parameter name: Start
+6/10/2020 10:07:43 PM [INFO] Application started
+6/10/2020 10:07:43 PM [INFO] Processing user login
+6/10/2020 10:07:46 PM [INFO] User test authenticated successfully.
+6/10/2020 10:17:17 PM [INFO] Application started
+6/10/2020 10:17:17 PM [INFO] Processing user login
+6/10/2020 10:17:20 PM [INFO] User test authenticated successfully.
+6/10/2020 10:17:27 PM [ERROR] Input error: All fields must contain an entry. Please enter data in the Description field.
+Parameter name: Description
+6/10/2020 10:17:50 PM [ERROR] Input error: Appointment Start Time is outside of normal business hours. Normal business hours are 08:00:00 to 17:00:00.
+Parameter name: Start Time
+6/10/2020 10:17:58 PM [ERROR] Input error: Appointment End Time time is outside of normal business hours. Normal business hours are 08:00:00 to 17:00:00.
+Parameter name: End Time
+6/10/2020 10:18:14 PM [ERROR] Input error: Appointment End Date day is outside of normal work days. Normal work days are System.Collections.Generic.List`1+Enumerator[System.String].
+Parameter name: End Date
+6/10/2020 10:18:19 PM [ERROR] Input error: Appointment Start Date day is outside of normal work days. Normal work days are System.Collections.Generic.List`1+Enumerator[System.String].
+Parameter name: Start Date
+6/10/2020 10:38:48 PM [INFO] Application started
+6/10/2020 10:38:48 PM [INFO] Processing user login
+6/10/2020 10:39:02 PM [INFO] User test authenticated successfully.
+6/10/2020 10:39:41 PM [ERROR] Input error: Input in the URL field must start with http:// or https://.
+Parameter name: URL
+6/10/2020 10:39:46 PM [ERROR] Input error: Appointment Start Time is outside of normal business hours. Normal business hours are 08:00:00 to 17:00:00.
+Parameter name: Start Time
+6/10/2020 10:40:17 PM [INFO] Appointment record inserted with AppointmentId:7

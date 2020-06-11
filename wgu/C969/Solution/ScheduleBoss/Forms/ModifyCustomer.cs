@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using ScheduleBoss.Classes;
+using ScheduleBoss.Enums;
+using System;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using ScheduleBoss.Classes;
-using ScheduleBoss.Enums;
 
 namespace ScheduleBoss.Forms
 {
