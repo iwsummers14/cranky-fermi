@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using ScheduleBoss.Classes;
+using ScheduleBoss.Enums;
+using System;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using ScheduleBoss.Classes;
-using ScheduleBoss.Enums;
 
 namespace ScheduleBoss.Forms
 {
@@ -164,11 +159,11 @@ namespace ScheduleBoss.Forms
                 ModAddr.lastUpdate = DateTime.UtcNow;
 
                 // insert the data - possbily make this async/awaitable
-                bool AddressInsert = this.DataProc.UpdateData(ModAddr, DatabaseEntries.Address);
+                bool AddressUpdate = this.DataProc.UpdateData(ModAddr, DatabaseEntries.Address);
 
-                if (AddressInsert == false)
+                if (AddressUpdate == false)
                 {
-                    //throw exception here
+                    throw new Exception("Error during UPDATE operation on 'address' table. The SQL transaction has been rolled back.");
                 }
 
                 // log the operation
@@ -196,6 +191,11 @@ namespace ScheduleBoss.Forms
                 // insert the data 
                 bool CustUpdate = this.DataProc.UpdateData(ModCust, DatabaseEntries.Customer);
 
+                if (CustUpdate == false)
+                {
+                    throw new Exception("Error during UPDATE operation on 'customer' table. The SQL transaction has been rolled back.");
+                }
+
                 // log the operation
                 this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Customer record updated with CustomerId:{ModCust.customerId.ToString()}");
 
@@ -210,9 +210,11 @@ namespace ScheduleBoss.Forms
                 this.Logger.WriteLog($"{DateTime.Now.ToString()} [ERROR] Input error: {argEx.Message}");
             }
 
-            catch
+            // process general exception
+            catch (Exception ex)
             {
-
+                MessageBox.Show($"An error has occurred while updating customer record. Please consult the log for more information.", "Update error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [ERROR] Operation error: {ex.Message}");
             }
 
         }

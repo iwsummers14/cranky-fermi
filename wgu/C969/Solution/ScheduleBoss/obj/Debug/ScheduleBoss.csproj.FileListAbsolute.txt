@@ -11,9 +11,7 @@ C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleB
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.exe
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.pdb
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.exe.config
-C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.Forms.UserLogin.en-GB.resources
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.Forms.UserLogin.fr-CA.resources
-C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\bin\Debug\en-GB\ScheduleBoss.resources.dll
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\bin\Debug\fr-CA\ScheduleBoss.resources.dll
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\bin\Debug\MySql.Data.dll
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\bin\Debug\MySql.Data.EntityFramework.dll
@@ -33,7 +31,6 @@ C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleB
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\bin\Debug\MySql.Data.xml
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\bin\Debug\MySql.Data.EntityFramework.xml
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\bin\Debug\MySql.Web.xml
-C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\en-GB\ScheduleBoss.resources.dll
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\fr-CA\ScheduleBoss.resources.dll
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.csproj.CopyComplete
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.Forms.NewCustomer.resources
@@ -41,3 +38,4 @@ C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleB
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.csprojAssemblyReference.cache
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.Forms.ModifyCustomer.resources
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.Forms.CustomerList.resources
+C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.Forms.ModifyAppointment.resources

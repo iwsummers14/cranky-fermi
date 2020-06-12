@@ -29,6 +29,8 @@ namespace ScheduleBoss.Forms
 
         public DataProcessor DataProcessor { get; set; }
 
+        public CultureInfo Culture { get; set; } 
+
         public UserLogin(CultureInfo culture, DatabaseConnection DbConn, EventLogger Log)
         {
             InitializeComponent();
@@ -43,8 +45,9 @@ namespace ScheduleBoss.Forms
             // initialize the data processor 
             this.DataProcessor = new DataProcessor(this.Connection, this.Logger);
 
-            // set the current ui culture based on the passed culture info
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(culture.Name);
+            // set the culture property and current ui culture based on the passed culture info
+            this.Culture = culture;
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(this.Culture.Name);
 
             
             
@@ -72,12 +75,26 @@ namespace ScheduleBoss.Forms
                     this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] User {Username} authenticated successfully.");
 
                     // notify the user
-                    MessageBox.Show(
-                       $"User {Username} was authenticated successfully!",
-                       "Authentication successful.",
-                       MessageBoxButtons.OK,
-                       MessageBoxIcon.Information
-                   );
+                    if (this.Culture.Name == "en-US") 
+                    {
+                        MessageBox.Show(
+                           $"User {Username} was authenticated successfully!",
+                           "Authentication success",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Information
+                       );
+                    }
+                    // notify the user
+                    if (this.Culture.Name == "fr-CA")
+                    {
+                        MessageBox.Show(
+                           $"Utilisateur {Username} a été authentifié avec succès",
+                           "Succès de l'authentification",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Information
+                       );
+                    }
+
 
                     // set property and exit
                     this.IsAuthenticated = true;
@@ -88,12 +105,27 @@ namespace ScheduleBoss.Forms
                 else
                 {
                     // notify the user of the failure
-                    MessageBox.Show(
-                       $"The username or password was incorrect. Please check your entries and try again.",
-                       "Authentication failed.",
-                       MessageBoxButtons.OK,
-                       MessageBoxIcon.Warning
-                    );
+                    if (this.Culture.Name == "en-US")
+                    {
+                        MessageBox.Show(
+                           $"The username or password was incorrect. Please check your entries and try again.",
+                           "Authentication failed.",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Warning
+                        );
+                    }
+                    // notify the user
+                    if (this.Culture.Name == "fr-CA")
+                    {
+                        MessageBox.Show(
+                           $"Le nom d'utilisateur ou le mot de passe était incorrect. Veuillez vérifier vos entrées et réessayer.",
+                           "Échec de l'authentification",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Information
+                       );
+                    }
+
+                    
 
                     // log the event
                     this.Logger.WriteLog($"{DateTime.Now.ToString()} [WARN] User {Username} failed to authenticate.");
@@ -109,14 +141,28 @@ namespace ScheduleBoss.Forms
                   
             else
             {
-                
+
                 // display message to user
-                MessageBox.Show(
+                if (this.Culture.Name == "en-US")
+                {
+                    MessageBox.Show(
                        $"You have exceeded the maximum number of attempts. The application will now close.",
                        "Authentication failed.",
                        MessageBoxButtons.OK,
                        MessageBoxIcon.Error
+                    );
+                }
+                // notify the user
+                if (this.Culture.Name == "fr-CA")
+                {
+                    MessageBox.Show(
+                       $"Vous avez dépassé le nombre maximal de tentatives. L'application va maintenant se fermer.",
+                       "Authentification échouée.",
+                       MessageBoxButtons.OK,
+                       MessageBoxIcon.Information
                    );
+                }
+                
 
                 // log that the attempt counter max was reached
                 this.Logger.WriteLog($"{DateTime.Now.ToString()} [ERROR] User {Username} has failed authentication {LoginAttempts.ToString()} times.");

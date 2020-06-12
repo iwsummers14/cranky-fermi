@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Threading;
 using ScheduleBoss.Classes;
 using ScheduleBoss.Forms;
+using ScheduleBoss.Enums;
 
 
 namespace ScheduleBoss
@@ -70,21 +71,56 @@ namespace ScheduleBoss
         private void btn_AddAppointment_Click(object sender, EventArgs e)
         {
             Form NewAppt = new NewAppointment(this.Database, this.Logger, this.Session);
-            NewAppt.FormClosed += new FormClosedEventHandler(Appt_FormClosed);
+            NewAppt.FormClosed += new FormClosedEventHandler(Child_FormClosed);
             NewAppt.Show();
         }
 
         private void btn_ModifyAppointment_Click(object sender, EventArgs e)
         {
-           // Form ModAppt = new ModifyAppointment();
-           // ModAppt.FormClosed += new FormClosedEventHandler(Appt_FormClosed);
-           // ModAppt.Show();
+            
+
+            // get the active DGV from the tab control (using the tab that is selected)
+            // this is a foreach but there is only one DGV per tab.
+            tabControlAppts.SelectedTab.Controls.OfType<DataGridView>().ToList().ForEach(
+                
+                dgv =>
+                {
+                    // if a row was selected, get the underlying object to modify
+                    if (dgv.SelectedRows.Count > 0)
+                    {
+
+                        // cast the selected row as a DataRowView and extract the row from it
+                        DataRow row = ((DataRowView)dgv.CurrentRow.DataBoundItem).Row;
+                        int apptId = int.Parse(row[0].ToString());
+                        
+                        // get the associated record from the database
+                        Appointment Appt = this.DataProc.GetRecordById(apptId, DatabaseEntries.Appointment) as Appointment;
+
+                        // create an instance of the form and display it
+                        Form ModAppt = new ModifyAppointment(this.Database, this.Logger, this.Session, Appt);
+                        ModAppt.FormClosed += new FormClosedEventHandler(Child_FormClosed);
+                        ModAppt.Show();
+
+
+                    }
+
+                    // do nothing if nothing was selected
+                    else
+                    {
+
+                        return;
+
+                    }
+                }
+                
+            );
+
         }
 
         private void btn_AddCustomer_Click(object sender, EventArgs e)
         {
             NewCustomer NewCust = new NewCustomer( this.Database, this.Logger, this.Session );
-            NewCust.FormClosed += new FormClosedEventHandler(Cust_FormClosed);
+            NewCust.FormClosed += new FormClosedEventHandler(Child_FormClosed);
             NewCust.Show();
 
         }
@@ -92,6 +128,7 @@ namespace ScheduleBoss
         private void btn_ModifyCustomer_Click(object sender, EventArgs e)
         {
             CustomerList CustList = new CustomerList(this.Database, this.Logger, this.Session);
+            CustList.FormClosed += new FormClosedEventHandler(Child_FormClosed);
             CustList.Show();
         }
 
@@ -129,16 +166,88 @@ namespace ScheduleBoss
                 this.toolStripSessionLabel.Text = $"User: {this.Session.UserLoginInfo.Username} | Login Time: {this.Session.UserLoginTime.ToString()} | Current Time Zone: {this.Session.UserTimeZone.StandardName}";
 
                 // get the appointments for next 7 and next 30 days
-                DateTime FilterStart = DateTime.Now;
-                DateTime WeekFilterEnd = DateTime.Now.AddDays(7);
-                DateTime MonthFilterEnd = DateTime.Now.AddDays(31);
+                DateTime FilterStart = Session.ConvertDateTimeToUtc(DateTime.Now);
+                DateTime WeekFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(7));
+                DateTime MonthFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(31));
 
-                this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.Username, FilterStart, WeekFilterEnd);
+                this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, FilterStart, WeekFilterEnd);
+                this.MonthAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, FilterStart, MonthFilterEnd);
 
-                // set data binding on gridview
+
+                // set data binding on gridviews
                 this.WeekViewSource.DataSource = this.WeekAppointments;
                 dataGridWeek.DataSource = this.WeekViewSource;
 
+                this.MonthViewSource.DataSource = this.MonthAppointments;
+                dataGridMonth.DataSource = this.MonthViewSource;
+
+                // set gridview display options
+
+                // set gridview options for both views - lambda expressions used to reduce repetitive code.
+                // first lambda is for the tab pages in the tab control; this adds the DataGridViews to the global list
+                var TabPages = tabControlAppts.TabPages.OfType<TabPage>().ToList();
+                var DataGridList = new List<DataGridView>();
+
+                // add all DataGridView controls to the global list
+                TabPages.ForEach(
+                        p => DataGridList.AddRange(
+                            p.Controls.OfType<DataGridView>()
+                        )
+                    );
+                
+                // second lambda sets the same options across both gridviews since they have the same data but for different ranges
+                // set standard options on all datagrid views for this form
+                DataGridList.ForEach( 
+                    v => {
+                        // set options
+                        v.RowHeadersVisible = false;
+                        v.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                        v.AllowUserToAddRows = false;
+                        v.AllowUserToDeleteRows = false;
+                        v.AllowUserToResizeRows = false;
+                        v.AllowUserToOrderColumns = false;
+                        v.EditMode = DataGridViewEditMode.EditProgrammatically;
+                        v.MultiSelect = false;
+                        
+                        // set DataGridView display options
+                        v.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+                        v.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                        v.EnableHeadersVisualStyles = true;
+
+                        v.Columns["appointmentId"].HeaderText = "ID";
+                        v.Columns["appointmentId"].DisplayIndex = 0;
+                        
+                        v.Columns["customerName"].HeaderText = "Meeting With";
+                        v.Columns["customerName"].DisplayIndex = 1;
+                                                
+                        v.Columns["title"].HeaderText = "Title";
+                        v.Columns["title"].DisplayIndex = 2;
+
+                        v.Columns["description"].HeaderText = "Description";
+                        v.Columns["description"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        v.Columns["description"].DisplayIndex = 3;
+
+                        v.Columns["location"].HeaderText = "Location";
+                        v.Columns["location"].DisplayIndex = 4;
+
+                        v.Columns["contact"].HeaderText = "Contact";
+                        v.Columns["contact"].DisplayIndex = 5;
+
+                        v.Columns["type"].HeaderText = "Type";
+                        v.Columns["type"].DisplayIndex = 6;
+
+                        v.Columns["url"].HeaderText = "URL";
+                        v.Columns["url"].DisplayIndex = 7;
+
+                        v.Columns["start"].HeaderText = "Starts";
+                        v.Columns["start"].DisplayIndex = 8;
+
+                        v.Columns["end"].HeaderText = "Ends";
+                        v.Columns["end"].DisplayIndex = 9;
+
+                    }
+                );
+               
 
             }
             else
@@ -149,17 +258,47 @@ namespace ScheduleBoss
 
         }
 
-        private void Appt_FormClosed(object sender, FormClosedEventArgs e)
+        private void Child_FormClosed(object sender, FormClosedEventArgs e)
         {
+            // refresh the appointments for next 7 and next 30 days
+            DateTime FilterStart = Session.ConvertDateTimeToUtc(DateTime.Now);
+            DateTime WeekFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(7));
+            DateTime MonthFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(31));
 
+            this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, FilterStart, WeekFilterEnd);
+            this.MonthAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, FilterStart, MonthFilterEnd);
+
+            // reset data binding on gridviews
+            this.WeekViewSource.DataSource = this.WeekAppointments;
+            dataGridWeek.DataSource = this.WeekViewSource;
+
+            this.MonthViewSource.DataSource = this.MonthAppointments;
+            dataGridMonth.DataSource = this.MonthViewSource;
+
+            // refresh the controls
+            dataGridWeek.Refresh();
+            dataGridMonth.Refresh();
         }
 
-        private void Cust_FormClosed(object sender, FormClosedEventArgs e)
+        private void dataGridWeek_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-
+            if (e.Value is DateTime)
+            {
+                DateTime CellValue = (DateTime)e.Value;
+                e.Value = this.Session.ConvertDateTimeFromUtc(CellValue);
+            }
         }
 
-        
+        private void dataGridMonth_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.Value is DateTime)
+            {
+                DateTime CellValue = (DateTime)e.Value;
+                e.Value = this.Session.ConvertDateTimeFromUtc(CellValue);
+            }
+        }
+
+
 
         // END FORM CLOSE EVENT HANDLERS
 

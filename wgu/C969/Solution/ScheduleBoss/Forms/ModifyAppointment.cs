@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace ScheduleBoss.Forms
 {
-    public partial class NewAppointment : Form
+    public partial class ModifyAppointment : Form
     {
         public DatabaseConnection Database { get; set; }
 
@@ -22,9 +22,10 @@ namespace ScheduleBoss.Forms
         public DataTable Consultants { get; set; }
 
         public DataTable Customers { get; set; }
-        
 
-        public NewAppointment(DatabaseConnection dbConn, EventLogger log, UserSession sess)
+        public Appointment Appointment { get; set; }
+        
+        public ModifyAppointment(DatabaseConnection dbConn, EventLogger log, UserSession sess, Appointment appt)
         {
             InitializeComponent();
 
@@ -32,6 +33,7 @@ namespace ScheduleBoss.Forms
             this.Database = dbConn;
             this.Logger = log;
             this.Session = sess;
+            this.Appointment = appt;
 
             // initialize the data processor object 
             this.DataProc = new DataProcessor(this.Database, this.Logger);
@@ -52,13 +54,27 @@ namespace ScheduleBoss.Forms
             // set properties on date pickers
             dtp_StartDate.MinDate = DateTime.Today;
             dtp_EndDate.MinDate = DateTime.Today;
-            
+
+            // set field values from loaded objects - converting times from UTC to local time zone
+            mbox_ApptTitle.Text = this.Appointment.title;
+            cbox_Consultant.SelectedValue = this.Appointment.userId;
+            cbox_Customer.SelectedValue = this.Appointment.customerId;
+            dtp_StartDate.Value = this.Appointment.start.Date;
+            dtp_StartTime.Value = this.Session.ConvertDateTimeFromUtc(DateTime.Parse(this.Appointment.start.ToString()));
+            dtp_EndDate.Value = this.Appointment.end.Date;
+            dtp_EndTime.Value = this.Session.ConvertDateTimeFromUtc(DateTime.Parse(this.Appointment.end.ToString()));
+            mbox_ApptContact.Text = this.Appointment.contact;
+            mbox_ApptType.Text = this.Appointment.type;
+            mbox_ApptLocation.Text = this.Appointment.location;
+            mbox_Url.Text = this.Appointment.url;
+            tbox_ApptDescription.Text = this.Appointment.description;
+
         }
 
         private void btn_Save_Click(object sender, EventArgs e)
         {
             // initialize a new appointment object
-            Appointment NewAppt = new Appointment();
+            Appointment ModAppt = new Appointment();
 
             //set up data validation regexes
             Regex TextValidator = new Regex("[^a-zA-Z0-9\\-\\,\\.\\;\\'\\/\\(\\)\\s]");
@@ -106,7 +122,7 @@ namespace ScheduleBoss.Forms
                         }
                 );
 
-                // validate the dates for start and end time to ensure they are not outside of normal business hours
+                // validate the dates for start and end time
                 if (dtp_StartTime.Value.TimeOfDay > this.Session.WorkDayEnd || dtp_StartTime.Value.TimeOfDay < this.Session.WorkDayStart)
                 {
                     throw new ArgumentOutOfRangeException($"{dtp_StartTime.Tag.ToString()}", $"Appointment {dtp_StartTime.Tag.ToString()} is outside of normal business hours. Normal business hours are {Session.WorkDayStart.ToString()} to {Session.WorkDayEnd.ToString()}.");
@@ -121,7 +137,7 @@ namespace ScheduleBoss.Forms
                 {
                     throw new ArgumentOutOfRangeException($"{dtp_StartTime.Tag.ToString()}", $"{dtp_StartTime.Tag.ToString()} cannot be after {dtp_EndTime.Tag.ToString()}.");
                 }
-
+                
                 // validate the datetime to ensure start is not in the past
                 if ((dtp_StartDate.Value.Date + dtp_StartTime.Value.TimeOfDay) < DateTime.Now)
                 {
@@ -141,7 +157,7 @@ namespace ScheduleBoss.Forms
                 // construct a DateTime with the start and end time & date to validate them, and convert to UTC
                 DateTime Start = Session.ConvertDateTimeToUtc(dtp_StartDate.Value.Date + dtp_StartTime.Value.TimeOfDay);
                 DateTime End = Session.ConvertDateTimeToUtc(dtp_EndDate.Value.Date + dtp_EndTime.Value.TimeOfDay);
-                
+
                 //validate that there is not a conflict with another appointment
                 bool ConflictDetected = this.DataProc.ValidateAppointmentTimesForUser(Session.UserLoginInfo.UserId, Start, End);
 
@@ -151,40 +167,40 @@ namespace ScheduleBoss.Forms
                 }
 
                 // process the Appointment object
-                
+
                 // get next ID value
-                NewAppt.appointmentId = this.DataProc.GetNextId(DatabaseEntries.Appointment);
+                ModAppt.appointmentId = this.DataProc.GetNextId(DatabaseEntries.Appointment);
 
                 // set customer and userId values from combo boxes
-                NewAppt.customerId = int.Parse(cbox_Customer.SelectedValue.ToString());
-                NewAppt.userId = int.Parse(cbox_Consultant.SelectedValue.ToString());
+                ModAppt.customerId = int.Parse(cbox_Customer.SelectedValue.ToString());
+                ModAppt.userId = int.Parse(cbox_Consultant.SelectedValue.ToString());
 
                 // set text values based on text box entries - title, description, location, contaact, type, url
-                NewAppt.title = mbox_ApptTitle.Text;
-                NewAppt.description = tbox_ApptDescription.Text;
-                NewAppt.location = mbox_ApptLocation.Text;
-                NewAppt.contact = mbox_ApptContact.Text;
-                NewAppt.type = mbox_ApptType.Text;
-                NewAppt.url = mbox_Url.Text;
+                ModAppt.title = mbox_ApptTitle.Text;
+                ModAppt.description = tbox_ApptDescription.Text;
+                ModAppt.location = mbox_ApptLocation.Text;
+                ModAppt.contact = mbox_ApptContact.Text;
+                ModAppt.type = mbox_ApptType.Text;
+                ModAppt.url = mbox_Url.Text;
 
-                // set start and end date time properties and convert to utc
-                NewAppt.start = Start;
-                NewAppt.end = End;
+                // set start and end date time properties 
+                ModAppt.start = Start;
+                ModAppt.end = End;
 
                 // set created by, create date, updated by, and update date fields (equal since this is a new record)
-                NewAppt.createdBy = NewAppt.lastUpdateBy = Session.UserLoginInfo.Username;
-                NewAppt.createDate = NewAppt.lastUpdate = DateTime.UtcNow;
+                ModAppt.createdBy = ModAppt.lastUpdateBy = Session.UserLoginInfo.Username;
+                ModAppt.createDate = ModAppt.lastUpdate = DateTime.UtcNow;
 
                 // insert the data - possbily make this async/awaitable
-                bool ApptInsert = this.DataProc.InsertData(NewAppt, DatabaseEntries.Appointment);
+                bool ApptUpdate = this.DataProc.UpdateData(ModAppt, DatabaseEntries.Appointment);
 
-                if (ApptInsert == false)
+                if (ApptUpdate == false)
                 {
-                    throw new Exception("Error during INSERT operation. The SQL transaction has been rolled back.");
+                    throw new Exception("Error during UPDATE operation. The SQL transaction has been rolled back.");
                 }
 
                 // log the operation and close the form
-                this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Appointment record inserted with AppointmentId:{NewAppt.appointmentId.ToString()}");
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Appointment record inserted with AppointmentId:{ModAppt.appointmentId.ToString()}");
 
                 this.Close();
                 
@@ -218,6 +234,32 @@ namespace ScheduleBoss.Forms
             this.Close();
         }
 
+        private void btn_Delete_Click(object sender, EventArgs e)
+        {
+            DialogResult DeleteConfirmation = MessageBox.Show($"Are you sure you wish to delete this appointment?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (DeleteConfirmation == DialogResult.Yes)
+            {
+                // delete the address and customer records
+                bool apptDeleted = this.DataProc.DeleteRecord(this.Appointment.appointmentId, DatabaseEntries.Appointment);
+
+                // show confirmation if everything was successful and log it, otherwise direct the user to the logs if an error occurred.  
+                if (apptDeleted == true )
+                {
+                    MessageBox.Show($"Appointment {this.Appointment.title} has been deleted from the system.", "Appointment deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Deleted appointment record {this.Appointment.appointmentId}");
+
+                }
+                else
+                {
+                    MessageBox.Show($"Appointment {this.Appointment.title} was not fully deleted from the system. Please review the logs for more information.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                this.Close();
+            }
+
+        }
+
         private void dtp_StartDate_ValueChanged(object sender, EventArgs e)
         {
             // make the two date fields match
@@ -230,4 +272,5 @@ namespace ScheduleBoss.Forms
             dtp_StartDate.Value = dtp_EndDate.Value;
         }
     }
+
 }
