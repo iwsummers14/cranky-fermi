@@ -156,7 +156,7 @@ namespace ScheduleBoss.Forms
 
                 if (AddressInsert == false)
                 {
-                    //throw exception here
+                    throw new Exception("Error during INSERT operation on 'address' table. The SQL transaction has been rolled back.");
                 }
 
                 // log the operation
@@ -184,6 +184,11 @@ namespace ScheduleBoss.Forms
                 // insert the data 
                 bool CustInsert = this.DataProc.InsertData(NewCust, DatabaseEntries.Customer);
 
+                if (AddressInsert == false)
+                {
+                    throw new Exception("Error during INSERT operation on 'customer' table. The SQL transaction has been rolled back.");
+                }
+
                 // log the operation
                 this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Customer record inserted with CustomerId:{NewCust.customerId.ToString()}");
 
@@ -192,15 +197,18 @@ namespace ScheduleBoss.Forms
 
             }
 
+            // process argument out of range exception
             catch (ArgumentOutOfRangeException argEx)
             {
                 MessageBox.Show($"{argEx.Message}", "Invalid Entry!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.Logger.WriteLog($"{DateTime.Now.ToString()} [ERROR] Input error: {argEx.Message}");
             }
 
-            catch
+            // process general exception
+            catch (Exception ex)
             {
-
+                MessageBox.Show($"An error has occurred while creating a new customer record. Please consult the log for more information.", "Insert error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [ERROR] Operation error: {ex.Message}");
             }
 
         }

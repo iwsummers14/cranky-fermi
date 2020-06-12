@@ -54,7 +54,7 @@ namespace ScheduleBoss.Classes
             this.location = row["location"].ToString();
             this.contact = row["contact"].ToString();
             this.type = row["type"].ToString();
-            this.url = row["type"].ToString();
+            this.url = row["url"].ToString();
             this.start = DateTime.Parse(row["start"].ToString());
             this.end = DateTime.Parse(row["end"].ToString());
             this.createDate = DateTime.Parse(row["createDate"].ToString());

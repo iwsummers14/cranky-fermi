@@ -1,6 +1,6 @@
 ﻿namespace ScheduleBoss.Forms
 {
-    partial class NewAppointment
+    partial class ModifyAppointment
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewAppointment));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ModifyAppointment));
             this.mbox_ApptTitle = new System.Windows.Forms.MaskedTextBox();
             this.lbl_PanelAppt = new System.Windows.Forms.Label();
             this.cbox_Customer = new System.Windows.Forms.ComboBox();
@@ -58,6 +58,7 @@
             this.mbox_ApptLocation = new System.Windows.Forms.MaskedTextBox();
             this.lbl_ApptLocation = new System.Windows.Forms.Label();
             this.lbl_NewAppointment = new System.Windows.Forms.Label();
+            this.btn_Delete = new System.Windows.Forms.Button();
             this.apptPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -343,23 +344,36 @@
             this.lbl_NewAppointment.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_NewAppointment.Location = new System.Drawing.Point(12, 9);
             this.lbl_NewAppointment.Name = "lbl_NewAppointment";
-            this.lbl_NewAppointment.Size = new System.Drawing.Size(168, 21);
+            this.lbl_NewAppointment.Size = new System.Drawing.Size(192, 21);
             this.lbl_NewAppointment.TabIndex = 13;
-            this.lbl_NewAppointment.Text = "NEW APPOINTMENT";
+            this.lbl_NewAppointment.Text = "MODIFY APPOINTMENT";
             // 
-            // NewAppointment
+            // btn_Delete
+            // 
+            this.btn_Delete.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_Delete.Location = new System.Drawing.Point(16, 497);
+            this.btn_Delete.Name = "btn_Delete";
+            this.btn_Delete.Size = new System.Drawing.Size(100, 36);
+            this.btn_Delete.TabIndex = 15;
+            this.btn_Delete.TabStop = false;
+            this.btn_Delete.Text = "Delete";
+            this.btn_Delete.UseVisualStyleBackColor = true;
+            this.btn_Delete.Click += new System.EventHandler(this.btn_Delete_Click);
+            // 
+            // ModifyAppointment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(409, 544);
+            this.Controls.Add(this.btn_Delete);
             this.Controls.Add(this.btn_Cancel);
             this.Controls.Add(this.btn_Save);
             this.Controls.Add(this.apptPanel);
             this.Controls.Add(this.lbl_NewAppointment);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "NewAppointment";
-            this.Text = "SCHEDULE BOSS - New Appointment";
+            this.Name = "ModifyAppointment";
+            this.Text = "SCHEDULE BOSS - Modify Appointment";
             this.apptPanel.ResumeLayout(false);
             this.apptPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -397,5 +411,6 @@
         private System.Windows.Forms.Label lbl_StartTime;
         private System.Windows.Forms.MaskedTextBox mbox_ApptContact;
         private System.Windows.Forms.Label lbl_ApptContact;
+        private System.Windows.Forms.Button btn_Delete;
     }
 }

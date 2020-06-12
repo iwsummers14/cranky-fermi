@@ -69,64 +69,9 @@ namespace ScheduleBoss.Classes
                 return null;
 
             }
-
-
-
+                       
         }
-
-        // method to get the value of the next 'id' for a given entry type
-        public int GetNextId(DatabaseEntries entryType)
-        {
-            // create variable for return value
-            int nextId = 0;
-
-            // open connection
-            this.Database.ConnectToDatabase();
-
-            // create the query
-            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
-
-            switch (entryType)
-            {
-                case DatabaseEntries.Address:
-                    query.CommandText = "SELECT MAX(addressId) FROM address";
-                    break;
-
-                case DatabaseEntries.Appointment:
-                    query.CommandText = "SELECT MAX(appointmentId) FROM appointment";
-                    break;
-
-                case DatabaseEntries.City:
-                    query.CommandText = "SELECT MAX(cityId) FROM city";
-                    break;
-
-                case DatabaseEntries.Country:
-                    query.CommandText = "SELECT MAX(countryId) FROM country";
-                    break;
-
-                case DatabaseEntries.Customer:
-                    query.CommandText = "SELECT MAX(customerId) FROM customer";
-                    break;
-
-            }
-
-            // execute the query
-            MySqlDataReader queryReader = query.ExecuteReader();
-
-            if (queryReader.HasRows)
-            {
-                // read the record, increment it by 1 to generate the next id value, and close the query reader
-                queryReader.Read();
-                nextId = queryReader.GetInt32(0) + 1;
-                queryReader.Close();
-            }
-
-            // close connection
-            this.Database.DisconnectFromDatabase();
-
-            return nextId;
-        }
-
+        
         // method to return all table values for an entry type
         public DataTable GetAllTableValues(DatabaseEntries entryType)
         {
@@ -182,7 +127,7 @@ namespace ScheduleBoss.Classes
         }
 
         // method to return all table values for an entry type
-        public DataTable GetAppointmentsForUserWithDate(string user, DateTime filterStartDate, DateTime filterEndDate)
+        public DataTable GetAppointmentsForUserWithDate(int userId, DateTime filterStartDate, DateTime filterEndDate)
         {
             var AllRecords = new DataTable();
 
@@ -194,11 +139,13 @@ namespace ScheduleBoss.Classes
 
             string queryTmp = "SELECT a.appointmentId, c.customerName, a.title, a.description, a.location, a.contact, a.type, a.url, a.start, a.end";
             queryTmp += " FROM appointment a INNER JOIN customer c ON a.customerId = c.customerId";
-            queryTmp += " WHERE start >= @filterStartDate AND start <= @filterEndDate";
+            queryTmp += " WHERE start >= @filterStartDate AND start <= @filterEndDate AND userId = @userId";
+            queryTmp += " ORDER BY start ASC";
 
             query.CommandText = queryTmp;
             query.Parameters.AddWithValue("@filterStartDate", filterStartDate);
             query.Parameters.AddWithValue("@filterEndDate", filterEndDate);
+            query.Parameters.AddWithValue("@userId", userId);
 
 
             // execute the query 
@@ -213,6 +160,59 @@ namespace ScheduleBoss.Classes
 
             return AllRecords;
 
+        }
+
+        // method to get the value of the next 'id' for a given entry type
+        public int GetNextId(DatabaseEntries entryType)
+        {
+            // create variable for return value
+            int nextId = 0;
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+
+            switch (entryType)
+            {
+                case DatabaseEntries.Address:
+                    query.CommandText = "SELECT MAX(addressId) FROM address";
+                    break;
+
+                case DatabaseEntries.Appointment:
+                    query.CommandText = "SELECT MAX(appointmentId) FROM appointment";
+                    break;
+
+                case DatabaseEntries.City:
+                    query.CommandText = "SELECT MAX(cityId) FROM city";
+                    break;
+
+                case DatabaseEntries.Country:
+                    query.CommandText = "SELECT MAX(countryId) FROM country";
+                    break;
+
+                case DatabaseEntries.Customer:
+                    query.CommandText = "SELECT MAX(customerId) FROM customer";
+                    break;
+
+            }
+
+            // execute the query
+            MySqlDataReader queryReader = query.ExecuteReader();
+
+            if (queryReader.HasRows)
+            {
+                // read the record, increment it by 1 to generate the next id value, and close the query reader
+                queryReader.Read();
+                nextId = queryReader.GetInt32(0) + 1;
+                queryReader.Close();
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            return nextId;
         }
 
         // method to get a single record by its ID value (primary key)
@@ -535,12 +535,23 @@ namespace ScheduleBoss.Classes
 
             try
             {
+                string queryTemp = String.Empty;
 
                 switch (entryType)
                 {
                     case DatabaseEntries.Address:
                         CustomerAddress Address = Data as CustomerAddress;
-                        UpdateCommand.CommandText = "UPDATE address SET address = @address, address2 = @address2, cityId = @cityId, postalCode = @postalCode, phone = @phone, lastUpdate = @lastUpdate, lastUpdateBy = @lastUpdateBy WHERE addressId = @addressId";
+                        queryTemp = "UPDATE address";
+                        queryTemp += " SET address = @address,";
+                        queryTemp += " address2 = @address2,";
+                        queryTemp += " cityId = @cityId,";
+                        queryTemp += " postalCode = @postalCode,";
+                        queryTemp += " phone = @phone,";
+                        queryTemp += " lastUpdate = @lastUpdate,";
+                        queryTemp += " lastUpdateBy = @lastUpdateBy";
+                        queryTemp += " WHERE addressId = @addressId";
+
+                        UpdateCommand.CommandText = queryTemp;
                         UpdateCommand.Parameters.AddWithValue("@addressId", Address.addressId);
                         UpdateCommand.Parameters.AddWithValue("@address", Address.address);
                         UpdateCommand.Parameters.AddWithValue("@address2", Address.address2);
@@ -553,21 +564,22 @@ namespace ScheduleBoss.Classes
 
                     case DatabaseEntries.Appointment:
                         Appointment Appt = Data as Appointment;
-                        UpdateCommand.CommandText = "" +
-                            "UPDATE appointment" +
-                            "SET  customerId = @customerId, " +
-                            "     userId = @userId, " +
-                            "     title = @title, " +
-                            "     description = @description, " +
-                            "     location = @location, " +
-                            "     contact = @contact, " +
-                            "     type = @type, " +
-                            "     url = @url, " +
-                            "     start = @start, " +
-                            "     end = @end, " +
-                            "     lastUpdate = @lastUpdate, " +
-                            "     lastUpdateBy = @lastUpdateBy" +
-                            "WHERE appointmentId = @appointmentId";
+                        queryTemp = "UPDATE appointment ";
+                        queryTemp += " SET customerId = @customerId,";
+                        queryTemp += " userId = @userId,";
+                        queryTemp += " title = @title,";
+                        queryTemp += " description = @description,";
+                        queryTemp += " location = @location,";
+                        queryTemp += " contact = @contact,";
+                        queryTemp += " type = @type,";
+                        queryTemp += " url = @url,";
+                        queryTemp += " start = @start,";
+                        queryTemp += " end = @end,";
+                        queryTemp += " lastUpdate = @lastUpdate,";
+                        queryTemp += " lastUpdateBy = @lastUpdateBy";
+                        queryTemp += " WHERE appointmentId = @appointmentId";
+                        
+                        UpdateCommand.CommandText = queryTemp;
                         UpdateCommand.Parameters.AddWithValue("@appointmentId", Appt.appointmentId);
                         UpdateCommand.Parameters.AddWithValue("@customerId", Appt.customerId);
                         UpdateCommand.Parameters.AddWithValue("@userId", Appt.userId);
@@ -591,8 +603,14 @@ namespace ScheduleBoss.Classes
 
                     case DatabaseEntries.Customer:
                         Customer Cust = Data as Customer;
-                        UpdateCommand.CommandText = "UPDATE customer SET customerName = @customerName, active = @active, lastUpdate = @lastUpdate, lastUpdateBy = @lastUpdateBy WHERE customerId = @customerId";
-                            
+                        queryTemp = "UPDATE customer";
+                        queryTemp += " SET customerName = @customerName,";
+                        queryTemp += " active = @active,";
+                        queryTemp += " lastUpdate = @lastUpdate,";
+                        queryTemp += " lastUpdateBy = @lastUpdateBy";
+                        queryTemp += " WHERE customerId = @customerId";
+
+                        UpdateCommand.CommandText = queryTemp;
                         UpdateCommand.Parameters.AddWithValue("@customerId", Cust.customerId);
                         UpdateCommand.Parameters.AddWithValue("@customerName", Cust.customerName);
                         UpdateCommand.Parameters.AddWithValue("@active", Cust.active);
@@ -625,6 +643,51 @@ namespace ScheduleBoss.Classes
             return IsUpdated;
         }
 
+        // method to check for appointment overlap
+        public bool ValidateAppointmentTimesForUser(int userId, DateTime Start, DateTime End)
+        {
+            // declare a return value
+            bool IsOverlapping = false;
+
+            var ConflictingRecords = new DataTable();
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+
+            string queryTmp = "SELECT * FROM appointment";
+            queryTmp += " WHERE userId = @userId";
+            queryTmp += " AND (start > @filterStartDate AND start < @filterEndDate)";
+            queryTmp += " OR (end > @filterStartDate AND end < @filterEndDate)";
+            queryTmp += " OR (start = @filterStartDate)";
+            queryTmp += " OR (end = @filterEndDate)";
+
+
+            query.CommandText = queryTmp;
+            query.Parameters.AddWithValue("@filterStartDate", Start);
+            query.Parameters.AddWithValue("@filterEndDate", End);
+            query.Parameters.AddWithValue("@userId", userId);
+                       
+            // execute the query 
+            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+            {
+                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                dataAdapter.Fill(ConflictingRecords);
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            // look for any records returned, if so, there was a conflict
+            if (ConflictingRecords.Rows.Count > 0)
+            {
+                IsOverlapping = true;
+            }
+
+            return IsOverlapping;
+        }
     }
     
 }

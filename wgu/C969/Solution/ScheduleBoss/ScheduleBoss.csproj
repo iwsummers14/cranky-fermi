@@ -73,6 +73,12 @@
     <Compile Include="Forms\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ModifyAppointment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModifyAppointment.Designer.cs">
+      <DependentUpon>ModifyAppointment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\NewAppointment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +108,9 @@
     <EmbeddedResource Include="Forms\CustomerList.resx">
       <DependentUpon>CustomerList.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModifyAppointment.resx">
+      <DependentUpon>ModifyAppointment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewAppointment.resx">
       <DependentUpon>NewAppointment.cs</DependentUpon>
     </EmbeddedResource>
@@ -110,9 +119,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewCustomer.resx">
       <DependentUpon>NewCustomer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UserLogin.en-GB.resx">
-      <DependentUpon>UserLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserLogin.en-US.resx">
       <DependentUpon>UserLogin.cs</DependentUpon>

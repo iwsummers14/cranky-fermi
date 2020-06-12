@@ -71,53 +71,56 @@ namespace ScheduleBoss
         private void btn_AddAppointment_Click(object sender, EventArgs e)
         {
             Form NewAppt = new NewAppointment(this.Database, this.Logger, this.Session);
-            NewAppt.FormClosed += new FormClosedEventHandler(Appt_FormClosed);
+            NewAppt.FormClosed += new FormClosedEventHandler(Child_FormClosed);
             NewAppt.Show();
         }
 
         private void btn_ModifyAppointment_Click(object sender, EventArgs e)
         {
-            // Form ModAppt = new ModifyAppointment();
-            // ModAppt.FormClosed += new FormClosedEventHandler(Appt_FormClosed);
-            // ModAppt.Show();
-
-            /*
             
-            // if a row was selected, get the underlying object to modify
-            if (dgv_Customers.SelectedRows.Count > 0)
-            {
 
-                // cast the selected row as a DataRowView and extract the row from it
-                DataRow row = ((DataRowView)dgv_Customers.CurrentRow.DataBoundItem).Row;
-                int custId = int.Parse(row[0].ToString());
-                int addrId = int.Parse(row[2].ToString());
+            // get the active DGV from the tab control (using the tab that is selected)
+            // this is a foreach but there is only one DGV per tab.
+            tabControlAppts.SelectedTab.Controls.OfType<DataGridView>().ToList().ForEach(
+                
+                dgv =>
+                {
+                    // if a row was selected, get the underlying object to modify
+                    if (dgv.SelectedRows.Count > 0)
+                    {
 
-                Customer Cust = this.DataProc.GetRecordById(custId, DatabaseEntries.Customer) as Customer;    
-                CustomerAddress Addr = this.DataProc.GetRecordById(addrId, DatabaseEntries.Address) as CustomerAddress;
+                        // cast the selected row as a DataRowView and extract the row from it
+                        DataRow row = ((DataRowView)dgv.CurrentRow.DataBoundItem).Row;
+                        int apptId = int.Parse(row[0].ToString());
+                        
+                        // get the associated record from the database
+                        Appointment Appt = this.DataProc.GetRecordById(apptId, DatabaseEntries.Appointment) as Appointment;
 
-                // create an instance of the form and display it
-                ModifyCustomer ModCust = new ModifyCustomer(this.Database, this.Logger, this.Session, Cust, Addr);
-                ModCust.FormClosed += new FormClosedEventHandler(ModCust_FormClosed);
-                ModCust.Show();
-               
-                  
-            } 
+                        // create an instance of the form and display it
+                        Form ModAppt = new ModifyAppointment(this.Database, this.Logger, this.Session, Appt);
+                        ModAppt.FormClosed += new FormClosedEventHandler(Child_FormClosed);
+                        ModAppt.Show();
 
-            // do nothing if nothing was selected
-            else
-            {
 
-                return;
+                    }
 
-            }
-             * 
-             */
+                    // do nothing if nothing was selected
+                    else
+                    {
+
+                        return;
+
+                    }
+                }
+                
+            );
+
         }
 
         private void btn_AddCustomer_Click(object sender, EventArgs e)
         {
             NewCustomer NewCust = new NewCustomer( this.Database, this.Logger, this.Session );
-            NewCust.FormClosed += new FormClosedEventHandler(Cust_FormClosed);
+            NewCust.FormClosed += new FormClosedEventHandler(Child_FormClosed);
             NewCust.Show();
 
         }
@@ -125,6 +128,7 @@ namespace ScheduleBoss
         private void btn_ModifyCustomer_Click(object sender, EventArgs e)
         {
             CustomerList CustList = new CustomerList(this.Database, this.Logger, this.Session);
+            CustList.FormClosed += new FormClosedEventHandler(Child_FormClosed);
             CustList.Show();
         }
 
@@ -166,8 +170,8 @@ namespace ScheduleBoss
                 DateTime WeekFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(7));
                 DateTime MonthFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(31));
 
-                this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.Username, FilterStart, WeekFilterEnd);
-                this.MonthAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.Username, FilterStart, MonthFilterEnd);
+                this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, FilterStart, WeekFilterEnd);
+                this.MonthAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, FilterStart, MonthFilterEnd);
 
 
                 // set data binding on gridviews
@@ -204,7 +208,7 @@ namespace ScheduleBoss
                         v.AllowUserToOrderColumns = false;
                         v.EditMode = DataGridViewEditMode.EditProgrammatically;
                         v.MultiSelect = false;
-
+                        
                         // set DataGridView display options
                         v.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
                         v.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
@@ -254,15 +258,15 @@ namespace ScheduleBoss
 
         }
 
-        private void Appt_FormClosed(object sender, FormClosedEventArgs e)
+        private void Child_FormClosed(object sender, FormClosedEventArgs e)
         {
             // refresh the appointments for next 7 and next 30 days
             DateTime FilterStart = Session.ConvertDateTimeToUtc(DateTime.Now);
             DateTime WeekFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(7));
             DateTime MonthFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(31));
 
-            this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.Username, FilterStart, WeekFilterEnd);
-            this.MonthAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.Username, FilterStart, MonthFilterEnd);
+            this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, FilterStart, WeekFilterEnd);
+            this.MonthAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, FilterStart, MonthFilterEnd);
 
             // reset data binding on gridviews
             this.WeekViewSource.DataSource = this.WeekAppointments;
@@ -274,11 +278,6 @@ namespace ScheduleBoss
             // refresh the controls
             dataGridWeek.Refresh();
             dataGridMonth.Refresh();
-        }
-
-        private void Cust_FormClosed(object sender, FormClosedEventArgs e)
-        {
-
         }
 
         private void dataGridWeek_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

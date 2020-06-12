@@ -543,3 +543,95 @@ Parameter name: URL
 6/10/2020 10:39:46 PM [ERROR] Input error: Appointment Start Time is outside of normal business hours. Normal business hours are 08:00:00 to 17:00:00.
 Parameter name: Start Time
 6/10/2020 10:40:17 PM [INFO] Appointment record inserted with AppointmentId:7
+6/11/2020 8:44:27 AM [ERROR] Input error: Appointment End Time time is outside of normal business hours. Normal business hours are 08:00:00 to 17:00:00.
+Parameter name: End Time
+6/11/2020 8:44:47 AM [INFO] Appointment record inserted with AppointmentId:8
+6/11/2020 2:34:03 PM [INFO] Application started
+6/11/2020 2:34:03 PM [INFO] Processing user login
+6/11/2020 2:34:07 PM [INFO] User test authenticated successfully.
+6/11/2020 2:35:07 PM [INFO] Application started
+6/11/2020 2:35:07 PM [INFO] Processing user login
+6/11/2020 2:35:11 PM [INFO] User test authenticated successfully.
+6/11/2020 2:37:53 PM [INFO] Application started
+6/11/2020 2:37:53 PM [INFO] Processing user login
+6/11/2020 2:37:56 PM [INFO] User test authenticated successfully.
+6/11/2020 2:38:55 PM [INFO] Appointment record inserted with AppointmentId:9
+6/11/2020 8:38:56 PM [INFO] Application started
+6/11/2020 8:38:56 PM [INFO] Processing user login
+6/11/2020 8:39:00 PM [INFO] User test authenticated successfully.
+6/11/2020 8:40:00 PM [INFO] Appointment record inserted with AppointmentId:10
+6/11/2020 8:40:23 PM [ERROR] Input error: Input in the URL field must start with http:// or https://.
+Parameter name: URL
+6/11/2020 8:40:38 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/11/2020 8:40:40 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/11/2020 8:40:45 PM [ERROR] Error during UPDATE operation: Fatal error encountered during command execution.
+6/11/2020 8:40:45 PM [INFO] Rolling back Database transaction.
+6/11/2020 8:40:47 PM [ERROR] Operation error: Error during UPDATE operation. The SQL transaction has been rolled back.
+6/11/2020 8:57:50 PM [INFO] Application started
+6/11/2020 8:57:50 PM [INFO] Processing user login
+6/11/2020 8:57:55 PM [INFO] User test authenticated successfully.
+6/11/2020 8:58:14 PM [ERROR] Input error: Input in the URL field must start with http:// or https://.
+Parameter name: URL
+6/11/2020 9:12:28 PM [INFO] Application started
+6/11/2020 9:12:28 PM [INFO] Processing user login
+6/11/2020 9:12:31 PM [INFO] User test authenticated successfully.
+6/11/2020 9:12:42 PM [INFO] Deleted appointment record 10
+6/11/2020 9:14:44 PM [INFO] Application started
+6/11/2020 9:14:44 PM [INFO] Processing user login
+6/11/2020 9:14:48 PM [INFO] User test authenticated successfully.
+6/11/2020 9:15:29 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/11/2020 9:15:56 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/11/2020 9:16:10 PM [ERROR] Input error: Appointment End Time time is outside of normal business hours. Normal business hours are 08:00:00 to 17:00:00.
+Parameter name: End Time
+6/11/2020 9:16:14 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/11/2020 9:16:40 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/11/2020 9:17:24 PM [INFO] Appointment record inserted with AppointmentId:10
+6/11/2020 9:17:34 PM [INFO] Deleted appointment record 10
+6/11/2020 9:34:19 PM [INFO] Application started
+6/11/2020 9:34:19 PM [INFO] Processing user login
+6/11/2020 9:34:23 PM [INFO] User test authenticated successfully.
+6/11/2020 9:36:53 PM [INFO] Application started
+6/11/2020 9:36:53 PM [INFO] Processing user login
+6/11/2020 9:36:59 PM [INFO] User test authenticated successfully.
+6/11/2020 9:37:33 PM [ERROR] Input error: All fields must contain an entry. Please enter data in the Description field.
+Parameter name: Description
+6/11/2020 9:37:55 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/11/2020 9:38:18 PM [INFO] Appointment record inserted with AppointmentId:10
+6/11/2020 9:38:57 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/11/2020 9:39:07 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/11/2020 9:42:39 PM [INFO] Application started
+6/11/2020 9:42:39 PM [INFO] Processing user login
+6/11/2020 9:42:42 PM [INFO] User test authenticated successfully.
+6/11/2020 9:43:15 PM [INFO] Appointment record inserted with AppointmentId:11
+6/11/2020 9:43:45 PM [ERROR] Input error: All fields must contain an entry. Please enter data in the Description field.
+Parameter name: Description
+6/11/2020 9:43:55 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/11/2020 9:44:17 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/11/2020 9:44:22 PM [INFO] Appointment record inserted with AppointmentId:12
+6/11/2020 9:50:35 PM [INFO] Application started
+6/11/2020 9:50:35 PM [INFO] Processing user login
+6/11/2020 9:50:39 PM [INFO] User test authenticated successfully.
+6/11/2020 9:51:06 PM [ERROR] Input error: Input in the URL field must start with http:// or https://.
+Parameter name: URL
+6/11/2020 9:51:13 PM [ERROR] Input error: Start Time cannot be after End Time.
+Parameter name: Start Time
+6/11/2020 9:51:20 PM [INFO] Appointment record inserted with AppointmentId:13
+6/11/2020 9:52:26 PM [INFO] Application started
+6/11/2020 9:52:26 PM [INFO] Processing user login
+6/11/2020 9:52:29 PM [INFO] User test authenticated successfully.
+6/11/2020 9:52:46 PM [INFO] Appointment record inserted with AppointmentId:14
+6/11/2020 9:54:35 PM [INFO] Application started
+6/11/2020 9:54:35 PM [INFO] Processing user login
+6/11/2020 9:54:37 PM [INFO] User test authenticated successfully.
+6/11/2020 9:55:00 PM [ERROR] Input error: Appointment End Time time is outside of normal business hours. Normal business hours are 08:00:00 to 17:00:00.
+Parameter name: End Time
+6/11/2020 9:55:06 PM [ERROR] Input error: Start Time cannot be in the past.
+Parameter name: Start Time
+6/11/2020 9:55:10 PM [INFO] Appointment record inserted with AppointmentId:15
+6/11/2020 10:08:38 PM [INFO] Application started
+6/11/2020 10:08:38 PM [INFO] Processing user login
+6/11/2020 10:08:43 PM [WARN] User test failed to authenticate.
+6/11/2020 10:08:43 PM [INFO] User test has attempted authentication 1 times.
+6/11/2020 10:08:45 PM [INFO] User test authenticated successfully.
+6/11/2020 10:26:50 PM [INFO] Application started
+6/11/2020 10:26:50 PM [INFO] Processing user login
