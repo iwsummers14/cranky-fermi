@@ -635,3 +635,117 @@ Parameter name: Start Time
 6/11/2020 10:08:45 PM [INFO] User test authenticated successfully.
 6/11/2020 10:26:50 PM [INFO] Application started
 6/11/2020 10:26:50 PM [INFO] Processing user login
+6/15/2020 10:17:17 PM [INFO] Application started
+6/15/2020 10:17:17 PM [INFO] Processing user login
+6/15/2020 10:17:21 PM [INFO] User test authenticated successfully.
+6/15/2020 10:18:55 PM [INFO] Application started
+6/15/2020 10:18:55 PM [INFO] Processing user login
+6/15/2020 10:18:59 PM [INFO] User test authenticated successfully.
+6/15/2020 10:19:04 PM [INFO] Application started
+6/15/2020 10:19:04 PM [INFO] Processing user login
+6/15/2020 10:19:07 PM [INFO] User test authenticated successfully.
+6/15/2020 10:19:41 PM [INFO] Application started
+6/15/2020 10:19:41 PM [INFO] Processing user login
+6/15/2020 10:19:47 PM [INFO] User test authenticated successfully.
+6/15/2020 10:21:29 PM [INFO] Application started
+6/15/2020 10:21:29 PM [INFO] Processing user login
+6/15/2020 10:21:32 PM [INFO] User test authenticated successfully.
+6/15/2020 10:21:46 PM [INFO] Application started
+6/15/2020 10:21:46 PM [INFO] Processing user login
+6/15/2020 10:21:49 PM [INFO] User test authenticated successfully.
+6/15/2020 10:31:09 PM [INFO] Application started
+6/15/2020 10:31:09 PM [INFO] Processing user login
+6/15/2020 10:31:14 PM [INFO] User test authenticated successfully.
+6/15/2020 10:32:27 PM [INFO] Application started
+6/15/2020 10:32:27 PM [INFO] Processing user login
+6/15/2020 10:32:30 PM [INFO] User test authenticated successfully.
+6/15/2020 10:37:27 PM [INFO] Application started
+6/15/2020 10:37:27 PM [INFO] Processing user login
+6/15/2020 10:37:30 PM [INFO] User test authenticated successfully.
+6/15/2020 10:42:42 PM [INFO] Application started
+6/15/2020 10:42:42 PM [INFO] Processing user login
+6/15/2020 10:42:47 PM [INFO] User test authenticated successfully.
+6/15/2020 10:43:21 PM [ERROR] Input error: Appointment Start Time is outside of normal business hours. Normal business hours are 08:00:00 to 17:00:00.
+Parameter name: Start Time
+6/15/2020 10:43:42 PM [ERROR] Input error: Start Time cannot be in the past.
+Parameter name: Start Time
+6/15/2020 10:43:56 AM [INFO] Appointment record inserted with AppointmentId:16
+6/15/2020 10:44:16 AM [INFO] Application started
+6/15/2020 10:44:16 AM [INFO] Processing user login
+6/15/2020 10:44:20 AM [INFO] User test authenticated successfully.
+6/15/2020 10:46:37 AM [INFO] Application started
+6/15/2020 10:46:37 AM [INFO] Processing user login
+6/15/2020 10:46:40 AM [INFO] User test authenticated successfully.
+6/15/2020 10:47:48 AM [INFO] Application started
+6/15/2020 10:47:48 AM [INFO] Processing user login
+6/15/2020 10:47:52 AM [INFO] User test authenticated successfully.
+6/15/2020 10:52:42 AM [INFO] Application started
+6/15/2020 10:52:42 AM [INFO] Processing user login
+6/15/2020 10:52:47 AM [INFO] User test authenticated successfully.
+6/15/2020 10:58:45 AM [INFO] Application started
+6/15/2020 10:58:45 AM [INFO] Processing user login
+6/15/2020 10:58:49 AM [INFO] User test authenticated successfully.
+6/15/2020 11:01:14 AM [INFO] Application started
+6/15/2020 11:01:14 AM [INFO] Processing user login
+6/15/2020 11:01:18 AM [INFO] User test authenticated successfully.
+6/15/2020 11:04:34 AM [INFO] Application started
+6/15/2020 11:04:34 AM [INFO] Processing user login
+6/15/2020 11:04:37 AM [INFO] User test authenticated successfully.
+6/15/2020 11:04:58 AM [INFO] Appointment record inserted with AppointmentId:17
+6/15/2020 11:05:04 AM [INFO] Application started
+6/15/2020 11:05:04 AM [INFO] Processing user login
+6/15/2020 11:05:07 AM [INFO] User test authenticated successfully.
+6/15/2020 11:05:52 AM [INFO] Application started
+6/15/2020 11:05:53 AM [INFO] Processing user login
+6/15/2020 11:05:56 AM [INFO] User test authenticated successfully.
+6/15/2020 11:07:32 AM [INFO] Application started
+6/15/2020 11:07:32 AM [INFO] Processing user login
+6/15/2020 11:07:36 AM [INFO] User test authenticated successfully.
+6/15/2020 11:08:10 AM [INFO] Application started
+6/15/2020 11:08:10 AM [INFO] Processing user login
+6/15/2020 11:08:13 AM [INFO] User test authenticated successfully.
+6/15/2020 11:08:36 AM [INFO] Application started
+6/15/2020 11:08:36 AM [INFO] Processing user login
+6/15/2020 11:08:39 AM [INFO] User test authenticated successfully.
+6/15/2020 11:10:41 AM [INFO] Application started
+6/15/2020 11:10:41 AM [INFO] Processing user login
+6/15/2020 11:10:45 AM [INFO] User test authenticated successfully.
+6/15/2020 11:13:55 AM [INFO] Application started
+6/15/2020 11:13:55 AM [INFO] Processing user login
+6/15/2020 11:13:59 AM [INFO] User test authenticated successfully.
+6/15/2020 11:31:35 AM [INFO] Application started
+6/15/2020 11:31:35 AM [INFO] Processing user login
+6/15/2020 11:31:38 AM [INFO] User test authenticated successfully.
+6/15/2020 11:32:02 AM [INFO] Appointment record inserted with AppointmentId:19
+6/15/2020 11:33:24 AM [INFO] Application started
+6/15/2020 11:33:24 AM [INFO] Processing user login
+6/15/2020 11:33:26 AM [INFO] User test authenticated successfully.
+6/15/2020 11:34:11 AM [INFO] Application started
+6/15/2020 11:34:11 AM [INFO] Processing user login
+6/15/2020 11:34:14 AM [INFO] User test authenticated successfully.
+6/15/2020 11:34:48 AM [INFO] Application started
+6/15/2020 11:34:48 AM [INFO] Processing user login
+6/15/2020 11:34:52 AM [INFO] User test authenticated successfully.
+6/15/2020 11:36:24 AM [INFO] Application started
+6/15/2020 11:36:24 AM [INFO] Processing user login
+6/15/2020 11:36:32 AM [INFO] User test authenticated successfully.
+6/15/2020 11:42:04 AM [INFO] Application started
+6/15/2020 11:42:04 AM [INFO] Processing user login
+6/15/2020 11:42:09 AM [INFO] User test authenticated successfully.
+6/15/2020 11:42:30 AM [INFO] Application started
+6/15/2020 11:42:30 AM [INFO] Processing user login
+6/15/2020 11:42:34 AM [INFO] User test authenticated successfully.
+6/15/2020 11:43:21 AM [INFO] Appointment record inserted with AppointmentId:20
+6/15/2020 11:46:10 AM [INFO] Application started
+6/15/2020 11:46:10 AM [INFO] Processing user login
+6/15/2020 11:46:14 AM [INFO] User test authenticated successfully.
+6/15/2020 11:46:39 AM [ERROR] Operation error: Connection must be valid and open.
+6/15/2020 11:46:41 AM [INFO] Appointment record inserted with AppointmentId:21
+6/15/2020 11:49:24 AM [INFO] Application started
+6/15/2020 11:49:24 AM [INFO] Processing user login
+6/15/2020 11:49:27 AM [INFO] User test authenticated successfully.
+6/15/2020 11:49:59 AM [INFO] Application started
+6/15/2020 11:49:59 AM [INFO] Processing user login
+6/15/2020 11:50:01 AM [INFO] User test authenticated successfully.
+6/15/2020 11:50:38 AM [INFO] Appointment record inserted with AppointmentId:22
+6/15/2020 11:51:14 AM [INFO] Deleted appointment record 21

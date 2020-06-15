@@ -37,6 +37,10 @@ namespace ScheduleBoss
 
         public BindingSource MonthViewSource { get; set; } = new BindingSource();
 
+        public BackgroundWorker AppointmentChecker { get; set; }  = new BackgroundWorker();
+
+        public System.Windows.Forms.Timer AppointmentCheckerTimer { get; set; } = new System.Windows.Forms.Timer();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -53,8 +57,7 @@ namespace ScheduleBoss
 
             // get the current culture of the user's system
             this.CurrentCulture = Thread.CurrentThread.CurrentCulture; 
-           
-            
+                       
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
@@ -67,6 +70,10 @@ namespace ScheduleBoss
 
         }
 
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.AppointmentChecker.CancelAsync();
+        }
 
         private void btn_AddAppointment_Click(object sender, EventArgs e)
         {
@@ -134,16 +141,72 @@ namespace ScheduleBoss
 
         private void btn_Logout_Click(object sender, EventArgs e)
         {
-            //this.Database.DisconnectFromDatabase();
+
+            // cancel any async tasks that are occurring and close the form
+            this.AppointmentChecker.CancelAsync();
             this.Close();
         }
 
-        private void toolStripSessionLabel_Click(object sender, EventArgs e)
+        #region BACKGROUND WORKER METHODS
+        private void InitializeBackgroundWorker()
         {
+            // set the background worker to support cancellation
+            this.AppointmentChecker.WorkerSupportsCancellation = true;
+
+            // assign a method to the DoWork event handler with a lambda expression - simplifies syntax
+            this.AppointmentChecker.DoWork += (obj, e) => AppointmentChecker_Worker(obj, e);
+            
+            // assign a method to the RunWorkerCompleted event handler with a lambda expression - simplifies syntax
+            this.AppointmentChecker.RunWorkerCompleted += (obj, e) => AppointmentChecker_WorkCompleted(obj, e);
+        }
+
+        private void AppointmentChecker_Worker(object sender, DoWorkEventArgs e) 
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            if (!worker.CancellationPending) 
+            {
+                // start a task to check for upcoming appointments in next 15 minutes
+                e.Result = this.DataProc.GetUpcomingAppointmentsForUser(Session.UserLoginInfo.UserId, 15);
+            }
+                    
+        }
+
+        private void AppointmentChecker_WorkCompleted(object sender, RunWorkerCompletedEventArgs e) 
+        {
+            
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            var UpcomingAppointments = e.Result as DataTable;
+
+            if (UpcomingAppointments.Rows.Count > 0)
+            {
+                foreach (DataRow row in UpcomingAppointments.Rows)
+                {
+                    // convert the time from utc
+                    var Start = Session.ConvertDateTimeFromUtc(DateTime.Parse(row["start"].ToString()));
+
+                    // alert the user for each appointment
+                    MessageBox.Show(
+                            $"Upcoming appointment, starting at {Start}!\n\nAppointment Title: {row["title"].ToString()}\nCustomer: {row["customerName"].ToString()}\nLocation: {row["location"].ToString()}\nURL: {row["url"].ToString()}",
+                            "Upcoming Appointment",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                    );
+                }
+
+            }
 
         }
 
-        // FORM CLOSE EVENT HANDLERS
+        private void AppointmentChecker_TimerWrapper(object sender, EventArgs e)
+        {
+            // run the background worker 
+            this.AppointmentChecker.RunWorkerAsync();
+        }
+        #endregion
+
+        #region FORM CLOSE EVENT HANDLERS
 
         private void LoginPrompt_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -200,14 +263,14 @@ namespace ScheduleBoss
                 DataGridList.ForEach( 
                     v => {
                         // set options
-                        v.RowHeadersVisible = false;
-                        v.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                         v.AllowUserToAddRows = false;
                         v.AllowUserToDeleteRows = false;
                         v.AllowUserToResizeRows = false;
                         v.AllowUserToOrderColumns = false;
-                        v.EditMode = DataGridViewEditMode.EditProgrammatically;
                         v.MultiSelect = false;
+                        v.RowHeadersVisible = false;
+                        v.EditMode = DataGridViewEditMode.EditProgrammatically;
+                        v.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                         
                         // set DataGridView display options
                         v.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
@@ -247,7 +310,15 @@ namespace ScheduleBoss
 
                     }
                 );
-               
+
+                // initialize background worker, run the task 
+                InitializeBackgroundWorker();
+                this.AppointmentChecker.RunWorkerAsync();
+
+                // set up the timer with an interval of one minute, and start it so that the task continues executing
+                this.AppointmentCheckerTimer.Tick += new EventHandler(AppointmentChecker_TimerWrapper);
+                this.AppointmentCheckerTimer.Interval = 60000;
+                this.AppointmentCheckerTimer.Start();
 
             }
             else
@@ -279,7 +350,9 @@ namespace ScheduleBoss
             dataGridWeek.Refresh();
             dataGridMonth.Refresh();
         }
+        #endregion
 
+        #region DATA GRID VIEW FORMATTERS 
         private void dataGridWeek_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.Value is DateTime)
@@ -298,10 +371,8 @@ namespace ScheduleBoss
             }
         }
 
+        #endregion
 
-
-        // END FORM CLOSE EVENT HANDLERS
-
-
+        
     }
 }

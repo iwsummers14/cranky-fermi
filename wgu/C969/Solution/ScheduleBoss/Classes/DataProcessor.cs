@@ -2,6 +2,7 @@
 using ScheduleBoss.Enums;
 using System;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace ScheduleBoss.Classes
 {
@@ -162,6 +163,45 @@ namespace ScheduleBoss.Classes
 
         }
 
+        // method to return appointments for a user 
+        public DataTable GetUpcomingAppointmentsForUser(int userId, int minutes)
+        {
+
+            // declare variables
+            var AllRecords = new DataTable();
+            var filterStartDate = DateTime.UtcNow;
+            var filterEndDate = filterStartDate.AddMinutes(minutes);
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+
+            string queryTmp = "SELECT a.appointmentId, c.customerName, a.title, a.description, a.location, a.contact, a.type, a.url, a.start, a.end";
+            queryTmp += " FROM appointment a INNER JOIN customer c ON a.customerId = c.customerId";
+            queryTmp += " WHERE start >= @filterStartDate AND start <= @filterEndDate AND userId = @userId";
+            queryTmp += " ORDER BY start ASC";
+
+            query.CommandText = queryTmp;
+            query.Parameters.AddWithValue("@filterStartDate", filterStartDate);
+            query.Parameters.AddWithValue("@filterEndDate", filterEndDate);
+            query.Parameters.AddWithValue("@userId", userId);
+        
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // execute the query 
+            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+            {
+                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                dataAdapter.Fill(AllRecords);
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            return AllRecords;
+
+        }
+                
         // method to get the value of the next 'id' for a given entry type
         public int GetNextId(DatabaseEntries entryType)
         {

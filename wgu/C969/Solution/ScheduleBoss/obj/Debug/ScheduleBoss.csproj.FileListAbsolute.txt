@@ -35,7 +35,6 @@ C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleB
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.csproj.CopyComplete
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.Forms.NewCustomer.resources
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.Forms.NewAppointment.resources
-C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.csprojAssemblyReference.cache
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.Forms.ModifyCustomer.resources
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.Forms.CustomerList.resources
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C969\Solution\ScheduleBoss\obj\Debug\ScheduleBoss.Forms.ModifyAppointment.resources

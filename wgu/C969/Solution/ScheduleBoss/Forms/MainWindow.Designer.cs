@@ -229,7 +229,6 @@
             // 
             this.toolStripSessionLabel.Name = "toolStripSessionLabel";
             this.toolStripSessionLabel.Size = new System.Drawing.Size(0, 17);
-            this.toolStripSessionLabel.Click += new System.EventHandler(this.toolStripSessionLabel_Click);
             // 
             // panel3
             // 
@@ -267,6 +266,7 @@
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SCHEDULE BOSS - Home";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.tabControlAppts.ResumeLayout(false);
             this.tabThisWeek.ResumeLayout(false);
