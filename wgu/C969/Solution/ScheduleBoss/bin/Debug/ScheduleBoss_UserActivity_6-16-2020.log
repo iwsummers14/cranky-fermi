@@ -1,0 +1,72 @@
+﻿6/16/2020 2:21:20 AM [INFO] Application started
+6/16/2020 2:21:20 AM [INFO] Processing user login
+6/16/2020 2:21:25 AM [INFO] User test authenticated successfully.
+6/16/2020 2:21:49 AM [INFO] Deleted appointment record 3
+6/16/2020 2:21:57 AM [INFO] Application started
+6/16/2020 2:21:57 AM [INFO] Processing user login
+6/16/2020 2:22:01 AM [INFO] User test authenticated successfully.
+6/16/2020 2:22:22 AM [INFO] Deleted appointment record 5
+6/16/2020 2:28:25 AM [INFO] Application started
+6/16/2020 2:28:25 AM [INFO] Processing user login
+6/16/2020 2:28:29 AM [INFO] User test authenticated successfully.
+6/16/2020 2:28:44 AM [INFO] Deleted appointment record 6
+6/16/2020 3:20:46 AM [INFO] Application started
+6/16/2020 3:20:46 AM [INFO] Processing user login
+6/16/2020 3:20:51 AM [INFO] User test authenticated successfully.
+6/16/2020 3:33:06 AM [INFO] Application started
+6/16/2020 3:33:06 AM [INFO] Processing user login
+6/16/2020 3:33:10 AM [INFO] User test authenticated successfully.
+6/16/2020 3:37:18 AM [INFO] Application started
+6/16/2020 3:37:18 AM [INFO] Processing user login
+6/16/2020 3:37:21 AM [INFO] User test authenticated successfully.
+6/16/2020 3:41:45 AM [INFO] Application started
+6/16/2020 3:41:45 AM [INFO] Processing user login
+6/16/2020 3:41:48 AM [INFO] User test authenticated successfully.
+6/16/2020 3:42:13 AM [INFO] Application started
+6/16/2020 3:42:13 AM [INFO] Processing user login
+6/16/2020 3:42:17 AM [INFO] User test authenticated successfully.
+6/16/2020 3:43:13 AM [INFO] Application started
+6/16/2020 3:43:13 AM [INFO] Processing user login
+6/16/2020 3:43:16 AM [INFO] User test authenticated successfully.
+6/16/2020 3:46:30 AM [INFO] Application started
+6/16/2020 3:46:30 AM [INFO] Processing user login
+6/16/2020 3:46:33 AM [INFO] User test authenticated successfully.
+6/16/2020 3:48:12 AM [INFO] Application started
+6/16/2020 3:48:12 AM [INFO] Processing user login
+6/16/2020 3:48:16 AM [INFO] User test authenticated successfully.
+6/16/2020 3:53:24 AM [INFO] Application started
+6/16/2020 3:53:24 AM [INFO] Processing user login
+6/16/2020 3:53:28 AM [INFO] User test authenticated successfully.
+6/16/2020 3:53:50 AM [INFO] Application started
+6/16/2020 3:53:50 AM [INFO] Processing user login
+6/16/2020 3:53:53 AM [INFO] User test authenticated successfully.
+6/16/2020 3:55:09 AM [INFO] Application started
+6/16/2020 3:55:09 AM [INFO] Processing user login
+6/16/2020 3:55:12 AM [INFO] User test authenticated successfully.
+6/16/2020 4:01:50 AM [INFO] Application started
+6/16/2020 4:01:50 AM [INFO] Processing user login
+6/16/2020 4:01:53 AM [INFO] User test authenticated successfully.
+6/16/2020 7:07:41 PM [INFO] Application started
+6/16/2020 7:07:41 PM [INFO] Processing user login
+6/16/2020 7:07:48 PM [INFO] User test authenticated successfully.
+6/16/2020 7:08:10 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/16/2020 7:08:44 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/16/2020 7:08:54 PM [INFO] Deleted appointment record 8
+6/16/2020 7:17:47 PM [INFO] Application started
+6/16/2020 7:17:47 PM [INFO] Processing user login
+6/16/2020 7:17:50 PM [INFO] User test authenticated successfully.
+6/16/2020 7:18:36 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/16/2020 7:19:00 PM [INFO] Appointment record inserted with AppointmentId:23
+6/16/2020 7:19:19 PM [INFO] Appointment record inserted with AppointmentId:4
+6/16/2020 7:19:40 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/16/2020 7:19:56 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/16/2020 7:20:32 PM [INFO] Application started
+6/16/2020 7:20:32 PM [INFO] Processing user login
+6/16/2020 7:20:36 PM [INFO] User test authenticated successfully.
+6/16/2020 8:01:47 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/16/2020 8:04:35 PM [INFO] Application started
+6/16/2020 8:04:35 PM [INFO] Processing user login
+6/16/2020 8:04:39 PM [INFO] User test authenticated successfully.
+6/16/2020 8:04:58 PM [INFO] Appointment record inserted with AppointmentId:23
+6/16/2020 8:05:11 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
+6/16/2020 8:05:17 PM [INFO] Appointment record inserted with AppointmentId:23

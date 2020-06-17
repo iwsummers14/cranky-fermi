@@ -97,6 +97,18 @@
     <Compile Include="Forms\NewCustomer.Designer.cs">
       <DependentUpon>NewCustomer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LogViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LogViewer.Designer.cs">
+      <DependentUpon>LogViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ReportViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ReportViewer.Designer.cs">
+      <DependentUpon>ReportViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UserLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +131,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewCustomer.resx">
       <DependentUpon>NewCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LogViewer.resx">
+      <DependentUpon>LogViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ReportViewer.resx">
+      <DependentUpon>ReportViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserLogin.en-US.resx">
       <DependentUpon>UserLogin.cs</DependentUpon>
@@ -170,6 +188,7 @@
     <Content Include="Resources\contacts_book_2_fill.ico" />
     <Content Include="Resources\contacts_book_fill.ico" />
     <Content Include="Resources\contacts_fill.ico" />
+    <Content Include="Resources\layout-3-fill.ico" />
     <Content Include="Resources\phone_fill.ico" />
     <Content Include="Resources\question_fill.ico" />
     <Content Include="Resources\team_fill.ico" />

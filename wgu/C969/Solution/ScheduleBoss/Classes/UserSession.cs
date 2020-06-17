@@ -17,6 +17,8 @@ namespace ScheduleBoss.Classes
 
         public TimeZoneInfo UserTimeZone { get; private set; }
 
+        public CultureInfo CurrentCulture { get; set; }
+
         public bool IsDaylightSavingsTime { get; private set; }
 
         public LoginResponse UserLoginInfo { get; set; }
@@ -26,6 +28,8 @@ namespace ScheduleBoss.Classes
         public TimeSpan WorkDayEnd { get; private set; }
 
         public List<string> WorkDays { get; private set; }
+
+        public List<string> WorkWeek { get; private set; }
 
         public UserSession()
         {
@@ -39,7 +43,10 @@ namespace ScheduleBoss.Classes
 
             // Parse the workdays string and convert to a list
             this.WorkDays = AppSettings["WorkDays"].Split(',').ToList<string>();
-            
+
+            // Parse the work week string and convert to a list
+            this.WorkWeek = AppSettings["WorkWeek"].Split(',').ToList<string>();
+
             // read workday information in from app.config
             this.WorkDayStart = TimeSpan.Parse(AppSettings["WorkDayStart"]);
             this.WorkDayEnd = TimeSpan.Parse(AppSettings["WorkDayEnd"]);
@@ -58,6 +65,49 @@ namespace ScheduleBoss.Classes
             return convertedTime;
         }
 
+        public Dictionary<string, DateTime> GetThisWeek(DateTime now) 
+        {
+            var returnRange = new Dictionary<string, DateTime>();
+            var weekIndex = this.WorkWeek.IndexOf(now.DayOfWeek.ToString());
+
+            // special case for Saturday.. the work week is over, appointments on Saturday are not allowed,
+            // so the range would then start on the next day, Sunday
+            if (weekIndex == 6)
+            {
+                DateTime weekStart = now.AddDays(1);
+                DateTime weekEnd = weekStart.AddDays(7);
+
+                returnRange.Add("WeekStart", weekStart);
+                returnRange.Add("WeekEnd", weekEnd);
+            }
+
+            else
+            {
+                DateTime weekStart = now.AddDays(-weekIndex);
+                DateTime weekEnd = weekStart.AddDays(7);
+
+                returnRange.Add("WeekStart", weekStart);
+                returnRange.Add("WeekEnd", weekEnd);
+            }
+            
+
+            return returnRange;
+        }
+
+        public Dictionary<string, DateTime> GetThisMonth(DateTime now)
+        {
+            var returnRange = new Dictionary<string, DateTime>();
+            var monthIndex = (now.Day - 1);
+            var daysThisMonth = this.CurrentCulture.Calendar.GetDaysInMonth(now.Year, now.Month);
+
+            DateTime monthStart = now.AddDays(-monthIndex);
+            DateTime monthEnd = monthStart.AddDays(daysThisMonth);
+
+            returnRange.Add("MonthStart", monthStart);
+            returnRange.Add("MonthEnd", monthEnd);
+
+            return returnRange;
+        }
 
     }
 

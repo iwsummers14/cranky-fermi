@@ -749,3 +749,27 @@ Parameter name: Start Time
 6/15/2020 11:50:01 AM [INFO] User test authenticated successfully.
 6/15/2020 11:50:38 AM [INFO] Appointment record inserted with AppointmentId:22
 6/15/2020 11:51:14 AM [INFO] Deleted appointment record 21
+6/16/2020 12:49:10 AM [INFO] Application started
+6/16/2020 12:49:10 AM [INFO] Processing user login
+6/16/2020 12:49:13 AM [INFO] User test authenticated successfully.
+6/16/2020 12:50:00 AM [INFO] Application started
+6/16/2020 12:50:00 AM [INFO] Processing user login
+6/16/2020 12:50:03 AM [INFO] User test authenticated successfully.
+6/16/2020 1:14:15 AM [INFO] Application started
+6/16/2020 1:14:15 AM [INFO] Processing user login
+6/16/2020 1:14:18 AM [INFO] User test authenticated successfully.
+6/16/2020 1:27:14 AM [INFO] Application started
+6/16/2020 1:27:15 AM [INFO] Processing user login
+6/16/2020 1:27:21 AM [INFO] User test authenticated successfully.
+6/16/2020 1:29:39 AM [INFO] Application started
+6/16/2020 1:29:39 AM [INFO] Processing user login
+6/16/2020 1:29:43 AM [INFO] User test authenticated successfully.
+6/16/2020 1:32:48 AM [INFO] Application started
+6/16/2020 1:32:48 AM [INFO] Processing user login
+6/16/2020 1:32:52 AM [INFO] User test authenticated successfully.
+6/16/2020 1:33:13 AM [INFO] Application started
+6/16/2020 1:33:13 AM [INFO] Processing user login
+6/16/2020 1:33:16 AM [INFO] User test authenticated successfully.
+6/16/2020 1:48:38 AM [INFO] Application started
+6/16/2020 1:48:38 AM [INFO] Processing user login
+6/16/2020 1:48:42 AM [INFO] User test authenticated successfully.

@@ -51,10 +51,6 @@ namespace ScheduleBoss.Forms
             cbox_Customer.DisplayMember = "customerName";
             cbox_Customer.ValueMember = "customerId";
 
-            // set properties on date pickers
-            dtp_StartDate.MinDate = DateTime.Today;
-            dtp_EndDate.MinDate = DateTime.Today;
-
             // set field values from loaded objects - converting times from UTC to local time zone
             mbox_ApptTitle.Text = this.Appointment.title;
             cbox_Consultant.SelectedValue = this.Appointment.userId;
@@ -160,7 +156,7 @@ namespace ScheduleBoss.Forms
                 DateTime End = Session.ConvertDateTimeToUtc(dtp_EndDate.Value.Date + dtp_EndTime.Value.TimeOfDay);
 
                 //validate that there is not a conflict with another appointment
-                bool ConflictDetected = this.DataProc.ValidateAppointmentTimesForUser(Session.UserLoginInfo.UserId, Start, End);
+                bool ConflictDetected = this.DataProc.ValidateAppointmentTimesForUser(Session.UserLoginInfo.UserId, Start, End, this.Appointment.appointmentId);
 
                 if (ConflictDetected)
                 {
@@ -169,8 +165,8 @@ namespace ScheduleBoss.Forms
 
                 // process the Appointment object
 
-                // get next ID value
-                ModAppt.appointmentId = this.DataProc.GetNextId(DatabaseEntries.Appointment);
+                // assign the ID value
+                ModAppt.appointmentId = this.Appointment.appointmentId;
 
                 // set customer and userId values from combo boxes
                 ModAppt.customerId = int.Parse(cbox_Customer.SelectedValue.ToString());

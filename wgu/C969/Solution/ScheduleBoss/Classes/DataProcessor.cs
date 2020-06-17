@@ -683,8 +683,8 @@ namespace ScheduleBoss.Classes
             return IsUpdated;
         }
 
-        // method to check for appointment overlap
-        public bool ValidateAppointmentTimesForUser(int userId, DateTime Start, DateTime End)
+        // method to check for appointment overlap with optional appointmentId param
+        public bool ValidateAppointmentTimesForUser(int userId, DateTime Start, DateTime End, int apptId = 0)
         {
             // declare a return value
             bool IsOverlapping = false;
@@ -699,13 +699,15 @@ namespace ScheduleBoss.Classes
 
             string queryTmp = "SELECT * FROM appointment";
             queryTmp += " WHERE userId = @userId";
-            queryTmp += " AND (start > @filterStartDate AND start < @filterEndDate)";
+            queryTmp += " AND appointmentId != @appointmentId";
+            queryTmp += " AND ((start > @filterStartDate AND start < @filterEndDate)";
             queryTmp += " OR (end > @filterStartDate AND end < @filterEndDate)";
             queryTmp += " OR (start = @filterStartDate)";
-            queryTmp += " OR (end = @filterEndDate)";
+            queryTmp += " OR (end = @filterEndDate))";
 
 
             query.CommandText = queryTmp;
+            query.Parameters.AddWithValue("@appointmentId", apptId);
             query.Parameters.AddWithValue("@filterStartDate", Start);
             query.Parameters.AddWithValue("@filterEndDate", End);
             query.Parameters.AddWithValue("@userId", userId);
