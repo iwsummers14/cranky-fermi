@@ -1,0 +1,62 @@
+﻿6/17/2020 10:55:42 AM [INFO] Application started
+6/17/2020 10:55:42 AM [INFO] Processing user login
+6/17/2020 10:55:45 AM [INFO] User test authenticated successfully.
+6/17/2020 10:56:08 AM [INFO] Address record inserted with AddressId:4
+6/17/2020 10:56:08 AM [INFO] Customer record inserted with CustomerId:4
+6/17/2020 11:10:22 AM [INFO] Application started
+6/17/2020 11:10:22 AM [INFO] Processing user login
+6/17/2020 11:10:25 AM [INFO] User test authenticated successfully.
+6/17/2020 11:10:47 AM [INFO] Address record inserted with AddressId:5
+6/17/2020 11:10:47 AM [INFO] Customer record inserted with CustomerId:5
+6/17/2020 11:11:06 AM [INFO] Address record updated with AddressId:5
+6/17/2020 11:11:06 AM [INFO] Customer record updated with CustomerId:5
+6/17/2020 11:12:03 AM [ERROR] Error during INSERT operation: Fatal error encountered during command execution.
+6/17/2020 11:12:03 AM [INFO] Rolling back Database transaction.
+6/17/2020 11:12:07 AM [ERROR] Operation error: Error during INSERT operation. The SQL transaction has been rolled back.
+6/17/2020 11:13:30 AM [INFO] Application started
+6/17/2020 11:13:31 AM [INFO] Processing user login
+6/17/2020 11:13:38 AM [INFO] User test authenticated successfully.
+6/17/2020 11:14:34 AM [INFO] Appointment record inserted with AppointmentId:24
+6/17/2020 11:14:47 AM [INFO] Appointment record inserted with AppointmentId:24
+6/17/2020 11:47:22 AM [INFO] Application started
+6/17/2020 11:47:22 AM [INFO] Processing user login
+6/17/2020 11:47:25 AM [INFO] User test authenticated successfully.
+6/17/2020 12:40:46 PM [INFO] Application started
+6/17/2020 12:40:46 PM [INFO] Processing user login
+6/17/2020 12:40:50 PM [INFO] User test authenticated successfully.
+6/17/2020 12:41:41 PM [ERROR] Input error: Appointment End Time time is outside of normal business hours. Normal business hours are 08:00:00 to 17:00:00.
+Parameter name: End Time
+6/17/2020 12:41:45 PM [INFO] Appointment record inserted with AppointmentId:25
+6/17/2020 1:13:49 PM [INFO] Application started
+6/17/2020 1:13:49 PM [INFO] Processing user login
+6/17/2020 1:13:53 PM [INFO] User test authenticated successfully.
+6/17/2020 1:16:43 PM [INFO] Application started
+6/17/2020 1:16:43 PM [INFO] Processing user login
+6/17/2020 1:19:46 PM [INFO] Application started
+6/17/2020 1:19:46 PM [INFO] Processing user login
+6/17/2020 1:26:29 PM [INFO] Application started
+6/17/2020 1:26:29 PM [INFO] Processing user login
+6/17/2020 1:26:37 PM [INFO] User test authenticated successfully.
+6/17/2020 1:27:30 PM [INFO] Application started
+6/17/2020 1:27:30 PM [INFO] Processing user login
+6/17/2020 1:27:34 PM [INFO] User test authenticated successfully.
+6/17/2020 2:21:34 PM [INFO] Application started
+6/17/2020 2:21:34 PM [INFO] Requesting user login
+6/17/2020 2:21:34 PM [INFO] Processing user login
+6/17/2020 2:21:37 PM [INFO] User test authenticated successfully.
+6/17/2020 2:22:01 PM [INFO] Logout requested
+6/17/2020 2:22:01 PM [INFO] Application closing
+6/17/2020 2:22:03 PM [INFO] Application started
+6/17/2020 2:22:03 PM [INFO] Requesting user login
+6/17/2020 2:22:03 PM [INFO] Processing user login
+6/17/2020 2:22:13 PM [WARN] User joe failed to authenticate.
+6/17/2020 2:22:13 PM [INFO] User joe has attempted authentication 1 times.
+6/17/2020 2:22:15 PM [INFO] User test authenticated successfully.
+6/17/2020 2:22:34 PM [INFO] Logout requested
+6/17/2020 2:22:34 PM [INFO] Application closing
+6/17/2020 2:33:49 PM [INFO] Application started
+6/17/2020 2:33:49 PM [INFO] Requesting user login
+6/17/2020 2:33:49 PM [INFO] Processing user login
+6/17/2020 2:34:00 PM [INFO] User test authenticated successfully.
+6/17/2020 3:33:22 PM [INFO] Logout requested
+6/17/2020 3:33:22 PM [INFO] Application closing

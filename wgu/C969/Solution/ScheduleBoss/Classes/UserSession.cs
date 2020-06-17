@@ -9,8 +9,15 @@ using System.Security;
 
 namespace ScheduleBoss.Classes
 {
+    /// <summary>
+    /// Class to hold user session data. This includes timezone information, work day start and end
+    /// times, work days, and the order of work days in a work week. This class also holds methods to
+    /// convert datetime information from the session time zone to UTC and from UTC to the session
+    /// time zone. It also generates date ranges for 'this week' and 'this month' based on a date time.
+    /// </summary>
     public class UserSession
     {
+     
         public bool IsAuthenticated { get; set; }
 
         public DateTime UserLoginTime { get; set; }
@@ -31,6 +38,7 @@ namespace ScheduleBoss.Classes
 
         public List<string> WorkWeek { get; private set; }
 
+        // constructor
         public UserSession()
         {
 
@@ -53,18 +61,21 @@ namespace ScheduleBoss.Classes
                 
         }
         
+        // method to convert a time from UTC to the session time zone
         public DateTime ConvertDateTimeFromUtc(DateTime time)
         {
             DateTime convertedTime = TimeZoneInfo.ConvertTimeFromUtc(time, this.UserTimeZone);
             return convertedTime;
         }
 
+        // method to convert a time from the session time zone to UTC
         public DateTime ConvertDateTimeToUtc(DateTime time)
         {
             DateTime convertedTime = TimeZoneInfo.ConvertTimeToUtc(time, this.UserTimeZone);
             return convertedTime;
         }
 
+        // method to get 'this week' range from a given datetime
         public Dictionary<string, DateTime> GetThisWeek(DateTime now) 
         {
             var returnRange = new Dictionary<string, DateTime>();
@@ -94,6 +105,7 @@ namespace ScheduleBoss.Classes
             return returnRange;
         }
 
+        // method to get 'this month' range from a given datetime
         public Dictionary<string, DateTime> GetThisMonth(DateTime now)
         {
             var returnRange = new Dictionary<string, DateTime>();

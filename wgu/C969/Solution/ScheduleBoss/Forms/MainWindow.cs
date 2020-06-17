@@ -16,6 +16,9 @@ using ScheduleBoss.Enums;
 
 namespace ScheduleBoss
 {
+    /// <summary>
+    /// Main application form. Uses a background worker and a forms timer to check for upcoming appointments and notify the user.
+    /// </summary>
     public partial class MainWindow : Form
     {
 
@@ -69,23 +72,27 @@ namespace ScheduleBoss
 
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            // launch the user login form using the culture information and database connection,
+            // launch the user login form as a modal dialog using the culture information and database connection,
             // with an event handler to deal with the login status
+            this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Requesting user login");
             UserLogin LoginPrompt = new Forms.UserLogin(this.CurrentCulture, this.Database, this.Logger);
             LoginPrompt.FormClosed += new FormClosedEventHandler(LoginPrompt_FormClosed);
-            LoginPrompt.Show();
+            LoginPrompt.TopMost = true;
+            LoginPrompt.ShowDialog();
 
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             // cancel any async tasks that are occurring and dispose
+            this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Application closing");
             CancelAndDisposeBackgroundWorker();
             this.Logger.Dispose();
         }
 
         private void btn_AddAppointment_Click(object sender, EventArgs e)
         {
+            // launch the new appointment form with an event handler for when it is closed
             Form NewAppt = new NewAppointment(this.Database, this.Logger, this.Session);
             NewAppt.FormClosed += new FormClosedEventHandler(Child_FormClosed);
             NewAppt.Show();
@@ -93,8 +100,6 @@ namespace ScheduleBoss
 
         private void btn_ModifyAppointment_Click(object sender, EventArgs e)
         {
-            
-
             // get the active DGV from the tab control (using the tab that is selected)
             // this is a foreach but there is only one DGV per tab.
             tabControlAppts.SelectedTab.Controls.OfType<DataGridView>().ToList().ForEach(
@@ -110,9 +115,10 @@ namespace ScheduleBoss
                         int apptId = int.Parse(row[0].ToString());
                         
                         // get the associated record from the database
-                        Appointment Appt = this.DataProc.GetRecordById(apptId, DatabaseEntries.Appointment) as Appointment;
+                        Appointment Appt = this.DataProc.GetRecordById<Appointment>(apptId, DatabaseEntries.Appointment) as Appointment;
 
-                        // create an instance of the form and display it
+                        // create an instance of the modify appointment form and display it, with an event handler for when
+                        // the form is closed
                         Form ModAppt = new ModifyAppointment(this.Database, this.Logger, this.Session, Appt);
                         ModAppt.FormClosed += new FormClosedEventHandler(Child_FormClosed);
                         ModAppt.Show();
@@ -135,6 +141,7 @@ namespace ScheduleBoss
 
         private void btn_AddCustomer_Click(object sender, EventArgs e)
         {
+            // launch the new customer form with an event handler for when it is closed
             NewCustomer NewCust = new NewCustomer( this.Database, this.Logger, this.Session );
             NewCust.FormClosed += new FormClosedEventHandler(Child_FormClosed);
             NewCust.Show();
@@ -143,6 +150,7 @@ namespace ScheduleBoss
 
         private void btn_ModifyCustomer_Click(object sender, EventArgs e)
         {
+            // launch the customer list form with an event handler for when it is closed
             CustomerList CustList = new CustomerList(this.Database, this.Logger, this.Session);
             CustList.FormClosed += new FormClosedEventHandler(Child_FormClosed);
             CustList.Show();
@@ -150,6 +158,7 @@ namespace ScheduleBoss
 
         private void btn_ViewReports_Click(object sender, EventArgs e)
         {
+            // launch the reportViewer form with an event handler for when it is closed
             Form ReportVwr = new ReportViewer(this.Database, this.Logger, this.Session);
             ReportVwr.FormClosed += new FormClosedEventHandler(Child_FormClosed);
             ReportVwr.Show();
@@ -157,6 +166,7 @@ namespace ScheduleBoss
 
         private void btn_ViewLog_Click(object sender, EventArgs e)
         {
+            // launch the logViewer form with an event handler for when it is closed
             Form LogVwr = new LogViewer(this.LogFilePath);
             LogVwr.FormClosed += new FormClosedEventHandler(Child_FormClosed);
             LogVwr.Show();
@@ -166,8 +176,8 @@ namespace ScheduleBoss
         {
 
             // cancel any async tasks that are occurring and close the form
+            this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Logout requested");
             CancelAndDisposeBackgroundWorker();
-            this.Logger.Dispose();
             this.Close();
         }
 
@@ -179,6 +189,9 @@ namespace ScheduleBoss
         }
 
         #region BACKGROUND WORKER METHODS
+        // these methods pertain to operations of the background worker
+
+        // method to initialize the background worker
         private void InitializeBackgroundWorker()
         {
             // set the background worker to support cancellation
@@ -191,6 +204,7 @@ namespace ScheduleBoss
             this.AppointmentChecker.RunWorkerCompleted += (obj, e) => AppointmentChecker_WorkCompleted(obj, e);
         }
 
+        // method to define the backgroundworker's task
         private void AppointmentChecker_Worker(object sender, DoWorkEventArgs e) 
         {
             BackgroundWorker worker = sender as BackgroundWorker;
@@ -203,11 +217,11 @@ namespace ScheduleBoss
                     
         }
 
+        // method to handle the results of the work 
         private void AppointmentChecker_WorkCompleted(object sender, RunWorkerCompletedEventArgs e) 
         {
-            
+            // notifies the user if there are upcoming appointments in the next 15 minutes
             BackgroundWorker worker = sender as BackgroundWorker;
-
             var UpcomingAppointments = e.Result as DataTable;
 
             if (UpcomingAppointments.Rows.Count > 0)
@@ -230,6 +244,7 @@ namespace ScheduleBoss
 
         }
 
+        // wrapper method to invoke the backgroundworker from a timer
         private void AppointmentChecker_TimerWrapper(object sender, EventArgs e)
         {
             // run the background worker 
@@ -238,7 +253,9 @@ namespace ScheduleBoss
         #endregion
 
         #region CHILD FORM CLOSE EVENT HANDLERS
+        // these methods are invoked when child forms are closed
 
+        // method to prepare the main window after a login form terminates (success or failure)
         private void LoginPrompt_FormClosed(object sender, FormClosedEventArgs e)
         {
             // cast the sender as a UserLogin object 
@@ -338,20 +355,23 @@ namespace ScheduleBoss
                 InitializeBackgroundWorker();
                 this.AppointmentChecker.RunWorkerAsync();
 
-                // set up the timer with an interval of one minute, and start it so that the task continues executing
+                // set up the timer to fire the wrapper method when it 'ticks'
+                // with an interval of three minutes, and start it so that the task executes repeatedly
                 this.AppointmentCheckerTimer.Tick += new EventHandler(AppointmentChecker_TimerWrapper);
-                this.AppointmentCheckerTimer.Interval = 60000;
+                this.AppointmentCheckerTimer.Interval = 180000;
                 this.AppointmentCheckerTimer.Start();
 
             }
             else
             {
+                // close the window if authentication was not successful
                 this.Close();
             }
 
 
         }
 
+        // method to refresh the datagrid views on a form close
         private void Child_FormClosed(object sender, FormClosedEventArgs e)
         {
             GetWeekAndMonthAppointments();
@@ -364,6 +384,9 @@ namespace ScheduleBoss
         #endregion
 
         #region DATA GRID VIEW FORMATTERS 
+        // these methods format the datagridviews for the proper timezone
+
+        // method to format dates in the week view
         private void dataGridWeek_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.Value is DateTime)
@@ -373,6 +396,7 @@ namespace ScheduleBoss
             }
         }
 
+        // method to format dates in the month view
         private void dataGridMonth_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.Value is DateTime)
@@ -386,7 +410,9 @@ namespace ScheduleBoss
         #endregion
 
         #region PRIVATE METHODS
+        // private methods to handle tasks within the form
 
+        // method to cancel work and dispose of the bg worker
         private void CancelAndDisposeBackgroundWorker()
         {
             // cancel any async tasks that are occurring and close the form
@@ -405,6 +431,7 @@ namespace ScheduleBoss
             }
         }
 
+        // method to get week and month appointments 
         private void GetWeekAndMonthAppointments()
         {
             // get the ranges for this week and this month
@@ -428,6 +455,7 @@ namespace ScheduleBoss
             dataGridMonth.DataSource = this.MonthViewSource;
         }
 
+        // method to adjust the date range label text
         private void SetDateRangeLabel()
         {
             // set the date range label appropriately

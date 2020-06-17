@@ -76,8 +76,6 @@ namespace ScheduleBoss.Forms
             Regex PhoneValidator = new Regex("[^0-9\\-]");
             Regex PostalValidator = new Regex("[^0-9]");
             
-
-
             try
             {
                 // validate the fields are not empty

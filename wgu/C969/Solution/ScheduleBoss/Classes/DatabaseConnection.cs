@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MySql.Data.MySqlClient;
 using System.Configuration;
-using MySql.Data.MySqlClient;
 
 namespace ScheduleBoss.Classes
 {
+
+    /// <summary>
+    /// class to hold information pertaining to the backend database connection required by ScheduleBoss
+    /// </summary>
     public class DatabaseConnection
     {
 
@@ -15,22 +14,25 @@ namespace ScheduleBoss.Classes
 
         public MySqlConnection SqlConnection { get; set; }
 
+        // default constructor that uses connection string stored in app.config
         public DatabaseConnection()
         {
-            // default constructor that uses connection string stored in app.config
+            
             this.ConnectionString = ConfigurationManager.ConnectionStrings["ScheduleBossDatabase"].ConnectionString;
 
         }
 
+        // overload constructor allowing a specific connectionstring to be passed
         public DatabaseConnection(string connString)
         {
-            // overload constructor allowing a connectionstring to be passed
+            
             this.ConnectionString = connString;
         }
 
+        // overload constructor that constructs a connstring out of four elements
         public DatabaseConnection(string hostname, string databaseName, string username, string password)
         {
-            // overload constructor that constructs a connstring out of four elements
+            
             MySqlConnectionStringBuilder csBuilder = new MySqlConnectionStringBuilder();
             csBuilder.Server = hostname;
             csBuilder.UserID = username;
@@ -40,9 +42,10 @@ namespace ScheduleBoss.Classes
             this.ConnectionString = csBuilder.ToString();  
         }
 
+        // method to establish connection to backend database
         public bool ConnectToDatabase()
         {
-            // method to establish connection
+            
             this.SqlConnection = new MySqlConnection(this.ConnectionString);
 
             if (this.SqlConnection.State == System.Data.ConnectionState.Open)
@@ -56,28 +59,43 @@ namespace ScheduleBoss.Classes
                     this.SqlConnection.Open();
                     return true;
                 }
-                catch (MySqlException msEx)
+                catch 
                 {
-                    
                     return false;
                 }
             }
             
                         
         }
+
+        // method to disconnect from the backend database
         public bool DisconnectFromDatabase()
         {
 
             if (this.SqlConnection.State == System.Data.ConnectionState.Open)
             {
-                this.SqlConnection.Close();
-                return true;
+                try
+                {
+                    this.SqlConnection.Close();
+                    return true;
+                } 
+                catch
+                {
+                    return false;
+                }
 
             }
             else if (this.SqlConnection.State == System.Data.ConnectionState.Broken)
             {
-                this.SqlConnection.Close();
-                return true;
+                try
+                {
+                    this.SqlConnection.Close();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
             }
             else
             {

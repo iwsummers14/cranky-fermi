@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace ScheduleBoss.Classes
 {
+    /// <summary>
+    /// DataModel class to hold Customer data. Mirrors the columns in the Customer table.
+    /// </summary>
     public class Customer
     {
+        
         public int customerId { get; set; }
         
         public string customerName { get; set; }
@@ -25,11 +29,11 @@ namespace ScheduleBoss.Classes
 
         public string lastUpdateBy { get; set; }
 
-        public Customer()
-        {
+        // default constructor
+        public Customer(){}
 
-        }
 
+        // constructor taking a datarow to set property values
         public Customer(DataRow row)
         {
             this.customerId = int.Parse(row["customerId"].ToString());

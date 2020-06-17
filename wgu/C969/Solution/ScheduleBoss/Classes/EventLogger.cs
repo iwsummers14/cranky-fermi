@@ -7,6 +7,9 @@ using System.IO;
 
 namespace ScheduleBoss.Classes
 {
+    /// <summary>
+    /// Class to handle event logging, to a plaintext log file.
+    /// </summary>
     public class EventLogger : IDisposable
     {
         
@@ -16,6 +19,7 @@ namespace ScheduleBoss.Classes
 
         public string LogFilePath { get; set; }
 
+        // constructor - requires a log file path to be passed in
         public EventLogger(string FilePath)
         {
             // set the logfilepath property
@@ -29,14 +33,18 @@ namespace ScheduleBoss.Classes
             
             
         }
+
+        // method to write an entry to the log 
         public void WriteLog(FormattableString message)
         {
             this.Writer.WriteLine(message);
             this.Writer.Flush();
         }
 
+        // dispose method for implementing the IDisposable interface
         public void Dispose()
         {
+            // dispose of the streamWriter and close the file stream
             this.Writer.Dispose();
             this.LogFileStream.Close();
             

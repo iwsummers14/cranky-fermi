@@ -58,7 +58,7 @@
     <Compile Include="Classes\DatabaseConnection.cs" />
     <Compile Include="Classes\DataProcessor.cs" />
     <Compile Include="Classes\EventLogger.cs" />
-    <Compile Include="Classes\LoginResponse.cs" />
+    <Compile Include="Classes\DataModels\LoginResponse.cs" />
     <Compile Include="Classes\UserSession.cs" />
     <Compile Include="Enums\DatabaseEntries.cs" />
     <Compile Include="Forms\CustomerList.cs">
@@ -192,6 +192,7 @@
     <Content Include="Resources\phone_fill.ico" />
     <Content Include="Resources\question_fill.ico" />
     <Content Include="Resources\team_fill.ico" />
+    <Content Include="Resources\terminal-box-fill.ico" />
     <Content Include="Resources\time_fill.ico" />
     <Content Include="Resources\user_3_fill.ico" />
     <Content Include="Resources\user_add_fill.ico" />

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ScheduleBoss.Classes
 {
+    /// <summary>
+    /// DataModel class to hold City data. Mirrors the columns in the City table.
+    /// </summary>
     public class CustomerCity
     {
         public int cityId { get; set; }
@@ -23,8 +26,10 @@ namespace ScheduleBoss.Classes
 
         public string lastUpdateBy { get; set; }
 
+        // default constructor
         public CustomerCity() { }
-
+        
+        // constructor taking a datarow as input to set property values
         public CustomerCity(DataRow row)
         {
             this.cityId = int.Parse(row["cityId"].ToString());

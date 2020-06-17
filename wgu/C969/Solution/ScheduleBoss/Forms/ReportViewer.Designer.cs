@@ -69,7 +69,7 @@
             // 
             // btn_Close
             // 
-            this.btn_Close.Location = new System.Drawing.Point(674, 401);
+            this.btn_Close.Location = new System.Drawing.Point(673, 775);
             this.btn_Close.Name = "btn_Close";
             this.btn_Close.Size = new System.Drawing.Size(113, 43);
             this.btn_Close.TabIndex = 5;
@@ -90,7 +90,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 830);
             this.Controls.Add(this.btn_Run);
             this.Controls.Add(this.btn_Close);
             this.Controls.Add(this.lbl_ReportType);
@@ -98,6 +98,7 @@
             this.Controls.Add(this.lbl_ReportViewer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ReportViewer";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SCHEDULE BOSS - Report Viewer";
             this.Load += new System.EventHandler(this.ReportViewer_Load);
             this.ResumeLayout(false);
