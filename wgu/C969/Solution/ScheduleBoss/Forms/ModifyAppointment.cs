@@ -51,10 +51,6 @@ namespace ScheduleBoss.Forms
             cbox_Customer.DisplayMember = "customerName";
             cbox_Customer.ValueMember = "customerId";
 
-            // set properties on date pickers
-            dtp_StartDate.MinDate = DateTime.Today;
-            dtp_EndDate.MinDate = DateTime.Today;
-
             // set field values from loaded objects - converting times from UTC to local time zone
             mbox_ApptTitle.Text = this.Appointment.title;
             cbox_Consultant.SelectedValue = this.Appointment.userId;
@@ -82,7 +78,8 @@ namespace ScheduleBoss.Forms
 
             try {
 
-                // validate the text fields are not empty, and evaluate them against the regex validators
+                // validate the text fields are not empty, and evaluate them against the regex validators.  Using a lambda here
+                // and LINQ selecting by type to avoid repetitive statements against each field.
                 this.apptPanel.Controls.OfType<TextBox>().ToList().ForEach(
                     tb =>
                         {
@@ -159,7 +156,7 @@ namespace ScheduleBoss.Forms
                 DateTime End = Session.ConvertDateTimeToUtc(dtp_EndDate.Value.Date + dtp_EndTime.Value.TimeOfDay);
 
                 //validate that there is not a conflict with another appointment
-                bool ConflictDetected = this.DataProc.ValidateAppointmentTimesForUser(Session.UserLoginInfo.UserId, Start, End);
+                bool ConflictDetected = this.DataProc.ValidateAppointmentTimesForUser(Session.UserLoginInfo.UserId, Start, End, this.Appointment.appointmentId);
 
                 if (ConflictDetected)
                 {
@@ -168,8 +165,8 @@ namespace ScheduleBoss.Forms
 
                 // process the Appointment object
 
-                // get next ID value
-                ModAppt.appointmentId = this.DataProc.GetNextId(DatabaseEntries.Appointment);
+                // assign the ID value
+                ModAppt.appointmentId = this.Appointment.appointmentId;
 
                 // set customer and userId values from combo boxes
                 ModAppt.customerId = int.Parse(cbox_Customer.SelectedValue.ToString());
@@ -187,9 +184,9 @@ namespace ScheduleBoss.Forms
                 ModAppt.start = Start;
                 ModAppt.end = End;
 
-                // set created by, create date, updated by, and update date fields (equal since this is a new record)
-                ModAppt.createdBy = ModAppt.lastUpdateBy = Session.UserLoginInfo.Username;
-                ModAppt.createDate = ModAppt.lastUpdate = DateTime.UtcNow;
+                // set updated by, and update date fields
+                ModAppt.lastUpdateBy = Session.UserLoginInfo.Username;
+                ModAppt.lastUpdate = DateTime.UtcNow;
 
                 // insert the data - possbily make this async/awaitable
                 bool ApptUpdate = this.DataProc.UpdateData(ModAppt, DatabaseEntries.Appointment);
@@ -236,6 +233,7 @@ namespace ScheduleBoss.Forms
 
         private void btn_Delete_Click(object sender, EventArgs e)
         {
+            // request user confirmation before deleting the record
             DialogResult DeleteConfirmation = MessageBox.Show($"Are you sure you wish to delete this appointment?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (DeleteConfirmation == DialogResult.Yes)
@@ -256,6 +254,11 @@ namespace ScheduleBoss.Forms
                 }
 
                 this.Close();
+            }
+            else
+            {
+                // do nothing if confirmation was not given
+                return;
             }
 
         }

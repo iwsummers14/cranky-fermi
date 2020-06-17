@@ -45,16 +45,24 @@ namespace ScheduleBoss.Classes
             // method to establish connection
             this.SqlConnection = new MySqlConnection(this.ConnectionString);
 
-            try
+            if (this.SqlConnection.State == System.Data.ConnectionState.Open)
             {
-                this.SqlConnection.Open();
                 return true;
             }
-            catch (MySqlException msEx)
+            else
             {
-
-                return false;
+                try
+                {
+                    this.SqlConnection.Open();
+                    return true;
+                }
+                catch (MySqlException msEx)
+                {
+                    
+                    return false;
+                }
             }
+            
                         
         }
         public bool DisconnectFromDatabase()

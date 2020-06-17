@@ -48,6 +48,11 @@
             this.toolStripSessionLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.lbl_Exit = new System.Windows.Forms.Label();
+            this.lbl_DateRange = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.btn_ViewLog = new System.Windows.Forms.Button();
+            this.lbl_Reports = new System.Windows.Forms.Label();
+            this.btn_ViewReports = new System.Windows.Forms.Button();
             this.tabControlAppts.SuspendLayout();
             this.tabThisWeek.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridWeek)).BeginInit();
@@ -57,6 +62,7 @@
             this.panel2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_AddAppointment
@@ -112,6 +118,7 @@
             this.tabControlAppts.SelectedIndex = 0;
             this.tabControlAppts.Size = new System.Drawing.Size(1121, 621);
             this.tabControlAppts.TabIndex = 5;
+            this.tabControlAppts.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlAppts_Selected);
             // 
             // tabThisWeek
             // 
@@ -180,7 +187,7 @@
             this.panel2.Controls.Add(this.btn_ModifyCustomer);
             this.panel2.Location = new System.Drawing.Point(1150, 249);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(180, 202);
+            this.panel2.Size = new System.Drawing.Size(180, 147);
             this.panel2.TabIndex = 8;
             // 
             // lbl_Contacts
@@ -229,7 +236,6 @@
             // 
             this.toolStripSessionLabel.Name = "toolStripSessionLabel";
             this.toolStripSessionLabel.Size = new System.Drawing.Size(0, 17);
-            this.toolStripSessionLabel.Click += new System.EventHandler(this.toolStripSessionLabel_Click);
             // 
             // panel3
             // 
@@ -250,11 +256,64 @@
             this.lbl_Exit.TabIndex = 8;
             this.lbl_Exit.Text = "Exit";
             // 
+            // lbl_DateRange
+            // 
+            this.lbl_DateRange.AutoSize = true;
+            this.lbl_DateRange.Location = new System.Drawing.Point(910, 86);
+            this.lbl_DateRange.Name = "lbl_DateRange";
+            this.lbl_DateRange.Size = new System.Drawing.Size(96, 13);
+            this.lbl_DateRange.TabIndex = 13;
+            this.lbl_DateRange.Text = "Displaying Dates:";
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.btn_ViewLog);
+            this.panel4.Controls.Add(this.lbl_Reports);
+            this.panel4.Controls.Add(this.btn_ViewReports);
+            this.panel4.Location = new System.Drawing.Point(1150, 402);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(180, 151);
+            this.panel4.TabIndex = 9;
+            // 
+            // btn_ViewLog
+            // 
+            this.btn_ViewLog.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_ViewLog.Location = new System.Drawing.Point(3, 92);
+            this.btn_ViewLog.Name = "btn_ViewLog";
+            this.btn_ViewLog.Size = new System.Drawing.Size(174, 48);
+            this.btn_ViewLog.TabIndex = 8;
+            this.btn_ViewLog.Text = "View Activity Log";
+            this.btn_ViewLog.UseVisualStyleBackColor = true;
+            this.btn_ViewLog.Click += new System.EventHandler(this.btn_ViewLog_Click);
+            // 
+            // lbl_Reports
+            // 
+            this.lbl_Reports.AutoSize = true;
+            this.lbl_Reports.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_Reports.Location = new System.Drawing.Point(3, 0);
+            this.lbl_Reports.Name = "lbl_Reports";
+            this.lbl_Reports.Size = new System.Drawing.Size(89, 30);
+            this.lbl_Reports.TabIndex = 7;
+            this.lbl_Reports.Text = "Reports";
+            // 
+            // btn_ViewReports
+            // 
+            this.btn_ViewReports.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_ViewReports.Location = new System.Drawing.Point(3, 38);
+            this.btn_ViewReports.Name = "btn_ViewReports";
+            this.btn_ViewReports.Size = new System.Drawing.Size(174, 48);
+            this.btn_ViewReports.TabIndex = 3;
+            this.btn_ViewReports.Text = "View Reports";
+            this.btn_ViewReports.UseVisualStyleBackColor = true;
+            this.btn_ViewReports.Click += new System.EventHandler(this.btn_ViewReports_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1345, 725);
+            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.lbl_DateRange);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label1);
@@ -267,6 +326,7 @@
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SCHEDULE BOSS - Home";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_FormClosing);
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.tabControlAppts.ResumeLayout(false);
             this.tabThisWeek.ResumeLayout(false);
@@ -281,6 +341,8 @@
             this.statusStrip1.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -307,6 +369,11 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label lbl_Exit;
         private System.Windows.Forms.DataGridView dataGridMonth;
+        private System.Windows.Forms.Label lbl_DateRange;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Button btn_ViewLog;
+        private System.Windows.Forms.Label lbl_Reports;
+        private System.Windows.Forms.Button btn_ViewReports;
     }
 }
 

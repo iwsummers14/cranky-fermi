@@ -25,9 +25,15 @@ namespace ScheduleBoss
 
         public EventLogger Logger { get; set; }
 
+        public string LogFilePath { get; set; } = $".\\ScheduleBoss_UserActivity_{DateTime.Now.ToShortDateString().Replace("/", "-")}.log";
+
         public DataProcessor DataProc { get; set; }
 
         public CultureInfo CurrentCulture { get; set; }
+
+        public Dictionary<string, DateTime> WeekFilterDates { get; set; }
+
+        public Dictionary<string, DateTime> MonthFilterDates { get; set; }
 
         public DataTable WeekAppointments { get; set; }
 
@@ -37,6 +43,11 @@ namespace ScheduleBoss
 
         public BindingSource MonthViewSource { get; set; } = new BindingSource();
 
+        public BackgroundWorker AppointmentChecker { get; set; }  = new BackgroundWorker();
+
+        public System.Windows.Forms.Timer AppointmentCheckerTimer { get; set; } = new System.Windows.Forms.Timer();
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -45,7 +56,7 @@ namespace ScheduleBoss
             this.Database = new DatabaseConnection();
 
             // establish a logger
-            this.Logger = new EventLogger(".\\UserAuth.log");
+            this.Logger = new EventLogger(this.LogFilePath);
             this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Application started");
 
             // initialize a data processor
@@ -53,8 +64,7 @@ namespace ScheduleBoss
 
             // get the current culture of the user's system
             this.CurrentCulture = Thread.CurrentThread.CurrentCulture; 
-           
-            
+                       
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
@@ -67,6 +77,12 @@ namespace ScheduleBoss
 
         }
 
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // cancel any async tasks that are occurring and dispose
+            CancelAndDisposeBackgroundWorker();
+            this.Logger.Dispose();
+        }
 
         private void btn_AddAppointment_Click(object sender, EventArgs e)
         {
@@ -132,18 +148,96 @@ namespace ScheduleBoss
             CustList.Show();
         }
 
+        private void btn_ViewReports_Click(object sender, EventArgs e)
+        {
+            Form ReportVwr = new ReportViewer(this.Database, this.Logger, this.Session);
+            ReportVwr.FormClosed += new FormClosedEventHandler(Child_FormClosed);
+            ReportVwr.Show();
+        }
+
+        private void btn_ViewLog_Click(object sender, EventArgs e)
+        {
+            Form LogVwr = new LogViewer(this.LogFilePath);
+            LogVwr.FormClosed += new FormClosedEventHandler(Child_FormClosed);
+            LogVwr.Show();
+        }
+
         private void btn_Logout_Click(object sender, EventArgs e)
         {
-            //this.Database.DisconnectFromDatabase();
+
+            // cancel any async tasks that are occurring and close the form
+            CancelAndDisposeBackgroundWorker();
+            this.Logger.Dispose();
             this.Close();
         }
 
-        private void toolStripSessionLabel_Click(object sender, EventArgs e)
+        private void tabControlAppts_Selected(object sender, TabControlEventArgs e)
         {
+            // set the date range label appropriately based on week or month view
+            SetDateRangeLabel();
 
         }
 
-        // FORM CLOSE EVENT HANDLERS
+        #region BACKGROUND WORKER METHODS
+        private void InitializeBackgroundWorker()
+        {
+            // set the background worker to support cancellation
+            this.AppointmentChecker.WorkerSupportsCancellation = true;
+
+            // assign a method to the DoWork event handler with a lambda expression - simplifies syntax
+            this.AppointmentChecker.DoWork += (obj, e) => AppointmentChecker_Worker(obj, e);
+            
+            // assign a method to the RunWorkerCompleted event handler with a lambda expression - simplifies syntax
+            this.AppointmentChecker.RunWorkerCompleted += (obj, e) => AppointmentChecker_WorkCompleted(obj, e);
+        }
+
+        private void AppointmentChecker_Worker(object sender, DoWorkEventArgs e) 
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            if (!worker.CancellationPending) 
+            {
+                // start a task to check for upcoming appointments in next 15 minutes
+                e.Result = this.DataProc.GetUpcomingAppointmentsForUser(Session.UserLoginInfo.UserId, 15);
+            }
+                    
+        }
+
+        private void AppointmentChecker_WorkCompleted(object sender, RunWorkerCompletedEventArgs e) 
+        {
+            
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            var UpcomingAppointments = e.Result as DataTable;
+
+            if (UpcomingAppointments.Rows.Count > 0)
+            {
+                foreach (DataRow row in UpcomingAppointments.Rows)
+                {
+                    // convert the time from utc
+                    var Start = Session.ConvertDateTimeFromUtc(DateTime.Parse(row["start"].ToString()));
+
+                    // alert the user for each appointment
+                    MessageBox.Show(
+                            $"Upcoming appointment, starting at {Start}!\n\nAppointment Title: {row["title"].ToString()}\nCustomer: {row["customerName"].ToString()}\nLocation: {row["location"].ToString()}\nURL: {row["url"].ToString()}",
+                            "Upcoming Appointment",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information
+                    );
+                }
+
+            }
+
+        }
+
+        private void AppointmentChecker_TimerWrapper(object sender, EventArgs e)
+        {
+            // run the background worker 
+            this.AppointmentChecker.RunWorkerAsync();
+        }
+        #endregion
+
+        #region CHILD FORM CLOSE EVENT HANDLERS
 
         private void LoginPrompt_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -154,32 +248,21 @@ namespace ScheduleBoss
             if (login.IsAuthenticated == true)
             {
 
-                // initialize the session
+                // initialize the session and set the culture
                 this.Session = new UserSession();
+                this.Session.CurrentCulture = this.CurrentCulture;
 
                 // set the session properties returned from the login form
                 this.Session.IsAuthenticated = login.IsAuthenticated;
                 this.Session.UserLoginInfo = login.LoginResponse;
                 this.Session.UserLoginTime = DateTime.Now;
+                
 
                 // set status bar text
                 this.toolStripSessionLabel.Text = $"User: {this.Session.UserLoginInfo.Username} | Login Time: {this.Session.UserLoginTime.ToString()} | Current Time Zone: {this.Session.UserTimeZone.StandardName}";
 
-                // get the appointments for next 7 and next 30 days
-                DateTime FilterStart = Session.ConvertDateTimeToUtc(DateTime.Now);
-                DateTime WeekFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(7));
-                DateTime MonthFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(31));
-
-                this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, FilterStart, WeekFilterEnd);
-                this.MonthAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, FilterStart, MonthFilterEnd);
-
-
-                // set data binding on gridviews
-                this.WeekViewSource.DataSource = this.WeekAppointments;
-                dataGridWeek.DataSource = this.WeekViewSource;
-
-                this.MonthViewSource.DataSource = this.MonthAppointments;
-                dataGridMonth.DataSource = this.MonthViewSource;
+                // get appointment data and bind to gridviews
+                GetWeekAndMonthAppointments();
 
                 // set gridview display options
 
@@ -200,14 +283,14 @@ namespace ScheduleBoss
                 DataGridList.ForEach( 
                     v => {
                         // set options
-                        v.RowHeadersVisible = false;
-                        v.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                         v.AllowUserToAddRows = false;
                         v.AllowUserToDeleteRows = false;
                         v.AllowUserToResizeRows = false;
                         v.AllowUserToOrderColumns = false;
-                        v.EditMode = DataGridViewEditMode.EditProgrammatically;
                         v.MultiSelect = false;
+                        v.RowHeadersVisible = false;
+                        v.EditMode = DataGridViewEditMode.EditProgrammatically;
+                        v.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                         
                         // set DataGridView display options
                         v.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
@@ -247,7 +330,18 @@ namespace ScheduleBoss
 
                     }
                 );
-               
+
+                // set the date range label appropriately
+                SetDateRangeLabel();
+
+                // initialize background worker, run the task 
+                InitializeBackgroundWorker();
+                this.AppointmentChecker.RunWorkerAsync();
+
+                // set up the timer with an interval of one minute, and start it so that the task continues executing
+                this.AppointmentCheckerTimer.Tick += new EventHandler(AppointmentChecker_TimerWrapper);
+                this.AppointmentCheckerTimer.Interval = 60000;
+                this.AppointmentCheckerTimer.Start();
 
             }
             else
@@ -260,26 +354,16 @@ namespace ScheduleBoss
 
         private void Child_FormClosed(object sender, FormClosedEventArgs e)
         {
-            // refresh the appointments for next 7 and next 30 days
-            DateTime FilterStart = Session.ConvertDateTimeToUtc(DateTime.Now);
-            DateTime WeekFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(7));
-            DateTime MonthFilterEnd = Session.ConvertDateTimeToUtc(DateTime.Now.AddDays(31));
-
-            this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, FilterStart, WeekFilterEnd);
-            this.MonthAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, FilterStart, MonthFilterEnd);
-
-            // reset data binding on gridviews
-            this.WeekViewSource.DataSource = this.WeekAppointments;
-            dataGridWeek.DataSource = this.WeekViewSource;
-
-            this.MonthViewSource.DataSource = this.MonthAppointments;
-            dataGridMonth.DataSource = this.MonthViewSource;
+            GetWeekAndMonthAppointments();
 
             // refresh the controls
             dataGridWeek.Refresh();
             dataGridMonth.Refresh();
         }
 
+        #endregion
+
+        #region DATA GRID VIEW FORMATTERS 
         private void dataGridWeek_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.Value is DateTime)
@@ -299,9 +383,67 @@ namespace ScheduleBoss
         }
 
 
+        #endregion
 
-        // END FORM CLOSE EVENT HANDLERS
+        #region PRIVATE METHODS
+
+        private void CancelAndDisposeBackgroundWorker()
+        {
+            // cancel any async tasks that are occurring and close the form
+            try
+            {
+                this.AppointmentChecker.CancelAsync();
+            }
+            catch
+            {
+                // swallow the background worker exception
+            }
+            finally
+            {
+                // dispose of the background worker
+                this.AppointmentChecker.Dispose();
+            }
+        }
+
+        private void GetWeekAndMonthAppointments()
+        {
+            // get the ranges for this week and this month
+            this.WeekFilterDates = Session.GetThisWeek(DateTime.Now);
+            this.MonthFilterDates = Session.GetThisMonth(DateTime.Now);
+
+            DateTime WeekFilterStart = Session.ConvertDateTimeToUtc(WeekFilterDates["WeekStart"]);
+            DateTime WeekFilterEnd = Session.ConvertDateTimeToUtc(WeekFilterDates["WeekEnd"]);
+            DateTime MonthFilterStart = Session.ConvertDateTimeToUtc(MonthFilterDates["MonthStart"]);
+            DateTime MonthFilterEnd = Session.ConvertDateTimeToUtc(MonthFilterDates["MonthEnd"]);
+
+            this.WeekAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, WeekFilterStart, WeekFilterEnd);
+            this.MonthAppointments = DataProc.GetAppointmentsForUserWithDate(this.Session.UserLoginInfo.UserId, MonthFilterStart, MonthFilterEnd);
 
 
+            // set data binding on gridviews
+            this.WeekViewSource.DataSource = this.WeekAppointments;
+            dataGridWeek.DataSource = this.WeekViewSource;
+
+            this.MonthViewSource.DataSource = this.MonthAppointments;
+            dataGridMonth.DataSource = this.MonthViewSource;
+        }
+
+        private void SetDateRangeLabel()
+        {
+            // set the date range label appropriately
+            if (tabControlAppts.SelectedTab == tabThisWeek)
+            {
+                lbl_DateRange.Text = $"Displaying dates: {this.WeekFilterDates["WeekStart"].ToShortDateString()} to {this.WeekFilterDates["WeekEnd"].ToShortDateString()}";
+            }
+            else
+            {
+                lbl_DateRange.Text = $"Displaying dates: {this.MonthFilterDates["MonthStart"].ToShortDateString()} to {this.MonthFilterDates["MonthEnd"].ToShortDateString()}";
+            }
+
+        }
+
+        #endregion
+
+        
     }
 }

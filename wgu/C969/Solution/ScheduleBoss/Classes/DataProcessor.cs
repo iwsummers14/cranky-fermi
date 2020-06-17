@@ -2,6 +2,7 @@
 using ScheduleBoss.Enums;
 using System;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace ScheduleBoss.Classes
 {
@@ -162,6 +163,45 @@ namespace ScheduleBoss.Classes
 
         }
 
+        // method to return appointments for a user 
+        public DataTable GetUpcomingAppointmentsForUser(int userId, int minutes)
+        {
+
+            // declare variables
+            var AllRecords = new DataTable();
+            var filterStartDate = DateTime.UtcNow;
+            var filterEndDate = filterStartDate.AddMinutes(minutes);
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+
+            string queryTmp = "SELECT a.appointmentId, c.customerName, a.title, a.description, a.location, a.contact, a.type, a.url, a.start, a.end";
+            queryTmp += " FROM appointment a INNER JOIN customer c ON a.customerId = c.customerId";
+            queryTmp += " WHERE start >= @filterStartDate AND start <= @filterEndDate AND userId = @userId";
+            queryTmp += " ORDER BY start ASC";
+
+            query.CommandText = queryTmp;
+            query.Parameters.AddWithValue("@filterStartDate", filterStartDate);
+            query.Parameters.AddWithValue("@filterEndDate", filterEndDate);
+            query.Parameters.AddWithValue("@userId", userId);
+        
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // execute the query 
+            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+            {
+                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                dataAdapter.Fill(AllRecords);
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            return AllRecords;
+
+        }
+                
         // method to get the value of the next 'id' for a given entry type
         public int GetNextId(DatabaseEntries entryType)
         {
@@ -643,8 +683,8 @@ namespace ScheduleBoss.Classes
             return IsUpdated;
         }
 
-        // method to check for appointment overlap
-        public bool ValidateAppointmentTimesForUser(int userId, DateTime Start, DateTime End)
+        // method to check for appointment overlap with optional appointmentId param
+        public bool ValidateAppointmentTimesForUser(int userId, DateTime Start, DateTime End, int apptId = 0)
         {
             // declare a return value
             bool IsOverlapping = false;
@@ -659,13 +699,15 @@ namespace ScheduleBoss.Classes
 
             string queryTmp = "SELECT * FROM appointment";
             queryTmp += " WHERE userId = @userId";
-            queryTmp += " AND (start > @filterStartDate AND start < @filterEndDate)";
+            queryTmp += " AND appointmentId != @appointmentId";
+            queryTmp += " AND ((start > @filterStartDate AND start < @filterEndDate)";
             queryTmp += " OR (end > @filterStartDate AND end < @filterEndDate)";
             queryTmp += " OR (start = @filterStartDate)";
-            queryTmp += " OR (end = @filterEndDate)";
+            queryTmp += " OR (end = @filterEndDate))";
 
 
             query.CommandText = queryTmp;
+            query.Parameters.AddWithValue("@appointmentId", apptId);
             query.Parameters.AddWithValue("@filterStartDate", Start);
             query.Parameters.AddWithValue("@filterEndDate", End);
             query.Parameters.AddWithValue("@userId", userId);
