@@ -61,6 +61,7 @@
     <Compile Include="Classes\DataModels\LoginResponse.cs" />
     <Compile Include="Classes\UserSession.cs" />
     <Compile Include="Enums\DatabaseEntries.cs" />
+    <Compile Include="Enums\ReportTypes.cs" />
     <Compile Include="Forms\CustomerList.cs">
       <SubType>Form</SubType>
     </Compile>
