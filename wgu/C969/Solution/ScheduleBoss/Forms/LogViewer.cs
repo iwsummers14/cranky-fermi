@@ -35,6 +35,12 @@ namespace ScheduleBoss.Forms
             this.Close();
         }
 
+        private void btn_Refresh_Click(object sender, EventArgs e)
+        {
+            // re-load the log data
+            LoadLogData();
+        }
+
         private void LoadLogData()
         {
             try
@@ -71,9 +77,6 @@ namespace ScheduleBoss.Forms
 
         }
 
-        private void btn_Refresh_Click(object sender, EventArgs e)
-        {
-            LoadLogData();
-        }
+
     }
 }

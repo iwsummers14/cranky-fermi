@@ -45,13 +45,16 @@ namespace ScheduleBoss.Classes
         // method to establish connection to backend database
         public bool ConnectToDatabase()
         {
-            
+            // initialize the sql connection
             this.SqlConnection = new MySqlConnection(this.ConnectionString);
 
+            // do nothing if the connection state is open 
             if (this.SqlConnection.State == System.Data.ConnectionState.Open)
             {
                 return true;
             }
+
+            // establish a connection
             else
             {
                 try
@@ -71,7 +74,7 @@ namespace ScheduleBoss.Classes
         // method to disconnect from the backend database
         public bool DisconnectFromDatabase()
         {
-
+            // close the connection if it is open
             if (this.SqlConnection.State == System.Data.ConnectionState.Open)
             {
                 try
@@ -85,6 +88,9 @@ namespace ScheduleBoss.Classes
                 }
 
             }
+
+
+            // close the connection if it is broken
             else if (this.SqlConnection.State == System.Data.ConnectionState.Broken)
             {
                 try
@@ -97,9 +103,10 @@ namespace ScheduleBoss.Classes
                     return false;
                 }
             }
+
+            // do nothing if closed
             else
             {
-                // do nothing, nothing to do
                 return true;
             }
 

@@ -1,17 +1,14 @@
-﻿using System;
+﻿using ScheduleBoss.Classes;
+using ScheduleBoss.Enums;
+using ScheduleBoss.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
-using ScheduleBoss.Classes;
-using ScheduleBoss.Forms;
-using ScheduleBoss.Enums;
+using System.Windows.Forms;
 
 
 namespace ScheduleBoss
@@ -209,6 +206,7 @@ namespace ScheduleBoss
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
+            // execute work unless cancellation is pending
             if (!worker.CancellationPending) 
             {
                 // start a task to check for upcoming appointments in next 15 minutes
@@ -238,6 +236,10 @@ namespace ScheduleBoss
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Information
                     );
+
+                    // log the event
+                    this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Notifed user {this.Session.UserLoginInfo.Username} of upcoming appointment starting at {Start}.");
+                                    
                 }
 
             }
@@ -389,6 +391,7 @@ namespace ScheduleBoss
         // method to format dates in the week view
         private void dataGridWeek_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
+            // convert the dates to local time zone
             if (e.Value is DateTime)
             {
                 DateTime CellValue = (DateTime)e.Value;
@@ -399,6 +402,8 @@ namespace ScheduleBoss
         // method to format dates in the month view
         private void dataGridMonth_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
+
+            // convert the dates to local time zone
             if (e.Value is DateTime)
             {
                 DateTime CellValue = (DateTime)e.Value;

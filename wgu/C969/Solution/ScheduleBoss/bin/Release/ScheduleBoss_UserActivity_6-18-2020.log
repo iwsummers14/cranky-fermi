@@ -1,0 +1,44 @@
+﻿6/18/2020 4:31:59 PM [INFO] Application started
+6/18/2020 4:31:59 PM [INFO] Requesting user login
+6/18/2020 4:31:59 PM [INFO] Processing user login
+6/18/2020 4:32:02 PM [INFO] User test authenticated successfully.
+6/18/2020 4:32:50 PM [INFO] Address record inserted with AddressId:4
+6/18/2020 4:32:50 PM [INFO] Customer record inserted with CustomerId:4
+6/18/2020 4:32:59 PM [INFO] Address record updated with AddressId:4
+6/18/2020 4:32:59 PM [INFO] Customer record updated with CustomerId:4
+6/18/2020 4:33:25 PM [INFO] Address record inserted with AddressId:5
+6/18/2020 4:33:25 PM [INFO] Customer record inserted with CustomerId:5
+6/18/2020 4:33:34 PM [INFO] Deleted customer record 5
+6/18/2020 4:33:34 PM [INFO] Deleted address record 5
+6/18/2020 4:34:58 PM [INFO] Appointment record inserted with AppointmentId:3
+6/18/2020 4:35:44 PM [ERROR] Input error: Input in the Description field contains invalid characters. Letters, numbers, commas, periods, parentheses, semicolons, single quotes, and forward slashes are allowed.
+Parameter name: Description
+6/18/2020 4:35:48 PM [INFO] Appointment record inserted with AppointmentId:4
+6/18/2020 4:36:51 PM [INFO] Appointment record inserted with AppointmentId:5
+6/18/2020 4:38:34 PM [ERROR] Input error: Appointment Start Time is outside of normal business hours. Normal business hours are 08:00:00 to 17:00:00.
+Parameter name: Start Time
+6/18/2020 4:38:37 PM [INFO] Appointment record inserted with AppointmentId:6
+6/18/2020 4:38:52 PM [ERROR] Input error: Start Time cannot be after End Time.
+Parameter name: Start Time
+6/18/2020 4:38:57 PM [INFO] Appointment record updated with AppointmentId:6
+6/18/2020 4:39:04 PM [INFO] Deleted appointment record 6
+6/18/2020 4:39:37 PM [INFO] Logout requested
+6/18/2020 4:39:37 PM [INFO] Application closing
+6/18/2020 4:41:43 PM [INFO] Application started
+6/18/2020 4:41:43 PM [INFO] Requesting user login
+6/18/2020 4:41:43 PM [INFO] Processing user login
+6/18/2020 4:41:46 PM [INFO] User test authenticated successfully.
+6/18/2020 4:41:49 PM [INFO] Notifed user test of upcoming appointment starting at 6/18/2020 4:45:00 PM.
+6/18/2020 4:42:06 PM [INFO] Logout requested
+6/18/2020 4:42:06 PM [INFO] Application closing
+6/18/2020 4:43:14 PM [INFO] Application started
+6/18/2020 4:43:14 PM [INFO] Requesting user login
+6/18/2020 4:43:14 PM [INFO] Processing user login
+6/18/2020 4:43:18 PM [INFO] User test authenticated successfully.
+6/18/2020 4:43:22 PM [INFO] Notifed user test of upcoming appointment starting at 6/18/2020 4:45:00 PM.
+6/18/2020 5:58:06 PM [INFO] Application closing
+6/18/2020 5:58:55 PM [INFO] Application started
+6/18/2020 5:58:55 PM [INFO] Requesting user login
+6/18/2020 5:58:55 PM [INFO] Processing user login
+6/18/2020 5:59:00 PM [INFO] User test authenticated successfully.
+6/19/2020 8:00:59 AM [INFO] Application closing

@@ -20,6 +20,7 @@ namespace ScheduleBoss.Classes
 
         public UserSession Session { get; set; }
 
+        // constructor requiring a database connection and logger 
         public DataProcessor( DatabaseConnection DbConn, EventLogger Log)
         {
             // set properties passed in constructor
@@ -85,6 +86,8 @@ namespace ScheduleBoss.Classes
         // method to return all table values for an entry type
         public DataTable GetAllTableValues(DatabaseEntries entryType)
         {
+
+            // establish return variable
             var AllRecords = new DataTable();
 
             // open connection
@@ -209,183 +212,6 @@ namespace ScheduleBoss.Classes
 
             return AllRecords;
 
-        }
-
-        // method to get the number of each Appointment type, ordered by Month
-        public List<string> GetAppointmentTypesByMonth() {
-
-            // set up local variables
-            List<string> reportData = new List<string>();
-            var AllRecords = new DataTable();
-
-            // open connection
-            this.Database.ConnectToDatabase();
-
-            // create the query
-            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
-
-            string queryTmp = "SELECT type,";
-            queryTmp += " COUNT(*) count,";
-            queryTmp += " MONTH(start) month";
-            queryTmp += " FROM U047yU.appointment";
-            queryTmp += " GROUP BY type";
-            queryTmp += " ORDER BY month";
-
-            query.CommandText = queryTmp;
-            
-            // execute the query 
-            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
-            {
-                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-                dataAdapter.Fill(AllRecords);
-            }
-
-            // close connection
-            this.Database.DisconnectFromDatabase();
-
-            // extract the unique months from the months column. uses a lambda to select the field value before sending it to LINQ
-            // methods to only get unique values and return a list
-            List<int> Months = AllRecords.AsEnumerable().Select(row => row.Field<int>("month")).Distinct().ToList();
-
-            // add report lines. pivoting off of unique values for months, gets the other relevant data
-            // and adds formatted strings to the return list. uses culture info to get the month name
-            foreach (int Month in Months)
-            {
-                reportData.Add($"Appointment types for: {CultureInfo.CurrentUICulture.DateTimeFormat.GetMonthName(Month)}");
-                reportData.Add($"================================================================================");
-
-                var typesThisMonth = AllRecords.Select($"month = {Month}");
-                
-                foreach (DataRow row in typesThisMonth)
-                {
-                    reportData.Add($"\t{row["type"].ToString()}: {row["count"].ToString()}");
-                }
-                reportData.Add(" ");
-            }
-
-
-            return reportData;
-        }
-
-        // method to get a schedule - that is, all appointments for a given consultant 
-        public List<string> GetScheduleByConsultant()
-        {
-            //(start, end, title, customer, user)
-            // set up local variables
-            List<string> reportData = new List<string>();
-            var AllRecords = new DataTable();
-
-            // open connection
-            this.Database.ConnectToDatabase();
-
-            // create the query
-            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
-
-            string queryTmp = "SELECT ";
-            queryTmp += " u.userName consultant,";
-            queryTmp += " c.customerName customer,";
-            queryTmp += " a.title title,";
-            queryTmp += " a.start startTime,";
-            queryTmp += " a.end endTime";
-            queryTmp += " FROM appointment a";
-            queryTmp += " INNER JOIN user u ON a.userId = u.userId";
-            queryTmp += " INNER JOIN customer c ON a.customerId = c.customerId";
-            queryTmp += " ORDER BY consultant, startTime ASC";
-                       
-            query.CommandText = queryTmp;
-
-            // execute the query 
-            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
-            {
-                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-                dataAdapter.Fill(AllRecords);
-            }
-
-            // close connection
-            this.Database.DisconnectFromDatabase();
-
-            // extract the unique consultants from the consultants column. uses a lambda to select the field value before sending it to LINQ
-            // methods to only get unique values and return a list
-            List<string> Consultants = AllRecords.AsEnumerable().Select(row => row.Field<string>("consultant")).Distinct().ToList();
-
-            // add report lines. pivoting off of unique values in consultants, gets the other relevant data
-            // and adds formatted strings to the return list
-            foreach (string Consultant in Consultants)
-            {
-
-                reportData.Add($"Appointments for: {Consultant}");
-                reportData.Add($"================================================================");
-               
-                var apptsThisUser = AllRecords.Select($"consultant = '{Consultant}'");
-
-                foreach (DataRow row in apptsThisUser)
-                {
-                    reportData.Add($"Meeting with: {row["customer"].ToString()}");
-                    reportData.Add($"\t\t Start time: {row["startTime"].ToString()}\t\t End time: {row["endTime"].ToString()}");
-                }
-                reportData.Add(" ");
-            }
-
-
-            return reportData;
-        }
-
-        // method to get the number of appointments scheduled, by customer
-        public List<string> GetAppointmentsByCustomer()
-        {
-
-            // set up local variables
-            List<string> reportData = new List<string>();
-            var AllRecords = new DataTable();
-
-            // open connection
-            this.Database.ConnectToDatabase();
-
-            // create the query
-            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
-
-            string queryTmp = "SELECT 	a.customerId,";
-            queryTmp += " c.customerName,";
-            queryTmp += " COUNT(*) count";
-            queryTmp += " FROM U047yU.appointment a";
-            queryTmp += " INNER JOIN U047yU.customer c on a.customerId = c.customerId";
-            queryTmp += " GROUP BY customerName";
-            queryTmp += " ORDER BY customerId";
-
-            query.CommandText = queryTmp;
-
-            // execute the query 
-            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
-            {
-                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-                dataAdapter.Fill(AllRecords);
-            }
-
-            // close connection
-            this.Database.DisconnectFromDatabase();
-
-            // extract the unique customers from the customers column. uses a lambda to select the field value before sending it to LINQ
-            // methods to only get unique values and return a list
-            List<string> Customers = AllRecords.AsEnumerable().Select(row => row.Field<string>("customerName")).Distinct().ToList();
-
-            // add report lines. pivoting off of unique values in customers, gets the other relevant data
-            // and adds formatted strings to the return list
-            foreach (string Customer in Customers)
-            {
-                reportData.Add($"Scheduled appointment counts for: {Customer}");
-                reportData.Add($"================================================================================");
-
-                var typesThisMonth = AllRecords.Select($"customerName = '{Customer}'");
-
-                foreach (DataRow row in typesThisMonth)
-                {
-                    reportData.Add($"\tAppointments scheduled: {row["count"].ToString()}");
-                }
-                reportData.Add(" ");
-            }
-
-            // return data to report viewer
-            return reportData;
         }
 
         // method to get the value of the next 'id' for a given entry type
@@ -926,6 +752,188 @@ namespace ScheduleBoss.Classes
 
             return IsOverlapping;
         }
+        
+        #region REPORT METHODS
+
+        // method to get the number of each Appointment type, ordered by Month
+        public List<string> GetAppointmentTypesByMonth()
+        {
+
+            // set up local variables
+            List<string> reportData = new List<string>();
+            var AllRecords = new DataTable();
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+
+            string queryTmp = "SELECT type,";
+            queryTmp += " COUNT(*) count,";
+            queryTmp += " MONTH(start) month";
+            queryTmp += " FROM U047yU.appointment";
+            queryTmp += " GROUP BY type";
+            queryTmp += " ORDER BY month";
+
+            query.CommandText = queryTmp;
+
+            // execute the query 
+            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+            {
+                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                dataAdapter.Fill(AllRecords);
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            // extract the unique months from the months column. uses a lambda to select the field value before sending it to LINQ
+            // methods to only get unique values and return a list
+            List<int> Months = AllRecords.AsEnumerable().Select(row => row.Field<int>("month")).Distinct().ToList();
+
+            // add report lines. pivoting off of unique values for months, gets the other relevant data
+            // and adds formatted strings to the return list. uses culture info to get the month name
+            foreach (int Month in Months)
+            {
+                reportData.Add($"Appointment types for: {CultureInfo.CurrentUICulture.DateTimeFormat.GetMonthName(Month)}");
+                reportData.Add($"================================================================================");
+
+                var typesThisMonth = AllRecords.Select($"month = {Month}");
+
+                foreach (DataRow row in typesThisMonth)
+                {
+                    reportData.Add($"\t{row["type"].ToString()}: {row["count"].ToString()}");
+                }
+                reportData.Add(" ");
+            }
+
+
+            return reportData;
+        }
+
+        // method to get a schedule - that is, all appointments for a given consultant 
+        public List<string> GetScheduleByConsultant()
+        {
+            // set up local variables
+            List<string> reportData = new List<string>();
+            var AllRecords = new DataTable();
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+
+            string queryTmp = "SELECT ";
+            queryTmp += " u.userName consultant,";
+            queryTmp += " c.customerName customer,";
+            queryTmp += " a.title title,";
+            queryTmp += " a.start startTime,";
+            queryTmp += " a.end endTime";
+            queryTmp += " FROM appointment a";
+            queryTmp += " INNER JOIN user u ON a.userId = u.userId";
+            queryTmp += " INNER JOIN customer c ON a.customerId = c.customerId";
+            queryTmp += " ORDER BY consultant, startTime ASC";
+
+            query.CommandText = queryTmp;
+
+            // execute the query 
+            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+            {
+                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                dataAdapter.Fill(AllRecords);
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            // extract the unique consultants from the consultants column. uses a lambda to select the field value before sending it to LINQ
+            // methods to only get unique values and return a list
+            List<string> Consultants = AllRecords.AsEnumerable().Select(row => row.Field<string>("consultant")).Distinct().ToList();
+
+            // add report lines. pivoting off of unique values in consultants, gets the other relevant data
+            // and adds formatted strings to the return list
+            foreach (string Consultant in Consultants)
+            {
+
+                reportData.Add($"Appointments for: {Consultant}");
+                reportData.Add($"================================================================");
+
+                var apptsThisUser = AllRecords.Select($"consultant = '{Consultant}'");
+
+                foreach (DataRow row in apptsThisUser)
+                {
+                    reportData.Add($"Meeting with: {row["customer"].ToString()}");
+                    reportData.Add($"\t\t Start time: {row["startTime"].ToString()}\t\t End time: {row["endTime"].ToString()}");
+                }
+                reportData.Add(" ");
+            }
+
+
+            return reportData;
+        }
+
+        // method to get the number of appointments scheduled, by customer
+        public List<string> GetAppointmentsByCustomer()
+        {
+
+            // set up local variables
+            List<string> reportData = new List<string>();
+            var AllRecords = new DataTable();
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+
+            string queryTmp = "SELECT 	a.customerId,";
+            queryTmp += " c.customerName,";
+            queryTmp += " COUNT(*) count";
+            queryTmp += " FROM U047yU.appointment a";
+            queryTmp += " INNER JOIN U047yU.customer c on a.customerId = c.customerId";
+            queryTmp += " GROUP BY customerName";
+            queryTmp += " ORDER BY customerId";
+
+            query.CommandText = queryTmp;
+
+            // execute the query 
+            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+            {
+                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                dataAdapter.Fill(AllRecords);
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            // extract the unique customers from the customers column. uses a lambda to select the field value before sending it to LINQ
+            // methods to only get unique values and return a list
+            List<string> Customers = AllRecords.AsEnumerable().Select(row => row.Field<string>("customerName")).Distinct().ToList();
+
+            // add report lines. pivoting off of unique values in customers, gets the other relevant data
+            // and adds formatted strings to the return list
+            foreach (string Customer in Customers)
+            {
+                reportData.Add($"Scheduled appointment counts for: {Customer}");
+                reportData.Add($"================================================================================");
+
+                var typesThisMonth = AllRecords.Select($"customerName = '{Customer}'");
+
+                foreach (DataRow row in typesThisMonth)
+                {
+                    reportData.Add($"\tAppointments scheduled: {row["count"].ToString()}");
+                }
+                reportData.Add(" ");
+            }
+
+            // return data to report viewer
+            return reportData;
+        }
+        
+        #endregion
+
     }
-    
+
 }

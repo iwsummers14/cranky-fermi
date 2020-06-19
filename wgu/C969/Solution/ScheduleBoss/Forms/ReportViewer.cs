@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ScheduleBoss.Classes;
+﻿using ScheduleBoss.Classes;
 using ScheduleBoss.Enums;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace ScheduleBoss.Forms
 {
@@ -34,16 +28,13 @@ namespace ScheduleBoss.Forms
 
             // initialize the data processor object 
             this.DataProc = new DataProcessor(this.Database, this.Logger);
-
-            // bind the ReportType enum values to the combo box 
-            cbox_ReportType.DataSource = Enum.GetValues(typeof(ReportTypes));
             
-
         }
 
         private void ReportViewer_Load(object sender, EventArgs e)
         {
-
+            // bind the ReportType enum values to the combo box 
+            cbox_ReportType.DataSource = Enum.GetValues(typeof(ReportTypes));
         }
 
         private void btn_Run_Click(object sender, EventArgs e)
@@ -57,6 +48,7 @@ namespace ScheduleBoss.Forms
             // create a reportdata list
             List<string> reportData = new List<string>();
 
+            // execute query based on report type and sent results to display method
             switch (ReportType)
             {
                 case ReportTypes.ScheduleByConsultant:
@@ -80,13 +72,16 @@ namespace ScheduleBoss.Forms
 
         private void btn_Close_Click(object sender, EventArgs e)
         {
+            // close the form
             this.Close();
         }
 
+        // method to write lines to the report viewer text box
         private void displayReport(List<string> reportData)
         {
             reportData.ForEach(str =>
                 {
+                    // write the lines to the report viewer text box
                     tbox_ReportData.AppendText($"{str}");
                     tbox_ReportData.AppendText($"\r\n");
                 }

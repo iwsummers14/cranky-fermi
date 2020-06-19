@@ -102,8 +102,8 @@ namespace ScheduleBoss.Forms
                 int custId = int.Parse(row[0].ToString());
                 int addrId = int.Parse(row[2].ToString());
 
-                Customer Cust = this.DataProc.GetRecordById<Customer>(custId, DatabaseEntries.Customer) as Customer;    
-                CustomerAddress Addr = this.DataProc.GetRecordById<CustomerAddress>(addrId, DatabaseEntries.Address) as CustomerAddress;
+                Customer Cust = this.DataProc.GetRecordById<Customer>(custId, DatabaseEntries.Customer);    
+                CustomerAddress Addr = this.DataProc.GetRecordById<CustomerAddress>(addrId, DatabaseEntries.Address);
 
                 // create an instance of the form and display it
                 ModifyCustomer ModCust = new ModifyCustomer(this.Database, this.Logger, this.Session, Cust, Addr);
@@ -134,9 +134,11 @@ namespace ScheduleBoss.Forms
                 int custId = int.Parse(row[0].ToString());
                 int addrId = int.Parse(row[2].ToString());
 
-                Customer Cust = this.DataProc.GetRecordById<Customer>(custId, DatabaseEntries.Customer) as Customer;
-                CustomerAddress Addr = this.DataProc.GetRecordById<CustomerAddress>(addrId, DatabaseEntries.Address) as CustomerAddress;
+                // get objects representing the customer and address
+                Customer Cust = this.DataProc.GetRecordById<Customer>(custId, DatabaseEntries.Customer);
+                CustomerAddress Addr = this.DataProc.GetRecordById<CustomerAddress>(addrId, DatabaseEntries.Address);
 
+                // prompt user to confirm
                 DialogResult DeleteConfirmation = MessageBox.Show($"Are you sure you wish to delete the customer {Cust.customerName}?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 
                 if (DeleteConfirmation == DialogResult.Yes)
@@ -184,6 +186,7 @@ namespace ScheduleBoss.Forms
 
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
+            // close form
             this.Close();
         }
 

@@ -23,6 +23,7 @@ namespace ScheduleBoss.Forms
 
         public CultureInfo Culture { get; set; } 
 
+        // constructor taking a cultureinfo object, database connection object, and logger object
         public UserLogin(CultureInfo culture, DatabaseConnection DbConn, EventLogger Log)
         {
             InitializeComponent();
@@ -40,13 +41,12 @@ namespace ScheduleBoss.Forms
             // set the culture property and current ui culture based on the passed culture info
             this.Culture = culture;
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(this.Culture.Name);
-
-            
             
         }
 
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
+            // close form
             this.Close();
         }
 
@@ -164,16 +164,6 @@ namespace ScheduleBoss.Forms
                 this.Close();
             }
             
-        }
-
-        private void UserLogin_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void UserLogin_FormClosed(object sender, FormClosedEventArgs e)
-        {
-                       
         }
     }
 }
