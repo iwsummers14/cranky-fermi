@@ -1,22 +1,32 @@
 ﻿using MySql.Data.MySqlClient;
 using ScheduleBoss.Enums;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
+using System.Globalization;
 
 namespace ScheduleBoss.Classes
 {
+    /// <summary>
+    /// Class to process data transactions between the application and the backend database.
+    /// </summary>
     public class DataProcessor
     {
-
+        
         public DatabaseConnection Database { get; set; }
 
         public EventLogger Logger { get; set;}
 
+        public UserSession Session { get; set; }
+
+        // constructor requiring a database connection and logger 
         public DataProcessor( DatabaseConnection DbConn, EventLogger Log)
         {
+            // set properties passed in constructor
             this.Database = DbConn;
             this.Logger = Log;
+            
         }
 
         // method to authenticate a user
@@ -76,6 +86,8 @@ namespace ScheduleBoss.Classes
         // method to return all table values for an entry type
         public DataTable GetAllTableValues(DatabaseEntries entryType)
         {
+
+            // establish return variable
             var AllRecords = new DataTable();
 
             // open connection
@@ -201,7 +213,7 @@ namespace ScheduleBoss.Classes
             return AllRecords;
 
         }
-                
+
         // method to get the value of the next 'id' for a given entry type
         public int GetNextId(DatabaseEntries entryType)
         {
@@ -255,14 +267,14 @@ namespace ScheduleBoss.Classes
             return nextId;
         }
 
-        // method to get a single record by its ID value (primary key)
-        public object GetRecordById(int recordId, DatabaseEntries entryType)
+        // method to get a single record by its ID value (primary key), uses generic typing
+        public T GetRecordById<T>(int recordId, DatabaseEntries entryType)
         {
             // set up a dataTable object
             var Records = new DataTable();
 
             // set up return object
-            Object Record = new Object();
+            object Record = new Object();
 
             // open connection
             this.Database.ConnectToDatabase();
@@ -365,7 +377,7 @@ namespace ScheduleBoss.Classes
             // close connection
             this.Database.DisconnectFromDatabase();
 
-            return Record;
+            return (T) Record;
         }
 
         // method to delete a record
@@ -452,8 +464,8 @@ namespace ScheduleBoss.Classes
             return IsDeleted;
         }
 
-        // method to insert a record
-        public bool InsertData(object Data, DatabaseEntries entryType) 
+        // method to insert a record (uses generic typing)
+        public bool InsertData<T>(T Data, DatabaseEntries entryType) 
         {
             // declare local variable to track status
             bool IsInserted = false;
@@ -470,45 +482,49 @@ namespace ScheduleBoss.Classes
             // assign the transaction to the command object
             InsertCommand.Transaction = InsertTransaction;
 
+            
 
             try
             {
-
+                
                 switch (entryType)
                 {
+
                     case DatabaseEntries.Address:
-                        CustomerAddress Address = Data as CustomerAddress;
+                        // get the type object for the generic T object to allow for getting properties
+                        Type typeAddress = Data.GetType();
                         InsertCommand.CommandText = "INSERT INTO address VALUES ( @addressId, @address, @address2, @cityId, @postalCode, @phone, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
-                        InsertCommand.Parameters.AddWithValue("@addressId", Address.addressId);
-                        InsertCommand.Parameters.AddWithValue("@address", Address.address);
-                        InsertCommand.Parameters.AddWithValue("@address2", Address.address2);
-                        InsertCommand.Parameters.AddWithValue("@cityId", Address.cityId);
-                        InsertCommand.Parameters.AddWithValue("@postalCode", Address.postalCode);
-                        InsertCommand.Parameters.AddWithValue("@phone", Address.phone);
-                        InsertCommand.Parameters.AddWithValue("@createDate", Address.createDate);
-                        InsertCommand.Parameters.AddWithValue("@createdBy", Address.createdBy);
-                        InsertCommand.Parameters.AddWithValue("@lastUpdate", Address.lastUpdate);
-                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", Address.lastUpdateBy);
+                        InsertCommand.Parameters.AddWithValue("@addressId", typeAddress.GetProperty("addressId").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@address", typeAddress.GetProperty("address").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@address2", typeAddress.GetProperty("address2").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@cityId", typeAddress.GetProperty("cityId").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@postalCode", typeAddress.GetProperty("postalCode").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@phone", typeAddress.GetProperty("phone").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@createDate", typeAddress.GetProperty("createDate").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@createdBy", typeAddress.GetProperty("createdBy").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@lastUpdate", typeAddress.GetProperty("lastUpdate").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", typeAddress.GetProperty("lastUpdateBy").GetValue(Data));
                         break;
 
                     case DatabaseEntries.Appointment:
-                        Appointment Appt = Data as Appointment;
+                        // get the type object for the generic T object to allow for getting properties
+                        Type typeAppointment = Data.GetType();
                         InsertCommand.CommandText = "INSERT INTO appointment VALUES ( @appointmentId, @customerId, @userId, @title, @description, @location, @contact, @type, @url, @start, @end, @createDate, @createdBy, @lastUpdate, @lastUpdateBy )";
-                        InsertCommand.Parameters.AddWithValue("@appointmentId", Appt.appointmentId);
-                        InsertCommand.Parameters.AddWithValue("@customerId", Appt.customerId);
-                        InsertCommand.Parameters.AddWithValue("@userId", Appt.userId);
-                        InsertCommand.Parameters.AddWithValue("@title", Appt.title);
-                        InsertCommand.Parameters.AddWithValue("@description", Appt.description);
-                        InsertCommand.Parameters.AddWithValue("@location", Appt.location);
-                        InsertCommand.Parameters.AddWithValue("@contact", Appt.contact);
-                        InsertCommand.Parameters.AddWithValue("@type", Appt.type);
-                        InsertCommand.Parameters.AddWithValue("@url", Appt.url);
-                        InsertCommand.Parameters.AddWithValue("@start", Appt.start);
-                        InsertCommand.Parameters.AddWithValue("@end", Appt.end);
-                        InsertCommand.Parameters.AddWithValue("@createDate", Appt.createDate);
-                        InsertCommand.Parameters.AddWithValue("@createdBy", Appt.createdBy);
-                        InsertCommand.Parameters.AddWithValue("@lastUpdate", Appt.lastUpdate);
-                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", Appt.lastUpdateBy);
+                        InsertCommand.Parameters.AddWithValue("@appointmentId", typeAppointment.GetProperty("appointmentId").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@customerId", typeAppointment.GetProperty("customerId").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@userId", typeAppointment.GetProperty("userId").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@title", typeAppointment.GetProperty("title").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@description", typeAppointment.GetProperty("description").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@location", typeAppointment.GetProperty("location").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@contact", typeAppointment.GetProperty("contact").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@type", typeAppointment.GetProperty("type").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@url", typeAppointment.GetProperty("url").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@start", typeAppointment.GetProperty("start").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@end", typeAppointment.GetProperty("end").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@createDate", typeAppointment.GetProperty("createDate").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@createdBy", typeAppointment.GetProperty("createdBy").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@lastUpdate", typeAppointment.GetProperty("lastUpdate").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", typeAppointment.GetProperty("lastUpdateBy").GetValue(Data));
                         break;
 
                     case DatabaseEntries.City:
@@ -518,16 +534,16 @@ namespace ScheduleBoss.Classes
                         break;
 
                     case DatabaseEntries.Customer:
-                        Customer Cust = Data as Customer;
+                        Type typeCust = Data.GetType();
                         InsertCommand.CommandText = "INSERT INTO customer VALUES ( @customerId, @customerName, @addressId, @active, @createDate, @createdBy, @lastUpdate, @lastUpdateBy)";
-                        InsertCommand.Parameters.AddWithValue("@customerId", Cust.customerId);
-                        InsertCommand.Parameters.AddWithValue("@customerName", Cust.customerName);
-                        InsertCommand.Parameters.AddWithValue("@addressId", Cust.addressId);
-                        InsertCommand.Parameters.AddWithValue("@active", Cust.active);
-                        InsertCommand.Parameters.AddWithValue("@createDate", Cust.createDate);
-                        InsertCommand.Parameters.AddWithValue("@createdBy", Cust.createdBy);
-                        InsertCommand.Parameters.AddWithValue("@lastUpdate", Cust.lastUpdate);
-                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", Cust.lastUpdateBy);
+                        InsertCommand.Parameters.AddWithValue("@customerId", typeCust.GetProperty("customerId").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@customerName", typeCust.GetProperty("customerName").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@addressId", typeCust.GetProperty("addressId").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@active", typeCust.GetProperty("active").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@createDate", typeCust.GetProperty("createDate").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@createdBy", typeCust.GetProperty("createdBy").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@lastUpdate", typeCust.GetProperty("lastUpdate").GetValue(Data));
+                        InsertCommand.Parameters.AddWithValue("@lastUpdateBy", typeCust.GetProperty("lastUpdateBy").GetValue(Data));
                         break;
 
 
@@ -555,8 +571,8 @@ namespace ScheduleBoss.Classes
             return IsInserted;
         }
 
-        // method to update a record 
-        public bool UpdateData(object Data, DatabaseEntries entryType)
+        // method to update a record (uses generic typing)
+        public bool UpdateData<T>(T Data, DatabaseEntries entryType)
         {
             // declare local variable to track status
             bool IsUpdated = false;
@@ -580,7 +596,9 @@ namespace ScheduleBoss.Classes
                 switch (entryType)
                 {
                     case DatabaseEntries.Address:
-                        CustomerAddress Address = Data as CustomerAddress;
+                        
+                        // get a type object for the generic T Data to allow for getting property values
+                        Type typeAddress = Data.GetType();
                         queryTemp = "UPDATE address";
                         queryTemp += " SET address = @address,";
                         queryTemp += " address2 = @address2,";
@@ -590,20 +608,21 @@ namespace ScheduleBoss.Classes
                         queryTemp += " lastUpdate = @lastUpdate,";
                         queryTemp += " lastUpdateBy = @lastUpdateBy";
                         queryTemp += " WHERE addressId = @addressId";
-
                         UpdateCommand.CommandText = queryTemp;
-                        UpdateCommand.Parameters.AddWithValue("@addressId", Address.addressId);
-                        UpdateCommand.Parameters.AddWithValue("@address", Address.address);
-                        UpdateCommand.Parameters.AddWithValue("@address2", Address.address2);
-                        UpdateCommand.Parameters.AddWithValue("@cityId", Address.cityId);
-                        UpdateCommand.Parameters.AddWithValue("@postalCode", Address.postalCode);
-                        UpdateCommand.Parameters.AddWithValue("@phone", Address.phone);
-                        UpdateCommand.Parameters.AddWithValue("@lastUpdate", Address.lastUpdate);
-                        UpdateCommand.Parameters.AddWithValue("@lastUpdateBy", Address.lastUpdateBy);
+                        UpdateCommand.Parameters.AddWithValue("@addressId", typeAddress.GetProperty("addressId").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@address", typeAddress.GetProperty("address").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@address2", typeAddress.GetProperty("address2").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@cityId", typeAddress.GetProperty("cityId").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@postalCode", typeAddress.GetProperty("postalCode").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@phone", typeAddress.GetProperty("phone").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@lastUpdate", typeAddress.GetProperty("lastUpdate").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@lastUpdateBy", typeAddress.GetProperty("lastUpdateBy").GetValue(Data));
                         break;
 
                     case DatabaseEntries.Appointment:
-                        Appointment Appt = Data as Appointment;
+
+                        // get a type object for the generic T Data to allow for getting property values
+                        Type typeAppointment = Data.GetType();
                         queryTemp = "UPDATE appointment ";
                         queryTemp += " SET customerId = @customerId,";
                         queryTemp += " userId = @userId,";
@@ -620,19 +639,19 @@ namespace ScheduleBoss.Classes
                         queryTemp += " WHERE appointmentId = @appointmentId";
                         
                         UpdateCommand.CommandText = queryTemp;
-                        UpdateCommand.Parameters.AddWithValue("@appointmentId", Appt.appointmentId);
-                        UpdateCommand.Parameters.AddWithValue("@customerId", Appt.customerId);
-                        UpdateCommand.Parameters.AddWithValue("@userId", Appt.userId);
-                        UpdateCommand.Parameters.AddWithValue("@title", Appt.title);
-                        UpdateCommand.Parameters.AddWithValue("@description", Appt.description);
-                        UpdateCommand.Parameters.AddWithValue("@location", Appt.location);
-                        UpdateCommand.Parameters.AddWithValue("@contact", Appt.contact);
-                        UpdateCommand.Parameters.AddWithValue("@type", Appt.type);
-                        UpdateCommand.Parameters.AddWithValue("@url", Appt.url);
-                        UpdateCommand.Parameters.AddWithValue("@start", Appt.start);
-                        UpdateCommand.Parameters.AddWithValue("@end", Appt.end);
-                        UpdateCommand.Parameters.AddWithValue("@lastUpdate", Appt.lastUpdate);
-                        UpdateCommand.Parameters.AddWithValue("@lastUpdateBy", Appt.lastUpdateBy);
+                        UpdateCommand.Parameters.AddWithValue("@appointmentId", typeAppointment.GetProperty("appointmentId").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@customerId", typeAppointment.GetProperty("customerId").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@userId", typeAppointment.GetProperty("userId").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@title", typeAppointment.GetProperty("title").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@description", typeAppointment.GetProperty("description").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@location", typeAppointment.GetProperty("location").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@contact", typeAppointment.GetProperty("contact").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@type", typeAppointment.GetProperty("type").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@url", typeAppointment.GetProperty("url").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@start", typeAppointment.GetProperty("start").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@end", typeAppointment.GetProperty("end").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@lastUpdate", typeAppointment.GetProperty("lastUpdate").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@lastUpdateBy", typeAppointment.GetProperty("lastUpdateBy").GetValue(Data));
                         break;
 
                     case DatabaseEntries.City:
@@ -642,7 +661,10 @@ namespace ScheduleBoss.Classes
                         break;
 
                     case DatabaseEntries.Customer:
-                        Customer Cust = Data as Customer;
+
+                        // get a type object for the generic T Data to allow for getting property values
+                        Type typeCust = Data.GetType();
+                        
                         queryTemp = "UPDATE customer";
                         queryTemp += " SET customerName = @customerName,";
                         queryTemp += " active = @active,";
@@ -651,11 +673,11 @@ namespace ScheduleBoss.Classes
                         queryTemp += " WHERE customerId = @customerId";
 
                         UpdateCommand.CommandText = queryTemp;
-                        UpdateCommand.Parameters.AddWithValue("@customerId", Cust.customerId);
-                        UpdateCommand.Parameters.AddWithValue("@customerName", Cust.customerName);
-                        UpdateCommand.Parameters.AddWithValue("@active", Cust.active);
-                        UpdateCommand.Parameters.AddWithValue("@lastUpdate", Cust.lastUpdate);
-                        UpdateCommand.Parameters.AddWithValue("@lastUpdateBy", Cust.lastUpdateBy);
+                        UpdateCommand.Parameters.AddWithValue("@customerId", typeCust.GetProperty("customerId").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@customerName", typeCust.GetProperty("customerName").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@active", typeCust.GetProperty("active").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@lastUpdate", typeCust.GetProperty("lastUpdate").GetValue(Data));
+                        UpdateCommand.Parameters.AddWithValue("@lastUpdateBy", typeCust.GetProperty("lastUpdateBy").GetValue(Data));
                         break;
 
 
@@ -730,6 +752,188 @@ namespace ScheduleBoss.Classes
 
             return IsOverlapping;
         }
+        
+        #region REPORT METHODS
+
+        // method to get the number of each Appointment type, ordered by Month
+        public List<string> GetAppointmentTypesByMonth()
+        {
+
+            // set up local variables
+            List<string> reportData = new List<string>();
+            var AllRecords = new DataTable();
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+
+            string queryTmp = "SELECT type,";
+            queryTmp += " COUNT(*) count,";
+            queryTmp += " MONTH(start) month";
+            queryTmp += " FROM U047yU.appointment";
+            queryTmp += " GROUP BY type";
+            queryTmp += " ORDER BY month";
+
+            query.CommandText = queryTmp;
+
+            // execute the query 
+            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+            {
+                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                dataAdapter.Fill(AllRecords);
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            // extract the unique months from the months column. uses a lambda to select the field value before sending it to LINQ
+            // methods to only get unique values and return a list
+            List<int> Months = AllRecords.AsEnumerable().Select(row => row.Field<int>("month")).Distinct().ToList();
+
+            // add report lines. pivoting off of unique values for months, gets the other relevant data
+            // and adds formatted strings to the return list. uses culture info to get the month name
+            foreach (int Month in Months)
+            {
+                reportData.Add($"Appointment types for: {CultureInfo.CurrentUICulture.DateTimeFormat.GetMonthName(Month)}");
+                reportData.Add($"================================================================================");
+
+                var typesThisMonth = AllRecords.Select($"month = {Month}");
+
+                foreach (DataRow row in typesThisMonth)
+                {
+                    reportData.Add($"\t{row["type"].ToString()}: {row["count"].ToString()}");
+                }
+                reportData.Add(" ");
+            }
+
+
+            return reportData;
+        }
+
+        // method to get a schedule - that is, all appointments for a given consultant 
+        public List<string> GetScheduleByConsultant()
+        {
+            // set up local variables
+            List<string> reportData = new List<string>();
+            var AllRecords = new DataTable();
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+
+            string queryTmp = "SELECT ";
+            queryTmp += " u.userName consultant,";
+            queryTmp += " c.customerName customer,";
+            queryTmp += " a.title title,";
+            queryTmp += " a.start startTime,";
+            queryTmp += " a.end endTime";
+            queryTmp += " FROM appointment a";
+            queryTmp += " INNER JOIN user u ON a.userId = u.userId";
+            queryTmp += " INNER JOIN customer c ON a.customerId = c.customerId";
+            queryTmp += " ORDER BY consultant, startTime ASC";
+
+            query.CommandText = queryTmp;
+
+            // execute the query 
+            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+            {
+                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                dataAdapter.Fill(AllRecords);
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            // extract the unique consultants from the consultants column. uses a lambda to select the field value before sending it to LINQ
+            // methods to only get unique values and return a list
+            List<string> Consultants = AllRecords.AsEnumerable().Select(row => row.Field<string>("consultant")).Distinct().ToList();
+
+            // add report lines. pivoting off of unique values in consultants, gets the other relevant data
+            // and adds formatted strings to the return list
+            foreach (string Consultant in Consultants)
+            {
+
+                reportData.Add($"Appointments for: {Consultant}");
+                reportData.Add($"================================================================");
+
+                var apptsThisUser = AllRecords.Select($"consultant = '{Consultant}'");
+
+                foreach (DataRow row in apptsThisUser)
+                {
+                    reportData.Add($"Meeting with: {row["customer"].ToString()}");
+                    reportData.Add($"\t\t Start time: {row["startTime"].ToString()}\t\t End time: {row["endTime"].ToString()}");
+                }
+                reportData.Add(" ");
+            }
+
+
+            return reportData;
+        }
+
+        // method to get the number of appointments scheduled, by customer
+        public List<string> GetAppointmentsByCustomer()
+        {
+
+            // set up local variables
+            List<string> reportData = new List<string>();
+            var AllRecords = new DataTable();
+
+            // open connection
+            this.Database.ConnectToDatabase();
+
+            // create the query
+            MySqlCommand query = this.Database.SqlConnection.CreateCommand();
+
+            string queryTmp = "SELECT 	a.customerId,";
+            queryTmp += " c.customerName,";
+            queryTmp += " COUNT(*) count";
+            queryTmp += " FROM U047yU.appointment a";
+            queryTmp += " INNER JOIN U047yU.customer c on a.customerId = c.customerId";
+            queryTmp += " GROUP BY customerName";
+            queryTmp += " ORDER BY customerId";
+
+            query.CommandText = queryTmp;
+
+            // execute the query 
+            using (MySqlDataAdapter dataAdapter = new MySqlDataAdapter(query))
+            {
+                dataAdapter.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                dataAdapter.Fill(AllRecords);
+            }
+
+            // close connection
+            this.Database.DisconnectFromDatabase();
+
+            // extract the unique customers from the customers column. uses a lambda to select the field value before sending it to LINQ
+            // methods to only get unique values and return a list
+            List<string> Customers = AllRecords.AsEnumerable().Select(row => row.Field<string>("customerName")).Distinct().ToList();
+
+            // add report lines. pivoting off of unique values in customers, gets the other relevant data
+            // and adds formatted strings to the return list
+            foreach (string Customer in Customers)
+            {
+                reportData.Add($"Scheduled appointment counts for: {Customer}");
+                reportData.Add($"================================================================================");
+
+                var typesThisMonth = AllRecords.Select($"customerName = '{Customer}'");
+
+                foreach (DataRow row in typesThisMonth)
+                {
+                    reportData.Add($"\tAppointments scheduled: {row["count"].ToString()}");
+                }
+                reportData.Add(" ");
+            }
+
+            // return data to report viewer
+            return reportData;
+        }
+        
+        #endregion
+
     }
-    
+
 }

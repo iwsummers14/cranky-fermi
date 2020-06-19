@@ -197,7 +197,7 @@ namespace ScheduleBoss.Forms
                 }
 
                 // log the operation and close the form
-                this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Appointment record inserted with AppointmentId:{ModAppt.appointmentId.ToString()}");
+                this.Logger.WriteLog($"{DateTime.Now.ToString()} [INFO] Appointment record updated with AppointmentId:{ModAppt.appointmentId.ToString()}");
 
                 this.Close();
                 
@@ -220,7 +220,7 @@ namespace ScheduleBoss.Forms
             // process general exception
             catch (Exception ex)
             {
-                MessageBox.Show($"An error has occurred while creating your appointment. Please consult the log for more information.", "Insert error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"An error has occurred while updating your appointment. Please consult the log for more information.", "Update error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.Logger.WriteLog($"{DateTime.Now.ToString()} [ERROR] Operation error: {ex.Message}");
             }
 

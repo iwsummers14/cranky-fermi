@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScheduleBoss.Classes
 {
+    /// <summary>
+    /// DataModel class to hold login response (user) data from database
+    /// </summary>
     public class LoginResponse
     {
+        
         public int UserId { get; set; }
 
         public string Username { get; set; }

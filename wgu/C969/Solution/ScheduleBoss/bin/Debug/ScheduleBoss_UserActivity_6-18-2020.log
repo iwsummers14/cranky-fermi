@@ -1,0 +1,88 @@
+﻿6/18/2020 11:46:18 AM [INFO] Application started
+6/18/2020 11:46:18 AM [INFO] Requesting user login
+6/18/2020 11:46:18 AM [INFO] Processing user login
+6/18/2020 11:46:21 AM [INFO] User test authenticated successfully.
+6/18/2020 11:46:43 AM [INFO] Logout requested
+6/18/2020 11:46:43 AM [INFO] Application closing
+6/18/2020 11:47:14 AM [INFO] Application started
+6/18/2020 11:47:14 AM [INFO] Requesting user login
+6/18/2020 11:47:14 AM [INFO] Processing user login
+6/18/2020 11:47:17 AM [INFO] User test authenticated successfully.
+6/18/2020 11:47:29 AM [INFO] Application closing
+6/18/2020 2:03:44 PM [INFO] Application started
+6/18/2020 2:03:44 PM [INFO] Requesting user login
+6/18/2020 2:03:44 PM [INFO] Processing user login
+6/18/2020 2:03:47 PM [INFO] User test authenticated successfully.
+6/18/2020 2:04:07 PM [INFO] Logout requested
+6/18/2020 2:04:07 PM [INFO] Application closing
+6/18/2020 2:04:38 PM [INFO] Application started
+6/18/2020 2:04:38 PM [INFO] Requesting user login
+6/18/2020 2:04:38 PM [INFO] Processing user login
+6/18/2020 2:04:41 PM [INFO] User test authenticated successfully.
+6/18/2020 2:06:15 PM [INFO] Logout requested
+6/18/2020 2:06:15 PM [INFO] Application closing
+6/18/2020 2:06:19 PM [INFO] Application started
+6/18/2020 2:06:19 PM [INFO] Requesting user login
+6/18/2020 2:06:19 PM [INFO] Processing user login
+6/18/2020 2:06:22 PM [INFO] User test authenticated successfully.
+6/18/2020 2:06:44 PM [INFO] Logout requested
+6/18/2020 2:06:44 PM [INFO] Application closing
+6/18/2020 2:08:58 PM [INFO] Application started
+6/18/2020 2:08:58 PM [INFO] Requesting user login
+6/18/2020 2:08:58 PM [INFO] Processing user login
+6/18/2020 2:09:01 PM [WARN] User test failed to authenticate.
+6/18/2020 2:09:01 PM [INFO] User test has attempted authentication 1 times.
+6/18/2020 2:09:02 PM [INFO] User test authenticated successfully.
+6/18/2020 2:10:35 PM [INFO] Application started
+6/18/2020 2:10:35 PM [INFO] Requesting user login
+6/18/2020 2:10:35 PM [INFO] Processing user login
+6/18/2020 2:10:37 PM [INFO] User test authenticated successfully.
+6/18/2020 2:10:51 PM [INFO] Logout requested
+6/18/2020 2:10:51 PM [INFO] Application closing
+6/18/2020 2:12:21 PM [INFO] Application started
+6/18/2020 2:12:21 PM [INFO] Requesting user login
+6/18/2020 2:12:21 PM [INFO] Processing user login
+6/18/2020 2:12:24 PM [INFO] User test authenticated successfully.
+6/18/2020 2:12:43 PM [INFO] Logout requested
+6/18/2020 2:12:43 PM [INFO] Application closing
+6/18/2020 2:29:50 PM [INFO] Application started
+6/18/2020 2:29:50 PM [INFO] Requesting user login
+6/18/2020 2:29:50 PM [INFO] Processing user login
+6/18/2020 2:29:56 PM [INFO] User test authenticated successfully.
+6/18/2020 2:30:52 PM [INFO] Application started
+6/18/2020 2:30:52 PM [INFO] Requesting user login
+6/18/2020 2:30:52 PM [INFO] Processing user login
+6/18/2020 2:30:55 PM [INFO] User test authenticated successfully.
+6/18/2020 2:35:54 PM [INFO] Application started
+6/18/2020 2:35:54 PM [INFO] Requesting user login
+6/18/2020 2:35:54 PM [INFO] Processing user login
+6/18/2020 2:35:58 PM [INFO] User test authenticated successfully.
+6/18/2020 2:41:05 PM [INFO] Application started
+6/18/2020 2:41:05 PM [INFO] Requesting user login
+6/18/2020 2:41:05 PM [INFO] Processing user login
+6/18/2020 2:41:08 PM [INFO] User test authenticated successfully.
+6/18/2020 2:41:24 PM [INFO] Logout requested
+6/18/2020 2:41:24 PM [INFO] Application closing
+6/18/2020 2:41:39 PM [INFO] Application started
+6/18/2020 2:41:39 PM [INFO] Requesting user login
+6/18/2020 2:41:39 PM [INFO] Processing user login
+6/18/2020 2:41:44 PM [INFO] User test authenticated successfully.
+6/18/2020 2:43:19 PM [INFO] Logout requested
+6/18/2020 2:43:19 PM [INFO] Application closing
+6/18/2020 2:43:49 PM [INFO] Application started
+6/18/2020 2:43:49 PM [INFO] Requesting user login
+6/18/2020 2:43:49 PM [INFO] Processing user login
+6/18/2020 2:43:52 PM [INFO] User test authenticated successfully.
+6/18/2020 2:44:16 PM [INFO] Logout requested
+6/18/2020 2:44:16 PM [INFO] Application closing
+6/18/2020 2:45:02 PM [INFO] Application started
+6/18/2020 2:45:02 PM [INFO] Requesting user login
+6/18/2020 2:45:02 PM [INFO] Processing user login
+6/18/2020 2:45:05 PM [INFO] User test authenticated successfully.
+6/18/2020 2:45:25 PM [INFO] Logout requested
+6/18/2020 2:45:25 PM [INFO] Application closing
+6/18/2020 2:48:45 PM [INFO] Application started
+6/18/2020 2:48:45 PM [INFO] Requesting user login
+6/18/2020 2:48:45 PM [INFO] Processing user login
+6/18/2020 2:48:48 PM [INFO] User test authenticated successfully.
+6/18/2020 2:49:19 PM [INFO] Application closing

@@ -359,6 +359,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NewAppointment";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SCHEDULE BOSS - New Appointment";
             this.apptPanel.ResumeLayout(false);
             this.apptPanel.PerformLayout();

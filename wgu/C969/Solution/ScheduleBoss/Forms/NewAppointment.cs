@@ -215,6 +215,7 @@ namespace ScheduleBoss.Forms
 
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
+            // close form
             this.Close();
         }
 

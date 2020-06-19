@@ -1,18 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using ScheduleBoss.Classes;
-using ScheduleBoss.Enums;
 
 namespace ScheduleBoss.Forms
 {
+    /// <summary>
+    /// Form that allows the user to view the activity log.
+    /// </summary>
     public partial class LogViewer : Form
     {
 
@@ -31,8 +25,29 @@ namespace ScheduleBoss.Forms
 
         private void ReportViewer_Load(object sender, EventArgs e)
         {
+            // load the log data
+            LoadLogData();
+        }
+
+        private void btn_Close_Click(object sender, EventArgs e)
+        {
+            
+            this.Close();
+        }
+
+        private void btn_Refresh_Click(object sender, EventArgs e)
+        {
+            // re-load the log data
+            LoadLogData();
+        }
+
+        private void LoadLogData()
+        {
             try
             {
+                // clear any text in the viewerbox 
+                tbox_LogData.Text = "";
+
                 // make a copy of the log file
                 File.Copy(this.LogFilePath, this.TmpLogPath);
 
@@ -40,12 +55,15 @@ namespace ScheduleBoss.Forms
                 using (TextReader reader = new StreamReader(File.OpenRead(this.TmpLogPath)))
                 {
                     tbox_LogData.Text = reader.ReadToEnd();
+                    
                 }
 
                 File.Delete(this.TmpLogPath);
+                tbox_LogData.ScrollToCaret();
             }
             catch (Exception ex)
             {
+                // display error message to user and close the form
                 MessageBox.Show(
                     $"Error reading log file {this.LogFilePath}.\n\nMessage: {ex.Message}.\n\nThe log viewer will now close.",
                     "Error",
@@ -56,13 +74,9 @@ namespace ScheduleBoss.Forms
                 if (File.Exists(this.TmpLogPath)) { File.Delete(this.TmpLogPath); }
                 this.Close();
             }
-            
+
         }
 
-        private void btn_Close_Click(object sender, EventArgs e)
-        {
-            
-            this.Close();
-        }
+
     }
 }

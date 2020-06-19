@@ -161,6 +161,7 @@ namespace ScheduleBoss.Forms
                 // insert the data - possbily make this async/awaitable
                 bool AddressUpdate = this.DataProc.UpdateData(ModAddr, DatabaseEntries.Address);
 
+                // throw error if the operation failed
                 if (AddressUpdate == false)
                 {
                     throw new Exception("Error during UPDATE operation on 'address' table. The SQL transaction has been rolled back.");
@@ -203,7 +204,7 @@ namespace ScheduleBoss.Forms
                 this.Close();
 
             }
-
+            // process argumentOutOfRange exception
             catch (ArgumentOutOfRangeException argEx)
             {
                 MessageBox.Show($"{argEx.Message}", "Invalid Entry!", MessageBoxButtons.OK, MessageBoxIcon.Warning);

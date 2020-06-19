@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;  
+using System.Data;
 
 namespace ScheduleBoss.Classes
 {
+    /// <summary>
+    /// DataModel class to hold Country data. Mirrors the columns in the Country table.
+    /// </summary>
     public class CustomerCountry
     {
         public int countryId { get; set; }
@@ -21,8 +20,10 @@ namespace ScheduleBoss.Classes
 
         public string lastUpdateBy { get; set; }
 
+        // default constructor
         public CustomerCountry() { }
 
+        // constructor taking datarow as input to set property values
         public CustomerCountry(DataRow row)
         {
             this.countryId = int.Parse(row["countryId"].ToString());

@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Data;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScheduleBoss.Classes
 {
+    /// <summary>
+    /// DataModel class to hold Appointment data. Mirrors the columns in the Appointment table.
+    /// </summary>
     public class Appointment
     {
-
+        
         public int appointmentId { get; set; }
 
         public int customerId { get; set; }
@@ -40,10 +39,10 @@ namespace ScheduleBoss.Classes
 
         public string lastUpdateBy { get; set; }
 
-        // default constructor
+        // default constructor 
         public Appointment() { }
 
-        // constructor taking a datarow to set properties
+        // constructor taking a datarow to set property values
         public Appointment(DataRow row)
         {
             this.appointmentId = int.Parse(row["appointmentId"].ToString());

@@ -1,16 +1,20 @@
 ﻿using System;
-using System.Configuration;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 using System.Globalization;
-using System.Security;
+using System.Linq;
 
 namespace ScheduleBoss.Classes
 {
+    /// <summary>
+    /// Class to hold user session data. This includes timezone information, work day start and end
+    /// times, work days, and the order of work days in a work week. This class also holds methods to
+    /// convert datetime information from the session time zone to UTC and from UTC to the session
+    /// time zone. It also generates date ranges for 'this week' and 'this month' based on a date time.
+    /// </summary>
     public class UserSession
     {
+     
         public bool IsAuthenticated { get; set; }
 
         public DateTime UserLoginTime { get; set; }
@@ -31,9 +35,10 @@ namespace ScheduleBoss.Classes
 
         public List<string> WorkWeek { get; private set; }
 
+        // constructor
         public UserSession()
         {
-
+            // load the appsettings section of the app.config file
             var AppSettings = ConfigurationManager.AppSettings;
 
             // set the TimeZoneInfo property and determine if it the time zone supports daylight savings time.
@@ -53,20 +58,24 @@ namespace ScheduleBoss.Classes
                 
         }
         
+        // method to convert a time from UTC to the session time zone
         public DateTime ConvertDateTimeFromUtc(DateTime time)
         {
             DateTime convertedTime = TimeZoneInfo.ConvertTimeFromUtc(time, this.UserTimeZone);
             return convertedTime;
         }
 
+        // method to convert a time from the session time zone to UTC
         public DateTime ConvertDateTimeToUtc(DateTime time)
         {
             DateTime convertedTime = TimeZoneInfo.ConvertTimeToUtc(time, this.UserTimeZone);
             return convertedTime;
         }
 
+        // method to get 'this week' range from a given datetime
         public Dictionary<string, DateTime> GetThisWeek(DateTime now) 
         {
+            // set up variables
             var returnRange = new Dictionary<string, DateTime>();
             var weekIndex = this.WorkWeek.IndexOf(now.DayOfWeek.ToString());
 
@@ -81,6 +90,7 @@ namespace ScheduleBoss.Classes
                 returnRange.Add("WeekEnd", weekEnd);
             }
 
+            // processing for all other days
             else
             {
                 DateTime weekStart = now.AddDays(-weekIndex);
@@ -90,22 +100,27 @@ namespace ScheduleBoss.Classes
                 returnRange.Add("WeekEnd", weekEnd);
             }
             
-
+            // return the range of dates
             return returnRange;
         }
 
+        // method to get 'this month' range from a given datetime
         public Dictionary<string, DateTime> GetThisMonth(DateTime now)
         {
+            // set up variables
             var returnRange = new Dictionary<string, DateTime>();
             var monthIndex = (now.Day - 1);
             var daysThisMonth = this.CurrentCulture.Calendar.GetDaysInMonth(now.Year, now.Month);
 
+            // set month start and end values
             DateTime monthStart = now.AddDays(-monthIndex);
             DateTime monthEnd = monthStart.AddDays(daysThisMonth);
 
+            // add values to dictionary
             returnRange.Add("MonthStart", monthStart);
             returnRange.Add("MonthEnd", monthEnd);
 
+            // return data
             return returnRange;
         }
 

@@ -110,6 +110,7 @@
             this.Controls.Add(this.btn_Delete);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CustomerList";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SCHEDULE BOSS - Customer List";
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Customers)).EndInit();
             this.panel1.ResumeLayout(false);

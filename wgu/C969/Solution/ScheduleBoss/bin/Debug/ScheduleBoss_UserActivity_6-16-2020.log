@@ -70,3 +70,6 @@
 6/16/2020 8:04:58 PM [INFO] Appointment record inserted with AppointmentId:23
 6/16/2020 8:05:11 PM [ERROR] Schedule conflict detected: A conflict with another appointment was detected. Please review Start and End times and dates and ensure they do not overlap with another appointment.
 6/16/2020 8:05:17 PM [INFO] Appointment record inserted with AppointmentId:23
+6/16/2020 8:25:51 PM [INFO] Application started
+6/16/2020 8:25:51 PM [INFO] Processing user login
+6/16/2020 8:25:55 PM [INFO] User test authenticated successfully.
