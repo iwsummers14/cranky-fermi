@@ -63,6 +63,8 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\DataConnection.cs" />
+    <Compile Include="Helpers\FileSystemHelper.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
@@ -142,4 +144,5 @@
       <Name>TermTracker</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
 </Project>
