@@ -1,3 +1,5 @@
+C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\bin\Debug\Images\banner.png
+C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\bin\Debug\Images\wgu_owl.png
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\bin\Debug\TermTracker.Android.dll
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\bin\Debug\TermTracker.Android.pdb
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\bin\Debug\com.companyname.termtracker.apk

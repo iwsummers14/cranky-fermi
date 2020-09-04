@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TermTracker.MainPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout.Children>
+                <Frame OutlineColor="Navy">
+                    <Frame.Content>
+                        <Image 
+                            Aspect="AspectFit"
+                            Source="Images/banner.png"
+                        />      
+                    </Frame.Content>
+                </Frame>
+                
+                <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            </StackLayout.Children>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
