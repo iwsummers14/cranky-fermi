@@ -468,3 +468,4 @@ C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTrack
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\obj\Debug\90\stamp\_GenerateJavaStubs.stamp
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\obj\Debug\90\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\obj\Debug\90\stamp\_ResolveLibraryProjectImports.stamp
+C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\obj\Debug\90\res\drawable\banner.png

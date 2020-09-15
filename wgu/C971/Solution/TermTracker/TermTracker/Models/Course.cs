@@ -1,11 +1,16 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace TermTracker.Models
 {
+    [Table("Courses")]
     public class Course
     {
+        [PrimaryKey, AutoIncrement, Column("id")]
+        public int Id { get; set; }
+
         public string CourseCode { get; set; }
 
         public string Title { get; set; }

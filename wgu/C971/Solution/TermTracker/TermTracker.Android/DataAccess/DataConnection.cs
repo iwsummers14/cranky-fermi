@@ -12,6 +12,7 @@ using Android.Views;
 using Android.Widget;
 using System.Runtime.CompilerServices;
 using TermTracker.Droid.Helpers;
+using SQLite;
 
 namespace TermTracker.Droid.DataAccess
 {
@@ -22,6 +23,12 @@ namespace TermTracker.Droid.DataAccess
         public DataConnection()
         {
             FileSystemHelper = new FileSystemHelper();
+        }
+
+        public SQLiteAsyncConnection GetDataConnection()
+        {
+            var path = FileSystemHelper.GetDatabaseFilePath("TermTracker.db3");
+            return new SQLiteAsyncConnection(path);
         }
     }
 }

@@ -9,6 +9,7 @@ using Foundation;
 using UIKit;
 using Xamarin.Essentials;
 using TermTracker.iOS.Helpers;
+using SQLite;
 
 namespace TermTracker.iOS.DataAccess
 {
@@ -21,5 +22,10 @@ namespace TermTracker.iOS.DataAccess
             FileSystemHelper = new FileSystemHelper();
         }
 
+        public SQLiteAsyncConnection GetDataConnection()
+        {
+            var path = FileSystemHelper.GetDatabaseFilePath("TermTracker.db3");
+            return new SQLiteAsyncConnection(path);
+        }
     }
 }

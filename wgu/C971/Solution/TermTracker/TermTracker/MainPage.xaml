@@ -5,18 +5,23 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout.Children>
-                <Frame OutlineColor="Navy">
-                    <Frame.Content>
-                        <Image 
-                            Aspect="AspectFit"
-                            Source="Images/banner.png"
-                        />      
-                    </Frame.Content>
-                </Frame>
+                <StackLayout>
+                    <Image Scale=".75"
+                            Aspect="AspectFill"
+                            Source="banner.png"
+                            Margin="10, 10, 10, 10"
+                           HorizontalOptions="Center"
+                        />
+                </StackLayout>
                 
-                <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
+                <Label Text="Term Tracker"
+                       FontSize="Large"
+                VerticalOptions="Start" 
                 HorizontalOptions="CenterAndExpand" />
+
+                <StackLayout>
+                    <Label Text="Terms"/>
+                </StackLayout>
             </StackLayout.Children>
         </StackLayout>
     </ContentPage.Content>

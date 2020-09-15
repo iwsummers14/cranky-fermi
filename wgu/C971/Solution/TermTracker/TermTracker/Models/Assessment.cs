@@ -1,17 +1,22 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using TermTracker.Enum;
 
 namespace TermTracker.Models
 {
-    public abstract class Assessment
+    [Table("Assessments")]
+    public class Assessment
     {
+        [PrimaryKey, AutoIncrement, Column("id")]
+        public int Id { get; set; }
+
         public string Title { get; set; }
 
-        public AssessmentType AssessmentType { get; set; }
+        public string AssessmentType { get; set; }
 
-        public AssessmentStatus Status { get; set; }
+        public string Status { get; set; }
 
         public DateTime StartDate { get; set; }
 
