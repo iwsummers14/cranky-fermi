@@ -13,15 +13,30 @@
                            HorizontalOptions="Center"
                         />
                 </StackLayout>
-                
                 <Label Text="Term Tracker"
                        FontSize="Large"
                 VerticalOptions="Start" 
                 HorizontalOptions="CenterAndExpand" />
 
-                <StackLayout>
+                <StackLayout VerticalOptions="CenterAndExpand" x:Name="Terms">
                     <Label Text="Terms"/>
+                    <ListView x:Name="TermsListView">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" BackgroundColor="#040421">
+                                        <Label Text="{Binding Title}" VerticalOptions="Center" TextColor="White" />
+                                        <Label Text="{Binding StartDate}-{Binding EndDate}" VerticalOptions="Center" TextColor="White"/>
+                                        <Label Text="{Binding Status}" VerticalOptions="Center" TextColor="White" />
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </StackLayout>
+                <Button x:Name="AddTerm" Text="Add Term" Clicked="AddTerm_Button_Clicked">
+                    
+                </Button>
             </StackLayout.Children>
         </StackLayout>
     </ContentPage.Content>

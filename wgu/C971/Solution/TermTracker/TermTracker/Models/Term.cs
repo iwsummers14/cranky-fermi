@@ -14,7 +14,7 @@ namespace TermTracker.Models
 
         public string Title { get; set; }
 
-        public TermStatus Status { get; set; }
+        public string Status { get; set; }
 
         public DateTime StartDate { get; set; }
 

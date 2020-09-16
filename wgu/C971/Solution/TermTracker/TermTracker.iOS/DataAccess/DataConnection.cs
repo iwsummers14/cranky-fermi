@@ -8,9 +8,11 @@ using TermTracker.Interfaces;
 using Foundation;
 using UIKit;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 using TermTracker.iOS.Helpers;
 using SQLite;
 
+[assembly: Dependency(typeof(TermTracker.iOS.DataAccess.DataConnection))]
 namespace TermTracker.iOS.DataAccess
 {
     public class DataConnection : IDataConnection

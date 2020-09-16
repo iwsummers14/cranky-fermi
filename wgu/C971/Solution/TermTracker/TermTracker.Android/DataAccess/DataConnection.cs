@@ -10,12 +10,14 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using System.Runtime.CompilerServices;
 using TermTracker.Droid.Helpers;
 using SQLite;
+using Xamarin.Forms;
 
+[assembly: Dependency(typeof(TermTracker.Droid.DataAccess.DataConnection))]
 namespace TermTracker.Droid.DataAccess
 {
+    
     public class DataConnection : IDataConnection
     {
         public IFileSystemHelper FileSystemHelper { get; private set; }

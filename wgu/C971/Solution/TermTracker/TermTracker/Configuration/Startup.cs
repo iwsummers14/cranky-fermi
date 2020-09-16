@@ -5,6 +5,8 @@ using System.Text;
 using TermTracker.Interfaces;
 using TermTracker.Models;
 using Xamarin.Forms;
+using TermTracker.Enum;
+using System.Runtime.CompilerServices;
 
 namespace TermTracker.Configuration
 {
@@ -14,7 +16,7 @@ namespace TermTracker.Configuration
 
         public Startup()
         {
-            DataConnection = DependencyService.Get<IDataConnection>().GetDataConnection();
+            DataConnection = DependencyService.Get<IDataConnection>(DependencyFetchTarget.NewInstance).GetDataConnection();
             CheckDatabase();
         }
 
@@ -23,13 +25,24 @@ namespace TermTracker.Configuration
             try
             {
                 var terms = await DataConnection.Table<Term>().ToListAsync();
+                if (terms == null)
+                {
+                    InitializeDatabase();
+                }
+                
             }
             catch (SQLiteException sqEx)
-            {
+            {       
                 Console.WriteLine($"Error: {sqEx.Message}");
-                CreateTables();
-                HydrateTables();
+                InitializeDatabase();
             }
+
+        }
+
+        private void InitializeDatabase()
+        {
+            CreateTables();
+            HydrateTables();
         }
 
         private async void CreateTables()
@@ -43,7 +56,16 @@ namespace TermTracker.Configuration
 
         private async void HydrateTables()
         {
-            //await
+            var demoTerm = new Term()
+            {
+                Title = "Term 1",
+                StartDate = new DateTime(2020, 08, 01),
+                EndDate = new DateTime(2020, 08, 01),
+                Status = System.Enum.GetName(typeof(TermStatus), TermStatus.NotStarted),
+            };
+
+            await DataConnection.InsertAsync(demoTerm);
+
         }
     }
 }
