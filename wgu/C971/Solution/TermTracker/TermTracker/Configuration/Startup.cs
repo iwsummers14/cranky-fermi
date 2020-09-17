@@ -7,6 +7,7 @@ using TermTracker.Models;
 using Xamarin.Forms;
 using TermTracker.Enum;
 using System.Runtime.CompilerServices;
+using System.IO;
 
 namespace TermTracker.Configuration
 {
@@ -22,8 +23,10 @@ namespace TermTracker.Configuration
 
         private async void CheckDatabase()
         {
+
             try
             {
+                
                 var terms = await DataConnection.Table<Term>().ToListAsync();
                 if (terms == null)
                 {
@@ -31,9 +34,9 @@ namespace TermTracker.Configuration
                 }
                 
             }
-            catch (SQLiteException sqEx)
+            catch 
             {       
-                Console.WriteLine($"Error: {sqEx.Message}");
+                
                 InitializeDatabase();
             }
 
@@ -48,24 +51,37 @@ namespace TermTracker.Configuration
         private async void CreateTables()
         {
             await DataConnection.CreateTableAsync<Term>();
-            await DataConnection.CreateTableAsync<Course>();
             await DataConnection.CreateTableAsync<Assessment>();
             await DataConnection.CreateTableAsync<Instructor>();
+            await DataConnection.CreateTableAsync<Course>();
 
         }
 
         private async void HydrateTables()
         {
-            var demoTerm = new Term()
+
+            var seedStartDate = new DateTime(2020, 10, 01);
+            var status = System.Enum.GetName(typeof(TermStatus), TermStatus.NotStarted);
+            int index;
+            List<Term> termRecords = new List<Term>();
+            
+            for (index = 1 ;  index <= 6; index++)
             {
-                Title = "Term 1",
-                StartDate = new DateTime(2020, 08, 01),
-                EndDate = new DateTime(2020, 08, 01),
-                Status = System.Enum.GetName(typeof(TermStatus), TermStatus.NotStarted),
-            };
+                var demoTerm = new Term()
+                {
+                    Title = $"Term {index}",
+                    StartDate = seedStartDate,
+                    EndDate = seedStartDate.AddMonths(6),
+                    Status = status
+                };
 
-            await DataConnection.InsertAsync(demoTerm);
+                termRecords.Add(demoTerm);
+               
+                seedStartDate = seedStartDate.AddMonths(6).AddDays(1);
+            }
 
+            await DataConnection.InsertAllAsync(termRecords);
+            
         }
     }
 }

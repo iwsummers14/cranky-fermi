@@ -32,10 +32,15 @@ namespace TermTracker
             TermsListView.ItemsSource = TermsList;
         
         }
-        
+               
         private void AddTerm_Button_Clicked(object sender, EventArgs e)
         {
 
+        }
+                
+        private void TermsListView_Refreshing(object sender, EventArgs e)
+        {
+            
         }
     }
 }
