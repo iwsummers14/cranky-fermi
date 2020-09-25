@@ -9,6 +9,8 @@ using TermTracker.Configuration;
 using TermTracker.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using TermTracker.ViewModels;
+using TermTracker.Views;
 
 namespace TermTracker
 {
@@ -19,10 +21,13 @@ namespace TermTracker
 
         private ObservableCollection<Term> TermsList;
 
+        public string ViewTitle = "Term Tracker";
+
         public MainPage()
         {
             InitializeComponent();
             DataConnection = new Startup().DataConnection;
+            TitleText.Text = ViewTitle;
         }
 
         protected override async void OnAppearing() 
@@ -40,6 +45,12 @@ namespace TermTracker
                 
         private void TermsListView_Refreshing(object sender, EventArgs e)
         {
+            
+        }
+
+        private async void ViewCellTerm_Tapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TermDetailPage(), true);
             
         }
     }

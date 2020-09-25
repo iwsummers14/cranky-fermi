@@ -10,6 +10,7 @@ namespace TermTracker.Models
     {
         [PrimaryKey, AutoIncrement, Column("id")]
         public int Id { get; set; }
+
         public string Name { get; set; }
 
         public string PhoneNumber { get; set; }

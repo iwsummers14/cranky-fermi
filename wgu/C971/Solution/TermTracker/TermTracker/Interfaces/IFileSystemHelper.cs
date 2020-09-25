@@ -6,7 +6,7 @@ namespace TermTracker.Interfaces
 {
     public interface IFileSystemHelper
     {
-        string GetDatabaseFilePath(string databaseFileName);
+        string GetFilePathInPersonalFolder(string fileName);
 
     }
 }

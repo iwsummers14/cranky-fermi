@@ -17,11 +17,11 @@ namespace TermTracker.Droid.Helpers
     public class FileSystemHelper : IFileSystemHelper
     {
         
-        public string GetDatabaseFilePath(string databaseFileName)
+        public string GetFilePathInPersonalFolder(string fileName)
         {
             string fileSystemPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
 
-            return Path.Combine(fileSystemPath, databaseFileName);
+            return Path.Combine(fileSystemPath, fileName);
         }
     }
 }

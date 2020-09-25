@@ -22,10 +22,10 @@ namespace TermTracker.Models
         public DateTime EndDate { get; set; }
 
         public bool NotificationsEnabled { get; set; }
+                
+        public int Instructor { get; set; }
 
-        public Instructor CourseInstructor { get; set; }
-
-        public List<Assessment> Assessments { get; set; }
+        public int Term { get; set; }
 
     }
 }

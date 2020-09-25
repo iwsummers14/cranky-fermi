@@ -29,7 +29,7 @@ namespace TermTracker.Droid.DataAccess
 
         public SQLiteAsyncConnection GetDataConnection()
         {
-            var path = FileSystemHelper.GetDatabaseFilePath("TermTracker.db3");
+            var path = FileSystemHelper.GetFilePathInPersonalFolder("TermTracker.db3");
             return new SQLiteAsyncConnection(path);
         }
     }

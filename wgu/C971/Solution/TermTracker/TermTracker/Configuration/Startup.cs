@@ -8,16 +8,23 @@ using Xamarin.Forms;
 using TermTracker.Enum;
 using System.Runtime.CompilerServices;
 using System.IO;
+using TermTracker.Utilities;
+using System.Threading.Tasks;
+using Xamarin.Forms.Internals;
+using Xamarin.Forms.Xaml;
 
 namespace TermTracker.Configuration
 {
     public class Startup
     {
         public SQLiteAsyncConnection DataConnection { get; private set; }
+        
+        public ILogger Logger { get; private set; }
 
         public Startup()
         {
             DataConnection = DependencyService.Get<IDataConnection>(DependencyFetchTarget.NewInstance).GetDataConnection();
+            Logger = DependencyService.Get<ILogger>(DependencyFetchTarget.NewInstance);
             CheckDatabase();
         }
 
@@ -28,40 +35,70 @@ namespace TermTracker.Configuration
             {
                 
                 var terms = await DataConnection.Table<Term>().ToListAsync();
-                if (terms == null)
+                if (terms == null || terms.Count == 0)
                 {
                     InitializeDatabase();
                 }
                 
             }
-            catch 
-            {       
-                
+            catch (SQLite.SQLiteException ex)
+            {
+                Logger.WriteLogEntry(ex.Message);
                 InitializeDatabase();
             }
 
         }
 
-        private void InitializeDatabase()
+        private async void InitializeDatabase()
         {
-            CreateTables();
-            HydrateTables();
+            var tablesReady = await CreateTables();
+
+            if (tablesReady)
+            {
+               var recordsReady = await HydrateTables();
+                
+                if (recordsReady == false)
+                {
+                    throw new Exception("Population of database records has failed.");
+                }
+            }
+            else
+            {
+                throw new Exception("Table creation has failed");
+            }
+            
+
         }
 
-        private async void CreateTables()
+        private async Task<bool> CreateTables()
         {
-            await DataConnection.CreateTableAsync<Term>();
-            await DataConnection.CreateTableAsync<Assessment>();
-            await DataConnection.CreateTableAsync<Instructor>();
-            await DataConnection.CreateTableAsync<Course>();
+            var success = false;
+
+            try
+            {
+                await DataConnection.CreateTableAsync<Term>();
+                await DataConnection.CreateTableAsync<Assessment>();
+                await DataConnection.CreateTableAsync<Instructor>();
+                await DataConnection.CreateTableAsync<Course>();
+
+                success = true;
+            }
+
+            catch (Exception ex)
+            {
+                Logger.WriteLogEntry(ex.Message);
+                return success;
+            }
+
+            return success;
 
         }
 
-        private async void HydrateTables()
+        private async Task<bool> HydrateTables()
         {
-
+            bool success = false;
             var seedStartDate = new DateTime(2020, 10, 01);
-            var status = System.Enum.GetName(typeof(TermStatus), TermStatus.NotStarted);
+            var status = EnumUtilities.GetDescription<TermStatus>(TermStatus.NotStarted);
             int index;
             List<Term> termRecords = new List<Term>();
             
@@ -80,8 +117,20 @@ namespace TermTracker.Configuration
                 seedStartDate = seedStartDate.AddMonths(6).AddDays(1);
             }
 
-            await DataConnection.InsertAllAsync(termRecords);
-            
+            try
+            {
+                var records = await DataConnection.InsertAllAsync(termRecords);
+                if (records == 6)
+                {
+                    success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.WriteLogEntry(ex.Message);
+                success = false;
+            }
+            return success;
         }
     }
 }

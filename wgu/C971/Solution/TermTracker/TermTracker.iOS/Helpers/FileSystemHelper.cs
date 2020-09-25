@@ -12,7 +12,7 @@ namespace TermTracker.iOS.Helpers
 {
     public class FileSystemHelper : IFileSystemHelper
     {
-        public string GetDatabaseFilePath(string databaseFileName)
+        public string GetFilePathInPersonalFolder(string fileName)
         {
             string personalFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string libraryFolder = Path.Combine(personalFolder, "..", "Library");
@@ -22,7 +22,7 @@ namespace TermTracker.iOS.Helpers
                 Directory.CreateDirectory(libraryFolder);
             }
 
-            return Path.Combine(libraryFolder, databaseFileName);
+            return Path.Combine(libraryFolder, fileName);
         }
     }
 }
