@@ -12,7 +12,7 @@ namespace TermTracker.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TermDetailPage : ContentPage
     {
-        public string ViewTitle = "Term Details";
+        private string ViewTitle = "Term Details";
 
         public TermDetailPage()
         {
@@ -20,9 +20,9 @@ namespace TermTracker.Views
             TitleText.Text = ViewTitle;
         }
 
-        private void ViewCellCourse_Tapped(object sender, EventArgs e)
+        private async void ViewCellCourse_Tapped(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new CourseDetailPage());
         }
 
         private void EditTerm_Clicked(object sender, EventArgs e)
@@ -39,5 +39,7 @@ namespace TermTracker.Views
         {
 
         }
+
+        
     }
 }

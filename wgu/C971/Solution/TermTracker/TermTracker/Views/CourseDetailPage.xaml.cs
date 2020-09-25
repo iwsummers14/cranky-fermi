@@ -12,9 +12,28 @@ namespace TermTracker.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CourseDetailPage : ContentPage
     {
+
+        private string ViewTitle = "Course Detail";
+
         public CourseDetailPage()
         {
             InitializeComponent();
+            TitleText.Text = ViewTitle;
+        }
+
+        private async void ViewCellAssessment_Tapped(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AssessmentDetailPage());
+        }
+
+        private void EditCourse_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteCourse_Clicked(object sender, EventArgs e)
+        {
+
         }
     }
 }

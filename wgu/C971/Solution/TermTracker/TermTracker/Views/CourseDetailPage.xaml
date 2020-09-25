@@ -1,12 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModels="clr-namespace:TermTracker.ViewModels"
              x:Class="TermTracker.Views.CourseDetailPage">
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="20" VerticalOptions="Start">
+            <ViewModels:PageHeaderView x:Name="PageHeaderView"></ViewModels:PageHeaderView>
+            <Label x:Name="TitleText" Text="" FontSize="Large" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15"/>
+            <StackLayout Orientation="Vertical" x:Name="Terms" VerticalOptions="FillAndExpand" Spacing="5">
+                <ListView x:Name="CoursesListView" HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewModels:ViewCellAssessment Tapped="ViewCellAssessment_Tapped" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <Button x:Name="AddAssessment" Text="Add Assessment" CornerRadius="7" />
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
+                <Button x:Name="EditCourse" 
+                        Text="Edit Course" 
+                        CornerRadius="7" 
+                        Margin="0, 0, 10, 0"  
+                        HorizontalOptions="StartAndExpand" 
+                        WidthRequest="150"
+                        Clicked="EditCourse_Clicked" />
+                <Button x:Name="DeleteCourse" 
+                        Text="Delete Course" 
+                        CornerRadius="7" 
+                        Margin="10, 0, 0, 0" 
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="150"
+                        Clicked="DeleteCourse_Clicked" />
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
