@@ -6,10 +6,6 @@ namespace TermTracker.Interfaces
 {
     public interface ITermTrackerView
     {
-        void Save();
-
-        void Cancel();
-
-        void Delete<T>();
+       
     }
 }

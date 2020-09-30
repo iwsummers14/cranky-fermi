@@ -4,13 +4,15 @@ C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTrack
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\bin\Debug\netstandard2.0\TermTracker.dll
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\bin\Debug\netstandard2.0\ref\TermTracker.dll
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\bin\Debug\netstandard2.0\TermTracker.pdb
-C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\TermTracker.csprojAssemblyReference.cache
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\App.xaml.g.cs
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\ViewModels\PageHeaderView.xaml.g.cs
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\ViewModels\ViewCellAssessment.xaml.g.cs
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\ViewModels\ViewCellCourse.xaml.g.cs
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\ViewModels\ViewCellTerm.xaml.g.cs
+C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\Views\AddOrEditAssessmentPage.xaml.g.cs
+C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\Views\AddOrEditCoursePage.xaml.g.cs
+C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\Views\AddOrEditTermPage.xaml.g.cs
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\Views\AssessmentDetailPage.xaml.g.cs
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\Views\CourseDetailPage.xaml.g.cs
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\Views\TermDetailPage.xaml.g.cs
@@ -21,3 +23,4 @@ C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTrack
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\TermTracker.dll
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\ref\TermTracker.dll
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\TermTracker.pdb
+C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\TermTracker.csprojAssemblyReference.cache

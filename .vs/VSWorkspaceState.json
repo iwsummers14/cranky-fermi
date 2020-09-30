@@ -1,12 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\wgu",
-    "\\wgu\\C968",
-    "\\wgu\\C968\\Solution",
-    "\\wgu\\C968\\Solution\\MasterOfParts",
-    "\\wgu\\C968\\Solution\\MasterOfParts\\Resources"
+    "\\wgu"
   ],
-  "SelectedNode": "\\wgu\\C968\\Solution\\MasterOfParts\\Forms",
+  "SelectedNode": "\\.gitignore",
   "PreviewInSolutionExplorer": false
 }

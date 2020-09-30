@@ -9,10 +9,10 @@
                 <ViewModels:PageHeaderView/>
                 <Label x:Name="TitleText" Text="Term Tracker" FontSize="Large" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15"/>
                 <StackLayout Orientation="Vertical" x:Name="Terms" VerticalOptions="FillAndExpand" Spacing="5">
-                    <ListView x:Name="TermsListView" HasUnevenRows="True">
+                    <ListView x:Name="TermsListView" HasUnevenRows="True" ItemTapped="TermsListView_ItemTapped">
                         <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <ViewModels:ViewCellTerm Tapped="ViewCellTerm_Tapped"/>
+                                    <ViewModels:ViewCellTerm />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>

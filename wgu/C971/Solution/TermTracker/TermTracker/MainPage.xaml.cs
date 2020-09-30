@@ -11,6 +11,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TermTracker.ViewModels;
 using TermTracker.Views;
+using TermTracker.Factory;
 
 namespace TermTracker
 {
@@ -20,6 +21,8 @@ namespace TermTracker
         private SQLiteAsyncConnection DataConnection;
 
         private ObservableCollection<Term> TermsList;
+
+        private ViewFactory Factory { get => new ViewFactory(); }
 
         public string ViewTitle = "Term Tracker";
 
@@ -47,11 +50,15 @@ namespace TermTracker
         {
             
         }
-
-        private async void ViewCellTerm_Tapped(object sender, EventArgs e)
+               
+        private async void TermsListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            await Navigation.PushAsync(new TermDetailPage(), true);
+            var term = (Term)(e.Item);
             
+
+            var page = Factory.GetDetailView<Term>(DataConnection, term);
+            await Navigation.PushAsync(page, true);
+
         }
     }
 }
