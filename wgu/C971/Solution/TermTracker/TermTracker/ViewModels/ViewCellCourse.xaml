@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TermTracker.ViewModels.ViewCellCourse">
+    <ViewCell.View>
+        <Frame BorderColor="#040421" Padding="2" BackgroundColor="#040421" CornerRadius="7" MinimumHeightRequest="100">
+            <StackLayout HorizontalOptions="Center">
+                <Label TextColor="White" HorizontalTextAlignment="Center" >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding CourseCode, StringFormat='{0} - '}" />
+                            <Span Text="{Binding Title}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label Text="{Binding Status, StringFormat='Status: {0:F0}'}" TextColor="White" HorizontalTextAlignment="Center" />
+            </StackLayout>
+        </Frame>
+    </ViewCell.View>
+</ViewCell>

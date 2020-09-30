@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModels="clr-namespace:TermTracker.ViewModels"
+             x:Class="TermTracker.MainPage">
+    <ContentPage.Content>
+        <StackLayout Margin="20" VerticalOptions="Start">
+            <StackLayout.Children>
+                <ViewModels:PageHeaderView/>
+                <Label x:Name="TitleText" Text="Term Tracker" FontSize="Large" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15"/>
+                <StackLayout Orientation="Vertical" x:Name="Terms" VerticalOptions="FillAndExpand" Spacing="5">
+                    <ListView x:Name="TermsListView" HasUnevenRows="True" ItemTapped="TermsListView_ItemTapped">
+                        <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewModels:ViewCellTerm />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                <Button x:Name="AddTerm" Text="Add Term" Clicked="AddTerm_Button_Clicked" CornerRadius="7">
+                    
+                </Button>
+            </StackLayout.Children>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

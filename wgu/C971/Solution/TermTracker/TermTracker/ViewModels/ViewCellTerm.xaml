@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TermTracker.ViewModels.ViewCellTerm">
+    <ViewCell.View>
+        <Frame BorderColor="#040421" Padding="2" BackgroundColor="#040421" CornerRadius="7" MinimumHeightRequest="100">
+            <StackLayout HorizontalOptions="Center">
+                <Label Text="{Binding Title}" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Status, StringFormat='Status: {0:F0}'}" TextColor="White" HorizontalTextAlignment="Center" />
+                <Label TextColor="White" HorizontalTextAlignment="Center" >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding StartDate, StringFormat='{0:d} to'}" />
+                            <Span Text="{Binding EndDate, StringFormat=' {0:d}'}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </StackLayout>
+        </Frame>
+    </ViewCell.View>
+</ViewCell>
