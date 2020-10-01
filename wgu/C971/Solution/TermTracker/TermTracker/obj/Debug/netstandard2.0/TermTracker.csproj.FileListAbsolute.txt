@@ -23,4 +23,3 @@ C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTrack
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\TermTracker.dll
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\ref\TermTracker.dll
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\TermTracker.pdb
-C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker\obj\Debug\netstandard2.0\TermTracker.csprojAssemblyReference.cache

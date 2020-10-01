@@ -23,9 +23,9 @@ namespace TermTracker.Models
 
         public bool NotificationsEnabled { get; set; }
                 
-        public int Instructor { get; set; }
+        public int InstructorId { get; set; }
 
-        public int Term { get; set; }
+        public int TermId { get; set; }
 
     }
 }

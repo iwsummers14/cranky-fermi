@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -23,16 +24,23 @@ namespace TermTracker.Views
 
         private SQLiteAsyncConnection DataConnection { get; set; }
 
+        private ObservableCollection<Course> CoursesList;
+
         private Term CurrentTerm { get; set; }
-        
-        private string ViewTitle = "Term Details";
 
         public TermDetailPage(ref SQLiteAsyncConnection dConn, Term termToLoad )
         {
             InitializeComponent();
-            TitleText.Text = ViewTitle;
             CurrentTerm = termToLoad;
             DataConnection = dConn;
+        }
+
+        protected override async void OnAppearing()
+        {
+            var courses = await DataConnection.QueryAsync<Course>("SELECT * FROM Courses WHERE TermId = ?", CurrentTerm.Id);
+            CoursesList = new ObservableCollection<Course>(courses);
+            CoursesListView.ItemsSource = CoursesList;
+            TitleText.Text = $"Courses for {CurrentTerm.Title}";
         }
 
         private async void ViewCellCourse_Tapped(object sender, EventArgs e)

@@ -24,92 +24,86 @@ namespace TermTracker.Configuration
         public Startup()
         {
             DataConnection = DependencyService.Get<IDataConnection>(DependencyFetchTarget.NewInstance).GetDataConnection();
+            PrepareDatabase();
+
             Logger = DependencyService.Get<ILogger>(DependencyFetchTarget.NewInstance);
-            CheckDatabase();
         }
 
-        private async void CheckDatabase()
+        private void PrepareDatabase()
         {
 
             try
             {
-                
-                var terms = await DataConnection.Table<Term>().ToListAsync();
-                if (terms == null || terms.Count == 0)
-                {
-                    InitializeDatabase();
-                }
-                
+                CleanDatabase(InitializeDatabase);
+                                                
             }
             catch (SQLite.SQLiteException ex)
             {
                 Logger.WriteLogEntry(ex.Message);
-                InitializeDatabase();
             }
 
         }
 
-        private async void InitializeDatabase()
+        private async void CleanDatabase(Action callback)
         {
-            var tablesReady = await CreateTables();
+            // Drop all tables
+            await DataConnection.DropTableAsync<Assessment>();
+            await DataConnection.DropTableAsync<Course>();
+            await DataConnection.DropTableAsync<Instructor>();
+            await DataConnection.DropTableAsync<Term>();
 
-            if (tablesReady)
-            {
-               var recordsReady = await HydrateTables();
-                
-                if (recordsReady == false)
-                {
-                    throw new Exception("Population of database records has failed.");
-                }
-            }
-            else
-            {
-                throw new Exception("Table creation has failed");
-            }
-            
+            callback();
+        }
+
+        private void InitializeDatabase()
+        {
+            // create tables
+            CreateTables(HydrateTables);
 
         }
 
-        private async Task<bool> CreateTables()
+        private async void CreateTables(Action callback)
         {
-            var success = false;
-
             try
             {
                 await DataConnection.CreateTableAsync<Term>();
                 await DataConnection.CreateTableAsync<Assessment>();
                 await DataConnection.CreateTableAsync<Instructor>();
                 await DataConnection.CreateTableAsync<Course>();
-
-                success = true;
             }
 
             catch (Exception ex)
             {
                 Logger.WriteLogEntry(ex.Message);
-                return success;
+                
             }
 
-            return success;
-
+            callback();
         }
 
-        private async Task<bool> HydrateTables()
+        private async void HydrateTables()
         {
-            bool success = false;
             var seedStartDate = new DateTime(2020, 10, 01);
-            var status = EnumUtilities.GetDescription<TermStatus>(TermStatus.NotStarted);
             int index;
             List<Term> termRecords = new List<Term>();
+            List<Course> courseRecords = new List<Course>();
+            Instructor instructor = new Instructor()
+            {
+                Name = "Ian Summers",
+                EmailAddress = "isumme1@wgu.edu",
+                PhoneNumber = "314-575-6545"
+            };
+
             
-            for (index = 1 ;  index <= 6; index++)
+            // add 3 demo terms
+            for (index = 1 ;  index <= 3; index++)
             {
                 var demoTerm = new Term()
                 {
                     Title = $"Term {index}",
                     StartDate = seedStartDate,
                     EndDate = seedStartDate.AddMonths(6),
-                    Status = status
+                    Status = EnumUtilities.GetDescription<TermStatus>(TermStatus.NotStarted)
                 };
 
                 termRecords.Add(demoTerm);
@@ -117,20 +111,39 @@ namespace TermTracker.Configuration
                 seedStartDate = seedStartDate.AddMonths(6).AddDays(1);
             }
 
+            seedStartDate = DateTime.Now;
+
+            // add 4 demo courses
+            for (index = 1; index <= 4; index++)
+            {
+                var demoCourse = new Course()
+                {
+                    TermId = 1,
+                    Title = $"Software Concepts, Level {index}",
+                    CourseCode = $"C10{index}",
+                    InstructorId = 1,
+                    StartDate = seedStartDate,
+                    EndDate = seedStartDate.AddDays(30),
+                    Status = EnumUtilities.GetDescription<CourseStatus>(CourseStatus.NotStarted)
+                };
+
+                courseRecords.Add(demoCourse);
+
+                seedStartDate = seedStartDate.AddDays(31);
+            }
+
             try
             {
-                var records = await DataConnection.InsertAllAsync(termRecords);
-                if (records == 6)
-                {
-                    success = true;
-                }
+                await DataConnection.InsertAsync(instructor);
+                await DataConnection.InsertAllAsync(termRecords);
+                await DataConnection.InsertAllAsync(courseRecords);
+                
             }
             catch (Exception ex)
             {
                 Logger.WriteLogEntry(ex.Message);
-                success = false;
             }
-            return success;
+
         }
     }
 }

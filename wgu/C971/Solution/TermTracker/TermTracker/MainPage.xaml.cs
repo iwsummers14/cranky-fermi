@@ -12,6 +12,7 @@ using Xamarin.Forms.Xaml;
 using TermTracker.ViewModels;
 using TermTracker.Views;
 using TermTracker.Factory;
+using TermTracker.Enum;
 
 namespace TermTracker
 {
@@ -41,9 +42,10 @@ namespace TermTracker
         
         }
                
-        private void AddTerm_Button_Clicked(object sender, EventArgs e)
+        private async void AddTerm_Button_Clicked(object sender, EventArgs e)
         {
-
+            var page = Factory.GetEntryView<Term>(UserOperation.Add, DataConnection);
+            await Navigation.PushAsync(page, true);
         }
                 
         private void TermsListView_Refreshing(object sender, EventArgs e)
@@ -54,8 +56,6 @@ namespace TermTracker
         private async void TermsListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var term = (Term)(e.Item);
-            
-
             var page = Factory.GetDetailView<Term>(DataConnection, term);
             await Navigation.PushAsync(page, true);
 

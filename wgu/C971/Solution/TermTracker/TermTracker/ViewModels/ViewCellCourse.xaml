@@ -8,8 +8,8 @@
                 <Label TextColor="White" HorizontalTextAlignment="Center" >
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="{Binding CourseCode, StringFormat='{0} - '}" />
-                            <Span Text="{Binding Title}" />
+                            <Span Text="{Binding CourseCode, StringFormat='{0} -'}" />
+                            <Span Text="{Binding Title, StringFormat=' {0}'}" />
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
