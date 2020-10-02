@@ -2,8 +2,8 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TermTracker.ViewModels.PageHeaderView">
-        <StackLayout Margin="20" VerticalOptions="Start">
-            <Image Scale=".85"
+        <StackLayout VerticalOptions="Start">
+            <Image Scale=".60"
                             Aspect="AspectFill"
                             Source="banner.png"
                            HorizontalOptions="Center"

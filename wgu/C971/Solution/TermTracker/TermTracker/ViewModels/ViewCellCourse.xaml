@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TermTracker.ViewModels.ViewCellCourse">
     <ViewCell.View>
-        <Frame BorderColor="#040421" Padding="2" BackgroundColor="#040421" CornerRadius="7" MinimumHeightRequest="100">
+        <Frame BorderColor="#0a255c" BackgroundColor="#0a255c" CornerRadius="7" Padding="5"  HeightRequest="50" Margin="0,3,0,3">
             <StackLayout HorizontalOptions="Center">
                 <Label TextColor="White" HorizontalTextAlignment="Center" >
                     <Label.FormattedText>

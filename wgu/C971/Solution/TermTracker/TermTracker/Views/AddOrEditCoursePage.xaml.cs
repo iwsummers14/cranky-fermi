@@ -43,11 +43,44 @@ namespace TermTracker.Views
         {
             DataConnection = dConn;
             CurrentCourse = await DataConnection.GetAsync<Course>(courseToLoad.Id);
+            TitleText.Text = "Edit Course";
         }
 
-        private async void InitializeViewAdd(SQLiteAsyncConnection dConn, int parentId)
+        private void InitializeViewAdd(SQLiteAsyncConnection dConn, int parentId)
         {
             DataConnection = dConn;
+            CurrentCourse = new Course()
+            {
+                TermId = parentId
+            };
+            TitleText.Text = "Add Course";
+        }
+
+        private void Save_Clicked(object sender, EventArgs e)
+        {
+            InsertOrReplace(CloseForm);
+        }
+
+        private void Cancel_Clicked(object sender, EventArgs e)
+        {
+            CloseForm();
+        }
+
+        private async void InsertOrReplace(Action callback)
+        {
+            CurrentCourse.Title = ent_CourseTitle.Text;
+            CurrentCourse.StartDate = dp_CourseStart.Date;
+            CurrentCourse.EndDate = dp_CourseEnd.Date;
+            CurrentCourse.Status = pk_CourseStatus.SelectedItem.ToString();
+
+            await DataConnection.InsertOrReplaceAsync(CurrentCourse, typeof(Course));
+            
+            callback();
+        }
+
+        private async void CloseForm()
+        {
+            await Navigation.PopAsync();
         }
     }
 }

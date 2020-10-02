@@ -4,8 +4,169 @@
              xmlns:ViewModels="clr-namespace:TermTracker.ViewModels"
              x:Class="TermTracker.Views.AddOrEditCoursePage">
     <ContentPage.Content>
-        <StackLayout Margin="20" VerticalOptions="Start">
-            <ViewModels:PageHeaderView x:Name="PageHeaderView"></ViewModels:PageHeaderView>
+        <StackLayout Margin="20">
+            <StackLayout  VerticalOptions="Start" >
+                <ViewModels:PageHeaderView x:Name="PageHeaderView"></ViewModels:PageHeaderView>
+                <Label x:Name="TitleText" Text="" FontSize="Large" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15"/>
+            </StackLayout>
+            <ScrollView VerticalScrollBarVisibility="Always">
+                <StackLayout VerticalOptions="FillAndExpand" >
+                    <StackLayout Orientation="Horizontal">
+                        <Label 
+                            x:Name="lbl_CourseDetails"
+                            Text="Course Details"
+                            FontSize="Subtitle"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label 
+                            x:Name="lbl_CourseCode"
+                            Text="Course Code"
+                            FontSize="Subtitle"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start" />
+                        <Entry 
+                            x:Name="ent_CourseCode"
+                            HorizontalOptions="EndAndExpand"
+                            WidthRequest="200"
+                    />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label 
+                            x:Name="lbl_CourseTitle"
+                            Text="Course Title"
+                            FontSize="Subtitle"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start" />
+                        <Entry 
+                            x:Name="ent_CourseTitle"
+                            HorizontalOptions="EndAndExpand"
+                            WidthRequest="200"
+                    />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label
+                            x:Name="lbl_CourseStart"
+                            Text="Start Date"
+                            FontSize="Subtitle"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start" />
+                        <DatePicker 
+                            x:Name="dp_CourseStart"
+                            HorizontalOptions="EndAndExpand"
+                            WidthRequest="150"
+                    />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label 
+                            x:Name="lbl_CourseEnd"
+                            Text="End Date"
+                            FontSize="Subtitle"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start" />
+                        <DatePicker
+                            x:Name="dp_CourseEnd"
+                            HorizontalOptions="EndAndExpand"
+                            WidthRequest="150"
+                    />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label 
+                            x:Name="lbl_CourseStatus"
+                            Text="Status"
+                            FontSize="Subtitle"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start" />
+                        <Picker
+                            x:Name="pk_CourseStatus"
+                            HorizontalOptions="EndAndExpand"
+                            WidthRequest="150"
+                    />
+
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label 
+                            x:Name="lbl_CourseNotifications"
+                            Text="Notifications Enabled"
+                            FontSize="Subtitle"
+                            VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand" />
+                        <Switch 
+                            x:Name="sw_NotificationsEnabled"
+                            HorizontalOptions="End"
+                        />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Margin="0,20,0,0">
+                        <Label 
+                            x:Name="lbl_InstructorDetails"
+                            Text="Instructor Details"
+                            FontSize="Subtitle"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label 
+                            x:Name="lbl_InstructorName"
+                            Text="Instructor Name"
+                            FontSize="Subtitle"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start" />
+                        <Entry 
+                            x:Name="ent_InstructorName"
+                            HorizontalOptions="EndAndExpand"
+                            WidthRequest="200" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label 
+                            x:Name="lbl_InstructorPhone"
+                            Text="Instructor Phone"
+                            FontSize="Subtitle"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start" />
+                        <Entry 
+                            x:Name="ent_InstructorPhone"
+                            HorizontalOptions="EndAndExpand"
+                            WidthRequest="200" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label 
+                            x:Name="lbl_InstructorEmail"
+                            Text="Instructor Email"
+                            FontSize="Subtitle"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start" />
+                        <Entry 
+                            x:Name="ent_InstructorEmail"
+                            HorizontalOptions="EndAndExpand"
+                            WidthRequest="200" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" Margin="0,20,0,0">
+                        <Label 
+                            x:Name="lbl_Notes"
+                            Text="Notes"
+                            FontSize="Subtitle"
+                            FontAttributes="Bold"
+                            VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Entry 
+                            x:Name="ent_Notes"
+                            HorizontalOptions="FillAndExpand"
+                            />
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            
+
+            <StackLayout Orientation="Vertical" VerticalOptions="End">
+                <Button x:Name="Save" Text="Save Course" Clicked="Save_Clicked" CornerRadius="7" />
+                <Button x:Name="Cancel" Text="Cancel" Clicked="Cancel_Clicked"  CornerRadius="7" />
+            </StackLayout>
         </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>

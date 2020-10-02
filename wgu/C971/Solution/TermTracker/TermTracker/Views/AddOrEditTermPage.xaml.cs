@@ -35,7 +35,7 @@ namespace TermTracker.Views
         {
             InitializeComponent();
             InitializeViewAdd(dConn);
-                        
+            
         }
 
         public AddOrEditTermPage(ref SQLiteAsyncConnection dConn, Term termToLoad)
@@ -50,7 +50,8 @@ namespace TermTracker.Views
             DataConnection = dConn;
             CurrentTerm = new Term();
             TitleText.Text = "Add Term";
-            
+            PreparePicker();
+
         }
 
         private async void InitializeViewEdit( SQLiteAsyncConnection dConn, Term termToLoad) 
@@ -58,10 +59,12 @@ namespace TermTracker.Views
             DataConnection = dConn;
             CurrentTerm = await DataConnection.GetAsync<Term>(termToLoad.Id);
             TitleText.Text = "Edit Term";
+            PreparePicker();
 
             ent_TermTitle.Text = CurrentTerm.Title;
             dp_TermStart.Date = CurrentTerm.StartDate;
             dp_TermEnd.Date = CurrentTerm.EndDate;
+            pk_TermStatus.SelectedIndex = pk_TermStatus.ItemsSource.IndexOf(CurrentTerm.Status);
 
         }
 
@@ -72,7 +75,7 @@ namespace TermTracker.Views
 
         private void Cancel_Clicked(object sender, EventArgs e)
         {
-            
+            CloseForm();
         }
 
         private async void InsertOrReplace(Action callback)
@@ -80,6 +83,7 @@ namespace TermTracker.Views
             CurrentTerm.Title = ent_TermTitle.Text;
             CurrentTerm.StartDate = dp_TermStart.Date;
             CurrentTerm.EndDate = dp_TermEnd.Date;
+            CurrentTerm.Status = pk_TermStatus.SelectedItem.ToString();
 
             await DataConnection.InsertOrReplaceAsync(CurrentTerm, typeof(Term));
             
@@ -91,5 +95,10 @@ namespace TermTracker.Views
             await Navigation.PopAsync();
         }
 
+        private void PreparePicker()
+        {
+            StatusValues = EnumUtilities.EnumDescriptionsToList<CourseStatus>(typeof(CourseStatus));
+            pk_TermStatus.ItemsSource = StatusValues;
+        }
     }
 }

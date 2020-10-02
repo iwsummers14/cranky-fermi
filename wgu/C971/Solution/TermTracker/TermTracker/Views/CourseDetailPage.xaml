@@ -7,17 +7,47 @@
     <ContentPage.Content>
         <StackLayout Margin="20" VerticalOptions="Start">
             <ViewModels:PageHeaderView x:Name="PageHeaderView"></ViewModels:PageHeaderView>
-            <Label x:Name="TitleText" Text="" FontSize="Large" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15"/>
-            <StackLayout Orientation="Vertical" x:Name="Terms" VerticalOptions="FillAndExpand" Spacing="5">
-                <ListView x:Name="CoursesListView" HasUnevenRows="True">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewModels:ViewCellAssessment Tapped="ViewCellAssessment_Tapped" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
-            <Button x:Name="AddAssessment" Text="Add Assessment" CornerRadius="7" />
+            <Label x:Name="TitleText" Text="" FontSize="Large" HorizontalTextAlignment="Center" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15" />
+            <Frame BorderColor="#0a255c" CornerRadius="7">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Course Start Date:" />
+                        <Label x:Name="lbl_CourseStartDate" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Course End Date:" />
+                        <Label x:Name="lbl_CourseEndDate" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Notifications Enabled:" />
+                        <Label x:Name="lbl_CourseNotifications" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Instructor Name:" />
+                        <Label x:Name="lbl_InstructorName" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Instructor Phone:" />
+                        <Label x:Name="lbl_InstructorPhone" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Instructor Email:" />
+                        <Label x:Name="lbl_InstructorEmail" />
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <ScrollView>
+                <StackLayout Orientation="Vertical" x:Name="Terms" VerticalOptions="FillAndExpand" Spacing="5">
+                    <ListView x:Name="AssessmentsListView" HasUnevenRows="True">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewModels:ViewCellAssessment Tapped="ViewCellAssessment_Tapped" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </ScrollView>
+            <Button x:Name="AddAssessment" Text="Add Assessment" CornerRadius="7" Clicked="AddAssessment_Clicked"/>
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                 <Button x:Name="EditCourse" 
                         Text="Edit Course" 

@@ -17,9 +17,11 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </StackLayout>
-                <Button x:Name="AddTerm" Text="Add Term" Clicked="AddTerm_Button_Clicked" CornerRadius="7">
-                    
-                </Button>
+                <Button 
+                    x:Name="AddTerm" 
+                    Text="Add Term" 
+                    CornerRadius="7"
+                    Clicked="AddTerm_Button_Clicked" />
             </StackLayout.Children>
         </StackLayout>
     </ContentPage.Content>

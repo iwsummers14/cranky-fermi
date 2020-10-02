@@ -12,55 +12,56 @@
         <StackLayout VerticalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal">
                     <Label 
-                    x:Name="lbl_TermTitle"
-                    Text="Title"
-                    FontSize="Subtitle"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Start" />
+                        x:Name="lbl_TermTitle"
+                        Text="Title"
+                        FontSize="Subtitle"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
                     <Entry 
-                    x:Name="ent_TermTitle"
-                    HorizontalOptions="EndAndExpand"
-                    WidthRequest="300"
+                        x:Name="ent_TermTitle"
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="300"
                     />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label
-                    x:Name="lbl_TermStart"
-                    Text="Term Start"
-                    FontSize="Subtitle"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Start" />
+                        x:Name="lbl_TermStart"
+                        Text="Term Start"
+                        FontSize="Subtitle"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
                     <DatePicker 
-                    x:Name="dp_TermStart"
-                    HorizontalOptions="EndAndExpand"
-                    WidthRequest="150"
+                        x:Name="dp_TermStart"
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="150"
                     />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label 
-                    x:Name="lbl_TermEnd"
-                    Text="Term End"
-                    FontSize="Subtitle"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Start" />
+                        x:Name="lbl_TermEnd"
+                        Text="Term End"
+                        FontSize="Subtitle"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
                     <DatePicker
-                    x:Name="dp_TermEnd"
-                    HorizontalOptions="EndAndExpand"
-                    WidthRequest="150"
+                        x:Name="dp_TermEnd"
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="150"
                     />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label 
-                    x:Name="lbl_TermStatus"
-                    Text="Status"
-                    FontSize="Subtitle"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Start" />
+                        x:Name="lbl_TermStatus"
+                        Text="Status"
+                        FontSize="Subtitle"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
                     <Picker
-                    x:Name="pk_TermStatus"
-                    HorizontalOptions="EndAndExpand"
-                    WidthRequest="150"
+                        x:Name="pk_TermStatus"
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="150"
                     />
+                    
                 </StackLayout>
             </StackLayout>
 

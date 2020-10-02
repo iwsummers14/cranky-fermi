@@ -42,12 +42,7 @@ namespace TermTracker.Views
             CoursesListView.ItemsSource = CoursesList;
             TitleText.Text = $"Courses for {CurrentTerm.Title}";
         }
-
-        private async void ViewCellCourse_Tapped(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new CourseDetailPage());
-        }
-
+               
         private async void EditTerm_Clicked(object sender, EventArgs e)
         {
             var view = Factory.GetEntryView<Term>(UserOperation.Edit, DataConnection, CurrentTerm);
@@ -65,6 +60,11 @@ namespace TermTracker.Views
             await Navigation.PushAsync(view);
         }
 
-        
+        private async void CoursesListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            var course = (Course)(e.Item);
+            var view = Factory.GetDetailView<Course>(DataConnection, course);
+            await Navigation.PushAsync(view);
+        }
     }
 }
