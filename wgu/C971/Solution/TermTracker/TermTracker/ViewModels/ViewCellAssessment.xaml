@@ -3,11 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TermTracker.ViewModels.ViewCellAssessment">
     <ViewCell.View>
-        <Frame BorderColor="#0a255c" BackgroundColor="#0a255c" CornerRadius="7" Padding="2" HeightRequest="65" Margin="0,3,0,3">
-            <StackLayout HorizontalOptions="Center">
-                <Label Text="{Binding Title}" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center"/>
-                <Label Text="{Binding AssessmentType, StringFormat='{0} Assessment'}" FontSize="Micro" TextColor="White" HorizontalTextAlignment="Center" />
-                <Label Text="{Binding Status, StringFormat='Status: {0}'}" FontSize="Micro" TextColor="White" HorizontalTextAlignment="Center" />
+        <Frame BorderColor="#0a255c" BackgroundColor="#0a255c" CornerRadius="7" Padding="1" HeightRequest="35" Margin="0,3,0,3">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                <Label TextColor="White" HorizontalTextAlignment="Center" >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding Title, StringFormat='{0} -'}" FontAttributes="Bold" FontSize="Small" />
+                            <Span Text="{Binding AssessmentType, StringFormat=' {0} Assessment -'}" />
+                            <Span Text="{Binding Status, StringFormat=' {0}'}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
             </StackLayout>
         </Frame>
     </ViewCell.View>

@@ -1,12 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ViewModels="clr-namespace:TermTracker.ViewModels"
              x:Class="TermTracker.Views.AssessmentDetailPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="20">
+            <ViewModels:PageHeaderView x:Name="PageHeaderView"></ViewModels:PageHeaderView>
+            <Label x:Name="TitleText" Text="" FontSize="Large" HorizontalTextAlignment="Center" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15" />
+            <StackLayout VerticalOptions="Start">
+                <Frame BorderColor="#0a255c" CornerRadius="2" Padding="3,10,3,10" VerticalOptions="Center" HeightRequest="125">
+                    <StackLayout Orientation="Vertical">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Status:" />
+                            <Label x:Name="lbl_AssessmentStatus" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Start Date:" />
+                            <Label x:Name="lbl_AssessmentStartDate" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="End Date:" />
+                            <Label x:Name="lbl_AssessmentEndDate" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Notifications Enabled:" />
+                            <Label x:Name="lbl_AssessmentNotifications" />
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            <StackLayout VerticalOptions="EndAndExpand">
+                <Button x:Name="EditAssessment" Text="Edit Assessment" CornerRadius="7" Clicked="EditAssessment_Clicked"/>
+                <Button x:Name="DeleteAssessment" Text="Delete Assessment" CornerRadius="7" Clicked="DeleteAssessment_Clicked"/>
+            </StackLayout>
         </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>

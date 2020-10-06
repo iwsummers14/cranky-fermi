@@ -12,13 +12,13 @@
             <StackLayout VerticalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal">
                     <Label 
-                        x:Name="lbl_AssessmentName"
-                        Text="Name"
+                        x:Name="lbl_AssessmentTitle"
+                        Text="Title"
                         FontSize="Subtitle"
                         VerticalOptions="Center"
                         HorizontalOptions="Start" />
                     <Entry 
-                        x:Name="ent_AssessmentName"
+                        x:Name="ent_AssessmentTitle"
                         HorizontalOptions="EndAndExpand"
                         WidthRequest="300"
                     />

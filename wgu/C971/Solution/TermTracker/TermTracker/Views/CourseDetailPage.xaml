@@ -8,7 +8,7 @@
         <StackLayout Margin="20" VerticalOptions="Start">
             <ViewModels:PageHeaderView x:Name="PageHeaderView"></ViewModels:PageHeaderView>
             <Label x:Name="TitleText" Text="" FontSize="Large" HorizontalTextAlignment="Center" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15" />
-            <Frame BorderColor="#0a255c" CornerRadius="7">
+            <Frame BorderColor="#0a255c" CornerRadius="2" Padding="3">
                 <StackLayout Orientation="Vertical">
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Course Start Date:" />
@@ -38,10 +38,10 @@
             </Frame>
             <ScrollView>
                 <StackLayout Orientation="Vertical" x:Name="Terms" VerticalOptions="FillAndExpand" Spacing="5">
-                    <ListView x:Name="AssessmentsListView" HasUnevenRows="True">
+                    <ListView x:Name="AssessmentsListView" HasUnevenRows="True" ItemTapped="AssessmentsListView_ItemTapped">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <ViewModels:ViewCellAssessment Tapped="ViewCellAssessment_Tapped" />
+                                <ViewModels:ViewCellAssessment/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>

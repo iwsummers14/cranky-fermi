@@ -52,14 +52,11 @@ namespace TermTracker.Views
             lbl_InstructorEmail.Text = instructor.First().EmailAddress;
 
         }
-        private async void ViewCellAssessment_Tapped(object sender, EventArgs e)
+        
+        private async void EditCourse_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new AssessmentDetailPage());
-        }
-
-        private void EditCourse_Clicked(object sender, EventArgs e)
-        {
-
+            var view = Factory.GetEntryView<Course>(UserOperation.Edit, DataConnection, CurrentCourse);
+            await Navigation.PushAsync(view);
         }
 
         private void DeleteCourse_Clicked(object sender, EventArgs e)
@@ -72,6 +69,13 @@ namespace TermTracker.Views
             var view = Factory.GetEntryView<Assessment>(UserOperation.Add, DataConnection, null, CurrentCourse.Id);
             await Navigation.PushAsync(view);
 
+        }
+
+        private async void AssessmentsListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            var assessment = (Assessment)(e.Item);
+            var view = Factory.GetDetailView<Assessment>(DataConnection, assessment);
+            await Navigation.PushAsync(view);
         }
     }
 }

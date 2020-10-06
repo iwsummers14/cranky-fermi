@@ -25,6 +25,8 @@ namespace TermTracker.Views
         private Term CurrentTerm { get; set; }
 
         private List<string> StatusValues { get; set; }
+
+        private UserOperation Operation { get; set; }
         
         public AddOrEditTermPage()
         {
@@ -48,6 +50,8 @@ namespace TermTracker.Views
         private void InitializeViewAdd(SQLiteAsyncConnection dConn)
         {
             DataConnection = dConn;
+            Operation = UserOperation.Add;
+
             CurrentTerm = new Term();
             TitleText.Text = "Add Term";
             PreparePicker();
@@ -57,6 +61,8 @@ namespace TermTracker.Views
         private async void InitializeViewEdit( SQLiteAsyncConnection dConn, Term termToLoad) 
         {
             DataConnection = dConn;
+            Operation = UserOperation.Edit;
+
             CurrentTerm = await DataConnection.GetAsync<Term>(termToLoad.Id);
             TitleText.Text = "Edit Term";
             PreparePicker();
@@ -70,7 +76,7 @@ namespace TermTracker.Views
 
         private void Save_Clicked(object sender, EventArgs e)
         {
-            InsertOrReplace(CloseForm);
+            InsertOrUpdate(CloseForm);
         }
 
         private void Cancel_Clicked(object sender, EventArgs e)
@@ -78,14 +84,22 @@ namespace TermTracker.Views
             CloseForm();
         }
 
-        private async void InsertOrReplace(Action callback)
+        private async void InsertOrUpdate(Action callback)
         {
             CurrentTerm.Title = ent_TermTitle.Text;
             CurrentTerm.StartDate = dp_TermStart.Date;
             CurrentTerm.EndDate = dp_TermEnd.Date;
             CurrentTerm.Status = pk_TermStatus.SelectedItem.ToString();
 
-            await DataConnection.InsertOrReplaceAsync(CurrentTerm, typeof(Term));
+            if (Operation == UserOperation.Add)
+            {
+                await DataConnection.InsertAsync(CurrentTerm);
+            }
+            else
+            {
+                await DataConnection.UpdateAsync(CurrentTerm);
+            }
+            
             
             callback();
         }
