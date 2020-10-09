@@ -49,9 +49,15 @@ namespace TermTracker.Views
             await Navigation.PushAsync(view);
         }
 
-        private void DeleteAssessment_Clicked(object sender, EventArgs e)
+        private async void DeleteAssessment_Clicked(object sender, EventArgs e)
         {
+            var confirmation = await DisplayAlert($"Delete Assessment", $"Are you sure you want to delete \n{CurrentAssessment.AssessmentType} Assessment '{CurrentAssessment.Title}'?", "Yes", "No");
 
+            if (confirmation == true)
+            {
+                await DataConnection.DeleteAsync<Assessment>(CurrentAssessment.Id);
+                await Navigation.PopAsync();
+            }
         }
     }
 }

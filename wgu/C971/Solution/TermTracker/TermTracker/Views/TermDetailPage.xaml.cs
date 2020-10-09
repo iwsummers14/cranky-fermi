@@ -49,9 +49,15 @@ namespace TermTracker.Views
             await Navigation.PushAsync(view);
         }
 
-        private void DeleteTerm_Clicked(object sender, EventArgs e)
+        private async void DeleteTerm_Clicked(object sender, EventArgs e)
         {
+            var confirmation = await DisplayAlert($"Delete Term", $"Are you sure you want to delete term \n'{CurrentTerm.Title}'?", "Yes", "No");
 
+            if (confirmation == true)
+            {
+                await DataConnection.DeleteAsync<Term>(CurrentTerm.Id);
+                await Navigation.PopAsync();
+            }
         }
 
         private async void AddCourse_Clicked(object sender, EventArgs e)

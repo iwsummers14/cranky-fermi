@@ -1,4 +1,5 @@
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\bin\Debug\Images\banner.png
+C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\bin\Debug\Images\share.png
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\bin\Debug\Images\wgu_owl.png
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\bin\Debug\TermTracker.Android.dll
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\bin\Debug\TermTracker.Android.pdb
@@ -47,6 +48,8 @@ C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTrack
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\obj\Debug\90\res\drawable\tab_about.png
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\obj\Debug\90\res\drawable\tab_feed.png
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\obj\Debug\90\res\drawable\banner.png
+C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\obj\Debug\90\res\drawable\wgu_owl.png
+C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\obj\Debug\90\res\drawable\share.png
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\obj\Debug\90\uploadflags.txt
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\obj\Debug\90\resolvedassemblies.hash
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.Android\obj\Debug\90\android\assets\FormsViewGroup.dll

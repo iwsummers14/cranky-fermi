@@ -23,6 +23,9 @@ namespace TermTracker.Views {
         private global::Xamarin.Forms.Label TitleText;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::Xamarin.Forms.StackLayout InputsLayout;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private global::Xamarin.Forms.Label lbl_TermTitle;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
@@ -57,6 +60,7 @@ namespace TermTracker.Views {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(AddOrEditTermPage));
             PageHeaderView = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::TermTracker.ViewModels.PageHeaderView>(this, "PageHeaderView");
             TitleText = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Label>(this, "TitleText");
+            InputsLayout = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.StackLayout>(this, "InputsLayout");
             lbl_TermTitle = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Label>(this, "lbl_TermTitle");
             ent_TermTitle = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Entry>(this, "ent_TermTitle");
             lbl_TermStart = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Label>(this, "lbl_TermStart");

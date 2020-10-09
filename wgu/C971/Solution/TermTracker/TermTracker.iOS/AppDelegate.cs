@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using TermTracker.iOS.NotificationHandlers;
 using UIKit;
+using UserNotifications;
 
 namespace TermTracker.iOS
 {
@@ -24,8 +26,10 @@ namespace TermTracker.iOS
         {
             global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
 
+            UNUserNotificationCenter.Current.Delegate = new iOSNotificationReceiver();
+
+            LoadApplication(new App());
             return base.FinishedLaunching(app, options);
         }
     }

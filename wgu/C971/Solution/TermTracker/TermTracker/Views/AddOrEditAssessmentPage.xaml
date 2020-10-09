@@ -9,7 +9,7 @@
                 <ViewModels:PageHeaderView x:Name="PageHeaderView"></ViewModels:PageHeaderView>
                 <Label x:Name="TitleText" Text="" FontSize="Large" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15"/>
             </StackLayout>
-            <StackLayout VerticalOptions="FillAndExpand">
+            <StackLayout VerticalOptions="FillAndExpand" x:Name="InputsLayout">
                 <StackLayout Orientation="Horizontal">
                     <Label 
                         x:Name="lbl_AssessmentTitle"

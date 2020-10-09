@@ -13,12 +13,16 @@
 
   <ItemGroup>
     <None Remove="Images\banner.png" />
+    <None Remove="Images\share.png" />
     <None Remove="Images\wgu_banner.png" />
     <None Remove="Images\wgu_owl.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Images\banner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\share.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Images\wgu_owl.png">

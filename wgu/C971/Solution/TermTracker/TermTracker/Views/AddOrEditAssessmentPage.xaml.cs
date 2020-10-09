@@ -56,7 +56,7 @@ namespace TermTracker.Views
             {
                 CourseId = parentId
             };
-            
+
             TitleText.Text = "Add Assessment";
             PreparePickers();
         }
@@ -67,7 +67,7 @@ namespace TermTracker.Views
             Operation = UserOperation.Edit;
 
             CurrentAssessment = await DataConnection.GetAsync<Assessment>(assessmentToLoad.Id);
-            
+
             TitleText.Text = "Edit Assessment";
             PreparePickers();
 
@@ -82,7 +82,12 @@ namespace TermTracker.Views
 
         private void Save_Clicked(object sender, EventArgs e)
         {
-            InsertOrUpdate(CloseForm);
+            bool validated = ValidateInputs();
+            if (validated) 
+            {
+                InsertOrUpdate(CloseForm);
+            }
+            
         }
 
         private void Cancel_Clicked(object sender, EventArgs e)
@@ -92,9 +97,10 @@ namespace TermTracker.Views
 
         private async void InsertOrUpdate(Action callback)
         {
+
             CurrentAssessment.Title = ent_AssessmentTitle.Text;
-            CurrentAssessment.StartDate = dp_AssessmentStart.Date;
-            CurrentAssessment.EndDate = dp_AssessmentEnd.Date;
+            CurrentAssessment.StartDate = dp_AssessmentStart.Date.Date;
+            CurrentAssessment.EndDate = dp_AssessmentEnd.Date.Date;
             CurrentAssessment.AssessmentType = pk_AssessmentType.SelectedItem.ToString();
             CurrentAssessment.Status = pk_AssessmentStatus.SelectedItem.ToString();
             CurrentAssessment.NotificationsEnabled = sw_NotificationsEnabled.IsToggled;
@@ -107,13 +113,13 @@ namespace TermTracker.Views
             {
                 await DataConnection.UpdateAsync(CurrentAssessment);
             }
-            
 
             callback();
+
         }
 
         private async void CloseForm()
-         {
+        {
             await Navigation.PopAsync();
         }
 
@@ -123,6 +129,52 @@ namespace TermTracker.Views
             StatusValues = EnumUtilities.EnumDescriptionsToList<AssessmentStatus>(typeof(AssessmentStatus));
             pk_AssessmentStatus.ItemsSource = StatusValues;
             pk_AssessmentType.ItemsSource = TypeValues;
+        }
+
+        private async void AlertUser(string title, string message)
+        {
+            await DisplayAlert($"{title}", $"{message}", "OK");
+        }
+
+        private bool ValidateInputs()
+        {
+            bool textInputsNotNull = false;
+            bool pickerInputsNotNull = false;
+            bool dateInputsNotNull = false;
+            bool validated = false;
+
+            var layouts = InputsLayout.Children.Where(c => c.GetType() == typeof(StackLayout)).Cast<StackLayout>().ToList();
+            var inputs = new List<View>();
+            layouts.ForEach(sl => inputs.AddRange(sl.Children));
+
+            var textInputs = inputs.Where(input => input.GetType() == typeof(Entry)).Cast<Entry>().ToList();
+            var pickerInputs = inputs.Where(input => input.GetType() == typeof(Picker)).Cast<Picker>().ToList();
+            var dateInputs = inputs.Where(input => input.GetType() == typeof(DatePicker)).Cast<DatePicker>().ToList();
+
+            textInputsNotNull = InputValidator.InputsNotNull<Entry>(textInputs);
+            pickerInputsNotNull = InputValidator.InputsNotNull<Picker>(pickerInputs);
+            dateInputsNotNull = InputValidator.InputsNotNull<DatePicker>(dateInputs);
+            
+
+            if (textInputsNotNull && pickerInputsNotNull && dateInputsNotNull)
+            {
+                bool datesOk = InputValidator.IsValidDateRange(dp_AssessmentStart.Date, dp_AssessmentEnd.Date, true);
+
+                if (datesOk)
+                {
+                    validated = true;
+                }
+                else
+                {
+                    AlertUser("Input validation", "Start Date must be a date before the End Date. Please choose a valid Start and End Date.");
+                }
+            }
+            else
+            {
+                AlertUser("Input validation", "All inputs must have values.\nPlease enter data in all fields.");
+            }
+
+            return validated;
         }
 
     }

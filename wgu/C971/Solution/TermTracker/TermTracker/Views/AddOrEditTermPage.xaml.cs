@@ -76,7 +76,11 @@ namespace TermTracker.Views
 
         private void Save_Clicked(object sender, EventArgs e)
         {
-            InsertOrUpdate(CloseForm);
+            bool validated = ValidateInputs();
+            if (validated)
+            {
+                InsertOrUpdate(CloseForm);
+            }
         }
 
         private void Cancel_Clicked(object sender, EventArgs e)
@@ -87,8 +91,8 @@ namespace TermTracker.Views
         private async void InsertOrUpdate(Action callback)
         {
             CurrentTerm.Title = ent_TermTitle.Text;
-            CurrentTerm.StartDate = dp_TermStart.Date;
-            CurrentTerm.EndDate = dp_TermEnd.Date;
+            CurrentTerm.StartDate = dp_TermStart.Date.Date;
+            CurrentTerm.EndDate = dp_TermEnd.Date.Date;
             CurrentTerm.Status = pk_TermStatus.SelectedItem.ToString();
 
             if (Operation == UserOperation.Add)
@@ -99,7 +103,6 @@ namespace TermTracker.Views
             {
                 await DataConnection.UpdateAsync(CurrentTerm);
             }
-            
             
             callback();
         }
@@ -114,5 +117,52 @@ namespace TermTracker.Views
             StatusValues = EnumUtilities.EnumDescriptionsToList<CourseStatus>(typeof(CourseStatus));
             pk_TermStatus.ItemsSource = StatusValues;
         }
+
+        private async void AlertUser(string title, string message)
+        {
+            await DisplayAlert($"{title}", $"{message}", "OK");
+        }
+
+        private bool ValidateInputs()
+        {
+            bool textInputsNotNull = false;
+            bool pickerInputsNotNull = false;
+            bool dateInputsNotNull = false;
+            bool validated = false;
+
+            var layouts = InputsLayout.Children.Where(c => c.GetType() == typeof(StackLayout)).Cast<StackLayout>().ToList();
+            var inputs = new List<View>();
+            layouts.ForEach(sl => inputs.AddRange(sl.Children));
+
+            var textInputs = inputs.Where(input => input.GetType() == typeof(Entry)).Cast<Entry>().ToList();
+            var pickerInputs = inputs.Where(input => input.GetType() == typeof(Picker)).Cast<Picker>().ToList();
+            var dateInputs = inputs.Where(input => input.GetType() == typeof(DatePicker)).Cast<DatePicker>().ToList();
+
+            textInputsNotNull = InputValidator.InputsNotNull<Entry>(textInputs);
+            pickerInputsNotNull = InputValidator.InputsNotNull<Picker>(pickerInputs);
+            dateInputsNotNull = InputValidator.InputsNotNull<DatePicker>(dateInputs);
+
+
+            if (textInputsNotNull && pickerInputsNotNull && dateInputsNotNull)
+            {
+                bool datesOk = InputValidator.IsValidDateRange(dp_TermStart.Date, dp_TermEnd.Date);
+
+                if (datesOk)
+                {
+                    validated = true;
+                }
+                else
+                {
+                    AlertUser("Input validation", "Start Date must be a date before the End Date. Please choose a valid Start and End Date.");
+                }
+            }
+            else
+            {
+                AlertUser("Input validation", "All inputs must have values.\nPlease enter data in all fields.");
+            }
+
+            return validated;
+        }
+
     }
 }

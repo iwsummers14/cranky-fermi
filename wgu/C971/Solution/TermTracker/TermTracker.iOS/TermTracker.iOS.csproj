@@ -69,6 +69,8 @@
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
+    <Compile Include="NotificationHandlers\iOSNotificationManager.cs" />
+    <Compile Include="NotificationHandlers\iOSNotificationReceiver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,5 +149,13 @@
       <Name>TermTracker</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\share.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\banner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\wgu_owl.png" />
+  </ItemGroup>
 </Project>

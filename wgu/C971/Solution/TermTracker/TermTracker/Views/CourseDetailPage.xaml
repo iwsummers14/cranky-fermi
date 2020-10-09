@@ -7,7 +7,19 @@
     <ContentPage.Content>
         <StackLayout Margin="20" VerticalOptions="Start">
             <ViewModels:PageHeaderView x:Name="PageHeaderView"></ViewModels:PageHeaderView>
-            <Label x:Name="TitleText" Text="" FontSize="Large" HorizontalTextAlignment="Center" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15" />
+            <StackLayout Orientation="Horizontal">
+                <Label x:Name="TitleText" Text="" FontSize="Large" HorizontalTextAlignment="Center" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15" />
+                <ImageButton x:Name="ShareNotes"
+                                     HeightRequest="30"
+                                     WidthRequest="30"
+                                     Aspect="AspectFit"
+                                     Source="share.png"
+                                     BackgroundColor="Transparent"
+                                     HorizontalOptions="End"
+                                     Margin="0"
+                                     Padding="0" 
+                                     Clicked="ShareNotes_Clicked"/>
+            </StackLayout>
             <Frame BorderColor="#0a255c" CornerRadius="2" Padding="3">
                 <StackLayout Orientation="Vertical">
                     <StackLayout Orientation="Horizontal">
@@ -33,6 +45,10 @@
                     <StackLayout Orientation="Horizontal">
                         <Label Text="Instructor Email:" />
                         <Label x:Name="lbl_InstructorEmail" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Notes:" />
+                        <Label x:Name="lbl_Notes" />
                     </StackLayout>
                 </StackLayout>
             </Frame>

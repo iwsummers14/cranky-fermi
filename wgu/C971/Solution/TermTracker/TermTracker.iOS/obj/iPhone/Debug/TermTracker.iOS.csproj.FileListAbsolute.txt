@@ -1,4 +1,5 @@
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.iOS\bin\iPhone\Debug\Images\banner.png
+C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.iOS\bin\iPhone\Debug\Images\share.png
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.iOS\bin\iPhone\Debug\Images\wgu_owl.png
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.iOS\bin\iPhone\Debug\TermTracker.iOS.exe
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.iOS\bin\iPhone\Debug\TermTracker.iOS.pdb

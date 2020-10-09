@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using TermTracker.Factory;
 using TermTracker.Models;
 using TermTracker.Enum;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -50,6 +51,7 @@ namespace TermTracker.Views
             lbl_InstructorName.Text = instructor.First().Name;
             lbl_InstructorPhone.Text = instructor.First().PhoneNumber;
             lbl_InstructorEmail.Text = instructor.First().EmailAddress;
+            lbl_Notes.Text = CurrentCourse.Notes;
 
         }
         
@@ -59,9 +61,15 @@ namespace TermTracker.Views
             await Navigation.PushAsync(view);
         }
 
-        private void DeleteCourse_Clicked(object sender, EventArgs e)
+        private async void DeleteCourse_Clicked(object sender, EventArgs e)
         {
-
+            var confirmation = await DisplayAlert($"Delete Course", $"Are you sure you want to delete course \n'{CurrentCourse.CourseCode} - {CurrentCourse.Title}'?", "Yes", "No");
+            
+            if (confirmation == true)
+            {
+                await DataConnection.DeleteAsync<Course>(CurrentCourse.Id);
+                await Navigation.PopAsync();
+            }
         }
 
         private async void AddAssessment_Clicked(object sender, EventArgs e)
@@ -76,6 +84,16 @@ namespace TermTracker.Views
             var assessment = (Assessment)(e.Item);
             var view = Factory.GetDetailView<Assessment>(DataConnection, assessment);
             await Navigation.PushAsync(view);
+        }
+
+        private async void ShareNotes_Clicked(object sender, EventArgs e)
+        {
+            await Share.RequestAsync(
+                new ShareTextRequest() 
+                { 
+                    Text = $"Check out my TermTracker notes for {CurrentCourse.CourseCode} - {CurrentCourse.Title}! \n\n{CurrentCourse.Notes}",
+                    Title = $"Share course notes for course {CurrentCourse.CourseCode} - {CurrentCourse.Title}?"
+                });
         }
     }
 }

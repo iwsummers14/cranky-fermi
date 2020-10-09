@@ -24,9 +24,9 @@ namespace TermTracker.Configuration
         public Startup()
         {
             DataConnection = DependencyService.Get<IDataConnection>(DependencyFetchTarget.NewInstance).GetDataConnection();
-            PrepareDatabase();
-
             Logger = DependencyService.Get<ILogger>(DependencyFetchTarget.NewInstance);
+            
+            PrepareDatabase();
         }
 
         private void PrepareDatabase()
@@ -83,7 +83,7 @@ namespace TermTracker.Configuration
 
         private async void HydrateTables()
         {
-            var seedStartDate = new DateTime(2020, 10, 01);
+            var seedStartDate = DateTime.Today;
             int index;
             List<Term> termRecords = new List<Term>();
             List<Course> courseRecords = new List<Course>();
@@ -111,7 +111,7 @@ namespace TermTracker.Configuration
                 seedStartDate = seedStartDate.AddMonths(6).AddDays(1);
             }
 
-            seedStartDate = DateTime.Now;
+            seedStartDate = DateTime.Today;
 
             // add 4 demo courses
             for (index = 1; index <= 4; index++)
@@ -124,7 +124,8 @@ namespace TermTracker.Configuration
                     InstructorId = 1,
                     StartDate = seedStartDate,
                     EndDate = seedStartDate.AddDays(30),
-                    Status = EnumUtilities.GetDescription<CourseStatus>(CourseStatus.NotStarted)
+                    Status = EnumUtilities.GetDescription<CourseStatus>(CourseStatus.NotStarted),
+                    NotificationsEnabled = true
                 };
 
                 courseRecords.Add(demoCourse);
@@ -143,6 +144,9 @@ namespace TermTracker.Configuration
             {
                 Logger.WriteLogEntry(ex.Message);
             }
+
+            // add an objective and performance assessment to the first course
+
 
         }
     }
