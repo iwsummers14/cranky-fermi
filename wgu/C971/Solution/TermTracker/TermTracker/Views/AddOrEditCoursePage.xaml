@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ViewModels="clr-namespace:TermTracker.ViewModels"
+             xmlns:Behaviors="clr-namespace:TermTracker.Behaviors"
              x:Class="TermTracker.Views.AddOrEditCoursePage">
     <ContentPage.Content>
         <StackLayout Margin="20">
@@ -130,8 +131,11 @@
                             x:Name="ent_InstructorPhone"
                             HorizontalOptions="EndAndExpand"
                             WidthRequest="200" 
-                            MaxLength="12"
-                            Keyboard="Telephone" />
+                            Keyboard="Telephone">
+                            <Entry.Behaviors>
+                                <Behaviors:PhoneMaskBehavior Mask="(XXX) XXX-XXXX" />
+                            </Entry.Behaviors>
+                        </Entry>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label 

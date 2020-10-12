@@ -1,11 +1,11 @@
 ﻿using SQLite;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using TermTracker.Enum;
 
 namespace TermTracker.Models
 {
+    /// <summary>
+    /// Assessment model, maps to Assessments table in SQLite database.
+    /// </summary>
     [Table("Assessments")]
     public class Assessment
     {

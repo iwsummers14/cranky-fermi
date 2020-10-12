@@ -16,6 +16,9 @@ using Xamarin.Forms.Xaml;
 
 namespace TermTracker.Views
 {
+    /// <summary>
+    /// Entry view for terms. Can be used to add or edit a term.
+    /// </summary>
     [Description("AddOrEditTerm")]
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddOrEditTermPage : ContentPage
@@ -28,11 +31,13 @@ namespace TermTracker.Views
 
         private UserOperation Operation { get; set; }
         
+        // default constructor
         public AddOrEditTermPage()
         {
             InitializeComponent();
         }
 
+        // constructor for add operation
         public AddOrEditTermPage(ref SQLiteAsyncConnection dConn, Nullable<int> parentId = null)
         {
             InitializeComponent();
@@ -40,6 +45,7 @@ namespace TermTracker.Views
             
         }
 
+        // constructor for edit operation
         public AddOrEditTermPage(ref SQLiteAsyncConnection dConn, Term termToLoad)
         {
             InitializeComponent();
@@ -47,6 +53,7 @@ namespace TermTracker.Views
 
         }
 
+        // initialize method for add operation
         private void InitializeViewAdd(SQLiteAsyncConnection dConn)
         {
             DataConnection = dConn;
@@ -58,6 +65,7 @@ namespace TermTracker.Views
 
         }
 
+        // initialize method for edit operation
         private async void InitializeViewEdit( SQLiteAsyncConnection dConn, Term termToLoad) 
         {
             DataConnection = dConn;
@@ -74,6 +82,7 @@ namespace TermTracker.Views
 
         }
 
+        // event handler method for save button pressed
         private void Save_Clicked(object sender, EventArgs e)
         {
             bool validated = ValidateInputs();
@@ -83,11 +92,13 @@ namespace TermTracker.Views
             }
         }
 
+        // event handler method for cancel button pressed
         private void Cancel_Clicked(object sender, EventArgs e)
         {
             CloseForm();
         }
 
+        // async method to handle insertion or updating of a record
         private async void InsertOrUpdate(Action callback)
         {
             CurrentTerm.Title = ent_TermTitle.Text;
@@ -107,42 +118,51 @@ namespace TermTracker.Views
             callback();
         }
 
+        // async method to close the form
         private async void CloseForm()
         {
             await Navigation.PopAsync();
         }
 
+        // method to prepare picker entries from enum used to control values
         private void PreparePicker()
         {
             StatusValues = EnumUtilities.EnumDescriptionsToList<CourseStatus>(typeof(CourseStatus));
             pk_TermStatus.ItemsSource = StatusValues;
         }
 
+        // async method to handle alerting user of error conditions
         private async void AlertUser(string title, string message)
         {
             await DisplayAlert($"{title}", $"{message}", "OK");
         }
 
+        // input validation method using the InputValidator class
         private bool ValidateInputs()
         {
+
+            // control vars
             bool textInputsNotNull = false;
             bool pickerInputsNotNull = false;
             bool dateInputsNotNull = false;
             bool validated = false;
 
+            // get children of the input stacklayout and send to list
             var layouts = InputsLayout.Children.Where(c => c.GetType() == typeof(StackLayout)).Cast<StackLayout>().ToList();
             var inputs = new List<View>();
             layouts.ForEach(sl => inputs.AddRange(sl.Children));
 
+            // isolate each type of input as a list
             var textInputs = inputs.Where(input => input.GetType() == typeof(Entry)).Cast<Entry>().ToList();
             var pickerInputs = inputs.Where(input => input.GetType() == typeof(Picker)).Cast<Picker>().ToList();
             var dateInputs = inputs.Where(input => input.GetType() == typeof(DatePicker)).Cast<DatePicker>().ToList();
 
+            // validate each type of entry 
             textInputsNotNull = InputValidator.InputsNotNull<Entry>(textInputs);
             pickerInputsNotNull = InputValidator.InputsNotNull<Picker>(pickerInputs);
             dateInputsNotNull = InputValidator.InputsNotNull<DatePicker>(dateInputs);
 
-
+            // notify user of error condition
             if (textInputsNotNull && pickerInputsNotNull && dateInputsNotNull)
             {
                 bool datesOk = InputValidator.IsValidDateRange(dp_TermStart.Date, dp_TermEnd.Date);
@@ -153,7 +173,7 @@ namespace TermTracker.Views
                 }
                 else
                 {
-                    AlertUser("Input validation", "Start Date must be a date before the End Date. Please choose a valid Start and End Date.");
+                    AlertUser("Input validation", "Start Date must be a date before the End Date.\nPlease choose a valid Start and End Date.");
                 }
             }
             else

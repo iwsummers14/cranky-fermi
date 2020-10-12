@@ -1,9 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TermTracker.Events
 {
+    /// <summary>
+    /// Event arguments for user notification implementation.
+    /// </summary>
+
     public class NotificationEventArgs : EventArgs
     {
         public string Title { get; set; }

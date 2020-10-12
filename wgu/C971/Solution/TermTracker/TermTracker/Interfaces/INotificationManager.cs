@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TermTracker.Interfaces
 {
+    /// <summary>
+    /// Interface for managing local user notifications. Implemented by specific types on each platform, iOS and Android.
+    /// </summary>
     public interface INotificationManager
     {
         event EventHandler NotificationReceived;

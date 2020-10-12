@@ -14,6 +14,9 @@ using Xamarin.Forms.Xaml;
 
 namespace TermTracker.Views
 {
+    /// <summary>
+    /// Entry view for assessments. Can be used to add or edit an assessment.
+    /// </summary>
     [Description("AddOrEditAssessment")]
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddOrEditAssessmentPage : ContentPage
@@ -28,11 +31,13 @@ namespace TermTracker.Views
 
         private List<string> TypeValues { get; set; }
 
+        // default constructor
         public AddOrEditAssessmentPage()
         {
             InitializeComponent();
         }
 
+        // constructor for add operation
         public AddOrEditAssessmentPage(ref SQLiteAsyncConnection dConn, int parentId)
         {
             InitializeComponent();
@@ -40,6 +45,7 @@ namespace TermTracker.Views
 
         }
 
+        // constructor for edit operation
         public AddOrEditAssessmentPage(ref SQLiteAsyncConnection dConn, Assessment assessmentToLoad)
         {
             InitializeComponent();
@@ -47,39 +53,42 @@ namespace TermTracker.Views
 
         }
 
+        // initialize method for add operation
         private void InitializeViewAdd(SQLiteAsyncConnection dConn, int parentId)
         {
             DataConnection = dConn;
             Operation = UserOperation.Add;
+            TitleText.Text = "Add Assessment";
 
             CurrentAssessment = new Assessment()
             {
                 CourseId = parentId
             };
-
-            TitleText.Text = "Add Assessment";
-            PreparePickers();
+                        
+            PreparePickers(parentId);
+                                    
         }
 
+        // initialize method for edit operation
         private async void InitializeViewEdit(SQLiteAsyncConnection dConn, Assessment assessmentToLoad)
         {
             DataConnection = dConn;
             Operation = UserOperation.Edit;
-
-            CurrentAssessment = await DataConnection.GetAsync<Assessment>(assessmentToLoad.Id);
-
             TitleText.Text = "Edit Assessment";
-            PreparePickers();
-
+            
+            CurrentAssessment = await DataConnection.GetAsync<Assessment>(assessmentToLoad.Id);
+            
+            PreparePickers(CurrentAssessment.CourseId);
+            
             ent_AssessmentTitle.Text = CurrentAssessment.Title;
             pk_AssessmentType.SelectedIndex = pk_AssessmentType.ItemsSource.IndexOf(CurrentAssessment.AssessmentType);
             dp_AssessmentStart.Date = CurrentAssessment.StartDate;
             dp_AssessmentEnd.Date = CurrentAssessment.EndDate;
             pk_AssessmentStatus.SelectedIndex = pk_AssessmentStatus.ItemsSource.IndexOf(CurrentAssessment.Status);
             sw_NotificationsEnabled.IsToggled = CurrentAssessment.NotificationsEnabled;
-
         }
 
+        // event handler method, save button pressed 
         private void Save_Clicked(object sender, EventArgs e)
         {
             bool validated = ValidateInputs();
@@ -90,11 +99,13 @@ namespace TermTracker.Views
             
         }
 
+        // event handler method, cancel button pressed 
         private void Cancel_Clicked(object sender, EventArgs e)
         {
             CloseForm();
         }
 
+        // async method to handle insertion or updating record in the database
         private async void InsertOrUpdate(Action callback)
         {
 
@@ -118,44 +129,66 @@ namespace TermTracker.Views
 
         }
 
+        // async method to close the form 
         private async void CloseForm()
         {
             await Navigation.PopAsync();
         }
 
-        private void PreparePickers()
+        // async method to fill the pickers with data from enum types used to control their selections
+        private async void PreparePickers(int parentId)
         {
             TypeValues = EnumUtilities.EnumDescriptionsToList<AssessmentType>(typeof(AssessmentType));
             StatusValues = EnumUtilities.EnumDescriptionsToList<AssessmentStatus>(typeof(AssessmentStatus));
+
+            var objectiveAssessments = await DataConnection.QueryAsync<Assessment>("SELECT * FROM Assessments WHERE CourseId = ? AND AssessmentType = 'Objective'", parentId);
+            var performanceAssessments = await DataConnection.QueryAsync<Assessment>("SELECT * FROM Assessments WHERE CourseId = ? AND AssessmentType = 'Performance'", parentId);
+
+            if (objectiveAssessments.Count >= 1 && Operation == UserOperation.Add)
+            {
+                TypeValues.RemoveAt(TypeValues.IndexOf("Objective"));
+            }
+            if (performanceAssessments.Count >= 1 && Operation == UserOperation.Add)
+            {
+                TypeValues.RemoveAt(TypeValues.IndexOf("Performance"));
+            }
+            
             pk_AssessmentStatus.ItemsSource = StatusValues;
             pk_AssessmentType.ItemsSource = TypeValues;
         }
 
+        // async method to alert user of a condition
         private async void AlertUser(string title, string message)
         {
             await DisplayAlert($"{title}", $"{message}", "OK");
         }
 
+        // input validation method using the InputVlaidator class to validate entries contain data, and that the data is valid
         private bool ValidateInputs()
         {
+
+            // control variables
             bool textInputsNotNull = false;
             bool pickerInputsNotNull = false;
             bool dateInputsNotNull = false;
             bool validated = false;
 
+            // get children of the input stack layout and send to list
             var layouts = InputsLayout.Children.Where(c => c.GetType() == typeof(StackLayout)).Cast<StackLayout>().ToList();
             var inputs = new List<View>();
             layouts.ForEach(sl => inputs.AddRange(sl.Children));
 
+            // isolate each category of input as a list
             var textInputs = inputs.Where(input => input.GetType() == typeof(Entry)).Cast<Entry>().ToList();
             var pickerInputs = inputs.Where(input => input.GetType() == typeof(Picker)).Cast<Picker>().ToList();
             var dateInputs = inputs.Where(input => input.GetType() == typeof(DatePicker)).Cast<DatePicker>().ToList();
 
+            // validate each category of input
             textInputsNotNull = InputValidator.InputsNotNull<Entry>(textInputs);
             pickerInputsNotNull = InputValidator.InputsNotNull<Picker>(pickerInputs);
             dateInputsNotNull = InputValidator.InputsNotNull<DatePicker>(dateInputs);
             
-
+            // handle notifying user of invalid conditions
             if (textInputsNotNull && pickerInputsNotNull && dateInputsNotNull)
             {
                 bool datesOk = InputValidator.IsValidDateRange(dp_AssessmentStart.Date, dp_AssessmentEnd.Date, true);
@@ -166,7 +199,7 @@ namespace TermTracker.Views
                 }
                 else
                 {
-                    AlertUser("Input validation", "Start Date must be a date before the End Date. Please choose a valid Start and End Date.");
+                    AlertUser("Input validation", "Start Date must be a date before the End Date.\nPlease choose a valid Start and End Date.");
                 }
             }
             else

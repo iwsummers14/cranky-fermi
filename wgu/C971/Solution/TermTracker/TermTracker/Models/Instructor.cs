@@ -1,10 +1,10 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TermTracker.Models
 {
+    /// <summary>
+    /// Instructor model, maps to Instructors table in SQLite database.
+    /// </summary>
     [Table("Instructors")]
     public class Instructor
     {

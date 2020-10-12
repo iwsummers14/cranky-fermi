@@ -15,6 +15,9 @@ using Xamarin.Forms.Xaml;
 
 namespace TermTracker.Views
 {
+    /// <summary>
+    /// Detail view for courses. User can edit or delete the course from this page.
+    /// </summary>
     [Description("ViewDetailCourse")]
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CourseDetailPage : ContentPage
@@ -28,7 +31,7 @@ namespace TermTracker.Views
 
         private Course CurrentCourse { get; set; }
 
-
+        // constructor
         public CourseDetailPage(ref SQLiteAsyncConnection dConn, Course courseToLoad)
         {
             InitializeComponent();
@@ -36,10 +39,16 @@ namespace TermTracker.Views
             DataConnection = dConn;
 
         }
+
+        // override of OnAppearing method to load the values
         protected override async void OnAppearing()
-        {
+        { 
+            CurrentCourse = await DataConnection.GetAsync<Course>(CurrentCourse.Id);
             var instructor = await DataConnection.QueryAsync<Instructor>("SELECT * FROM Instructors WHERE Id = ?", CurrentCourse.InstructorId);
             var assessments = await DataConnection.QueryAsync<Assessment>("SELECT * FROM Assessments WHERE CourseId = ?", CurrentCourse.Id);
+           
+
+            AddAssessment.IsEnabled = assessments.Count >= 2 ? false : true;
 
             AssessmentsList = new ObservableCollection<Assessment>(assessments);
             AssessmentsListView.ItemsSource = AssessmentsList;
@@ -54,13 +63,15 @@ namespace TermTracker.Views
             lbl_Notes.Text = CurrentCourse.Notes;
 
         }
-        
+
+        // event handler method for the edit button pressed
         private async void EditCourse_Clicked(object sender, EventArgs e)
         {
             var view = Factory.GetEntryView<Course>(UserOperation.Edit, DataConnection, CurrentCourse);
             await Navigation.PushAsync(view);
         }
 
+        // event handler method for the delete button pressed - includes a prompt to confirm
         private async void DeleteCourse_Clicked(object sender, EventArgs e)
         {
             var confirmation = await DisplayAlert($"Delete Course", $"Are you sure you want to delete course \n'{CurrentCourse.CourseCode} - {CurrentCourse.Title}'?", "Yes", "No");
@@ -72,6 +83,7 @@ namespace TermTracker.Views
             }
         }
 
+        // event handler method for the add assessment button pressed
         private async void AddAssessment_Clicked(object sender, EventArgs e)
         {
             var view = Factory.GetEntryView<Assessment>(UserOperation.Add, DataConnection, null, CurrentCourse.Id);
@@ -79,6 +91,7 @@ namespace TermTracker.Views
 
         }
 
+        // event handler method for tapping on an item in the assessments item list
         private async void AssessmentsListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var assessment = (Assessment)(e.Item);
@@ -86,6 +99,7 @@ namespace TermTracker.Views
             await Navigation.PushAsync(view);
         }
 
+        // event handler method for the share button pressed
         private async void ShareNotes_Clicked(object sender, EventArgs e)
         {
             await Share.RequestAsync(

@@ -17,7 +17,10 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(TermTracker.Droid.DataAccess.DataConnection))]
 namespace TermTracker.Droid.DataAccess
 {
-    
+    /// <summary>
+    /// Android specific implementation of the IDataConnection interface. 
+    /// Includes the file system helper and puts the SQLite database in the user data folder.
+    /// </summary>    
     public class DataConnection : IDataConnection
     {
         public IFileSystemHelper FileSystemHelper { get; private set; }

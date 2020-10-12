@@ -20,7 +20,7 @@
                     <Entry 
                         x:Name="ent_TermTitle"
                         HorizontalOptions="EndAndExpand"
-                        WidthRequest="300"
+                        WidthRequest="200"
                     />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">

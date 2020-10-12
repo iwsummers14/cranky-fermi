@@ -12,6 +12,9 @@ using UserNotifications;
 [assembly: Dependency(typeof(TermTracker.iOS.NotificationHandlers.iOSNotificationManager))]
 namespace TermTracker.iOS.NotificationHandlers
 {
+    /// <summary>
+    /// iOS implementation of the INotificationManager interface. Handles user local notifications on iOS devices.
+    /// </summary>
     public class iOSNotificationManager : INotificationManager
     {
         int messageId = -1;
@@ -58,7 +61,7 @@ namespace TermTracker.iOS.NotificationHandlers
             };
 
             
-            // Create a time-based trigger, interval is in seconds and must be greater than 0
+            // create a time-based trigger, interval is in seconds and must be greater than 0. quarter-second used, close to realtime
             var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(0.25, false);
 
             var request = UNNotificationRequest.FromIdentifier(messageId.ToString(), content, trigger);

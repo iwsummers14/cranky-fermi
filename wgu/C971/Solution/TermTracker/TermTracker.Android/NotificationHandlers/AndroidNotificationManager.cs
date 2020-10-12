@@ -1,31 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-
-using Xamarin.Forms;
-
-using Android.App;
-using Android.Support.V4.App;
-
-
+﻿using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using System;
 using TermTracker.Events;
 using TermTracker.Interfaces;
-using Xamarin.Forms.Platform.Android;
-using Android.Graphics;
-
 using AndroidApp = Android.App.Application;
 using NotificationCompat = Android.Support.V4.App.NotificationCompat;
 
 [assembly: Xamarin.Forms.Dependency(typeof(TermTracker.Droid.NotificationHandlers.AndroidNotificationManager))]
 namespace TermTracker.Droid.NotificationHandlers
 {
+    /// <summary>
+    /// Android implementation of the INotificationManager class.  Handles notifications for android devices. 
+    /// </summary>
     public class AndroidNotificationManager : INotificationManager
     {
         const string channelId = "default";

@@ -21,6 +21,9 @@ using TermTracker.Utilities;
 
 namespace TermTracker
 {
+    /// <summary>
+    /// The main page of the application.
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
@@ -29,6 +32,8 @@ namespace TermTracker
         private int NotificationNumber = 0;
 
         List<Tuple<Type, int>> NotificationsFired = new List<Tuple<Type, int>>();
+
+        private Startup AppStart;
 
         private SQLiteAsyncConnection DataConnection;
 
@@ -40,31 +45,41 @@ namespace TermTracker
 
         public string ViewTitle = "Term Tracker";
 
+        // constructor
         public MainPage()
         {
+            // initialize and create a background worker to handle notifications
             InitializeComponent();
             NotificationManager = DependencyService.Get<INotificationManager>();
             NotificationWorker = new BackgroundWorker();
             NotificationWorker.DoWork += ProcessNotifications;
 
-            DataConnection = new Startup().DataConnection;
+            // create a startup object and assign an event handler to it, get the data connection back from it
+            AppStart = new Startup();
+            AppStart.StartupComplete += AppStart_StartupComplete;
+            DataConnection = AppStart.DataConnection;
             TitleText.Text = ViewTitle;
             
         }
 
-        protected override async void OnAppearing() 
+        // event handler method for when startup is complete
+        private async void AppStart_StartupComplete(object sender, StartupCompleteEventArgs e)
         {
             var terms = await DataConnection.Table<Term>().ToListAsync();
             TermsList = new ObservableCollection<Term>(terms);
             TermsListView.ItemsSource = TermsList;
-                        
+        }
+
+        // override of the OnAppearing method to tell the background worker to run
+        protected override async void OnAppearing() 
+        {
             if (NotificationWorker.IsBusy == false)
             {
                 NotificationWorker.RunWorkerAsync();
             }
-            
         }
 
+        // 'work' method for the background worker to create notifications
         private void ProcessNotifications(object sender, DoWorkEventArgs e)
         {
             Thread.Sleep(5000);
@@ -78,12 +93,23 @@ namespace TermTracker
 
         }
 
+        // method to get courses and assessments that the app should notify the user about; can be 'starts today' or 'is due today' 
         private void CreateAndLogNotifications<T>(DateTime date, NotificationType notificationType) where T : class, new()
         {
             Type type = typeof(T);
-            var starting = GetEventsByStartDate<T>(date);
+            Task<List<T>> events = null;
 
-            foreach (T item in starting.Result)
+            switch (notificationType)
+            {
+                case NotificationType.Starts:
+                    events = GetEventsByStartDate<T>(date);
+                    break;
+                case NotificationType.IsDue:
+                    events = GetEventsByEndDate<T>(date);
+                    break;
+            }
+
+            foreach (T item in events.Result)
             {
 
                 switch (type.Name)
@@ -105,6 +131,7 @@ namespace TermTracker
                         
         }
 
+        // method to create a notification for a course, and record it as a tuple so it is not fired again
         private void CreateCourseNotification(object item, NotificationType notificationType)
         {
             var course = (Course)item;
@@ -122,6 +149,7 @@ namespace TermTracker
             }
         }
 
+        // method to create a notification for an assessment, and record it as a tuple so it is not fired again
         private void CreateAssessmentNotification(object item, NotificationType notificationType)
         {
             var assessment = (Assessment)item;
@@ -139,6 +167,7 @@ namespace TermTracker
             }
         }
 
+        // method to get a list of items T by their start date
         private async Task<List<T>> GetEventsByStartDate<T>(DateTime date) where T : class, new()
         {
             Type type = typeof(T);
@@ -146,6 +175,8 @@ namespace TermTracker
             List <T> matches = await DataConnection.QueryAsync<T>($"{querybase} WHERE StartDate = ? AND NotificationsEnabled = ?", date, true);
             return matches;
         }
+
+        // method to get a list of items T by their end date
         private async Task<List<T>> GetEventsByEndDate<T>(DateTime date) where T : class, new()
         {
             Type type = typeof(T);
@@ -153,24 +184,22 @@ namespace TermTracker
             List<T> matches = await DataConnection.QueryAsync<T>($"{querybase} WHERE EndDate = ? AND NotificationsEnabled = ?", date, true);
             return matches;
         }
-        
+
+        // method to create a user notification and schedule it
         private void CreateNotification(string title, string message)
         {
             NotificationNumber++;
             NotificationManager.ScheduleNotification(title, message);
         }
                
+        // event handler method for the add term button
         private async void AddTerm_Button_Clicked(object sender, EventArgs e)
         {
             var page = Factory.GetEntryView<Term>(UserOperation.Add, DataConnection);
             await Navigation.PushAsync(page, true);
         }
-                
-        private void TermsListView_Refreshing(object sender, EventArgs e)
-        {
-            
-        }
-               
+        
+        // event handler method for tapping a term item in the terms itemlist
         private async void TermsListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var term = (Term)(e.Item);

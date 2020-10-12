@@ -5,6 +5,9 @@ using System.Text;
 
 namespace TermTracker.Models
 {
+    /// <summary>
+    /// Course model, maps to Courses table in SQLite database.
+    /// </summary>
     [Table("Courses")]
     public class Course
     {

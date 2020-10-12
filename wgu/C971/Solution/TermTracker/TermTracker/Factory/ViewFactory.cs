@@ -4,19 +4,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 using TermTracker.Configuration;
 using TermTracker.Enum;
-using TermTracker.Interfaces;
-using TermTracker.Models;
 using TermTracker.Utilities;
-using TermTracker.Views;
 using Xamarin.Forms;
 
 namespace TermTracker.Factory
 {
+    /// <summary>
+    /// Factory-ish class to return the appropriate view based on the desired operation and the model type.
+    /// Locates views by their DescriptionAttribute decorator value.
+    /// </summary>
     public class ViewFactory
     {
        
@@ -31,8 +30,18 @@ namespace TermTracker.Factory
                         
         }
 
+        /// <summary>
+        /// Returns an entry view (Add or Edit) for the type T provided.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="op">The desired operation.</param>
+        /// <param name="dConn">An initialized DataConnection object.</param>
+        /// <param name="obj">(Optional) - For edit views, the object to edit.</param>
+        /// <param name="parentId">(Optional) - For add views, the primary key of the parent object.</param>
+        /// <returns></returns>
        public ContentPage GetEntryView<T>(UserOperation op, SQLiteAsyncConnection dConn, [Optional] T obj, [Optional] int parentId) 
         {
+            
             object view = null;
             Type viewType = null;
             Type objType = typeof(T);
@@ -56,7 +65,7 @@ namespace TermTracker.Factory
                 }
             }
 
-
+            // create an instance of the view, based on the operation
             switch (op)
             {
                 case UserOperation.Add:
@@ -71,11 +80,19 @@ namespace TermTracker.Factory
                     break;
             }
                  
+            // cast the view as a ContentPage and return it
             return (ContentPage)view;
         
         
         }
 
+        /// <summary>
+        /// Returns a detail view for the type T provided.
+        /// </summary>
+        /// <typeparam name="T">The model type to load.</typeparam>
+        /// <param name="dConn">An initialized DataConnection object.</param>
+        /// <param name="obj">The model to load.</param>
+        /// <returns></returns>
         public ContentPage GetDetailView<T>(SQLiteAsyncConnection dConn, T obj)
         {
             object view = null;
@@ -101,10 +118,10 @@ namespace TermTracker.Factory
                 }
             }
                         
+            // create an instance of the view, cast it as a Content page, and return it
             view = Activator.CreateInstance(viewType, dConn, obj);
 
             return (ContentPage)view;
-
 
         }
 

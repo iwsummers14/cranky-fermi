@@ -47,8 +47,10 @@
                         <Label x:Name="lbl_InstructorEmail" />
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="Notes:" />
-                        <Label x:Name="lbl_Notes" />
+                        <Label Text="Notes:" WidthRequest="65"/>
+                    <Label x:Name="lbl_Notes" 
+                               LineBreakMode="WordWrap"
+                               MaxLines="3"/>
                     </StackLayout>
                 </StackLayout>
             </Frame>

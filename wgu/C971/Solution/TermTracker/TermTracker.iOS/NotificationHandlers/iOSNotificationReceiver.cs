@@ -11,11 +11,14 @@ using Xamarin.Forms;
 
 namespace TermTracker.iOS.NotificationHandlers
 {
+    /// <summary>
+    /// Delegate class to receive notifications on iOS devices.
+    /// </summary>
     public class iOSNotificationReceiver : UNUserNotificationCenterDelegate
     {
         public override void WillPresentNotification(UNUserNotificationCenter center, UNNotification notification, Action<UNNotificationPresentationOptions> completionHandler)
         {
-            DependencyService.Get<INotificationManager>().ReceiveNotification(notification.Request.Content.Title, notification.Request.Content.Body);
+            //DependencyService.Get<INotificationManager>().ReceiveNotification(notification.Request.Content.Title, notification.Request.Content.Body);
             completionHandler(UNNotificationPresentationOptions.Alert);
         }
     }

@@ -14,9 +14,16 @@ using Android.Widget;
 
 namespace TermTracker.Droid.Helpers
 {
+    /// <summary>
+    /// Android specific implementaiton of the file system helper class. 
+    /// </summary>
     public class FileSystemHelper : IFileSystemHelper
     {
-        
+        /// <summary>
+        /// Returns a file path in the user's data folder with the given file name.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public string GetFilePathInPersonalFolder(string fileName)
         {
             string fileSystemPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
