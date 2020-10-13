@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "SJNKSHYgmf7GvZjzDTwnfWg3rAddTAWTahgHEni7R+KXbCEhjOVsPBe1HzAIe6NKgVYAa8dScPpv1Wr/v26QWQ==",
+  "dgSpecHash": "jm1Q/nB4zas7o5WuxwFJFHUkSzTRE5TeyPxqfD2WEerikcnhI/U5p+6xxwcYbUjk2gJ+DaU/3rBdIZPtVvuaMA==",
   "success": true,
   "projectFilePath": "C:\\Users\\iwsum\\source\\repos\\iwsummers14\\cranky-fermi\\wgu\\C971\\Solution\\TermTracker\\TermTracker\\TermTracker.csproj",
   "expectedPackageFiles": [
@@ -16,7 +16,7 @@
     "C:\\Users\\iwsum\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Users\\iwsum\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",
-    "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\4.6.0.1141\\xamarin.forms.4.6.0.1141.nupkg.sha512"
+    "C:\\Users\\iwsum\\.nuget\\packages\\xamarin.forms\\4.8.0.1534\\xamarin.forms.4.8.0.1534.nupkg.sha512"
   ],
   "logs": []
 }

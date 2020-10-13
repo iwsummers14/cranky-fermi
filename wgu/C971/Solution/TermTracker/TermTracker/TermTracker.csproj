@@ -13,12 +13,16 @@
 
   <ItemGroup>
     <None Remove="Images\banner.png" />
+    <None Remove="Images\share.png" />
     <None Remove="Images\wgu_banner.png" />
     <None Remove="Images\wgu_owl.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Images\banner.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\share.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Images\wgu_owl.png">
@@ -28,7 +32,7 @@
 
   <ItemGroup>
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
-    <PackageReference Include="Xamarin.Forms" Version="4.6.0.1141" />  
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1534" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
   </ItemGroup>
 

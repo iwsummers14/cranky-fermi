@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Ozx6jONZGi1jA5SdCZtpIpsOlptrlacHXnA4UX34EX6umtRvz7YqipIbFNAfpOcEYIL3LUwOvahq2f/v4yDaaQ==",
+  "dgSpecHash": "TlP4H2YCYzZNKdQNr44kmyqgfuCPGdPs+cImy5H41aiNTPTiojawyJ9Y8CPWpOfUypagPVf0JahOPqsN+B7gHw==",
   "success": true,
   "projectFilePath": "C:\\Users\\iwsum\\source\\repos\\iwsummers14\\cranky-fermi\\wgu\\C971\\Solution\\TermTracker\\TermTracker.Android\\TermTracker.Android.csproj",
   "expectedPackageFiles": [
@@ -50,7 +50,7 @@
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.android.support.versionedparcelable\\28.0.0.3\\xamarin.android.support.versionedparcelable.28.0.0.3.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.android.support.viewpager\\28.0.0.3\\xamarin.android.support.viewpager.28.0.0.3.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.5.3.2\\xamarin.essentials.1.5.3.2.nupkg.sha512",
-    "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\4.6.0.1141\\xamarin.forms.4.6.0.1141.nupkg.sha512"
+    "C:\\Users\\iwsum\\.nuget\\packages\\xamarin.forms\\4.8.0.1534\\xamarin.forms.4.8.0.1534.nupkg.sha512"
   ],
   "logs": []
 }

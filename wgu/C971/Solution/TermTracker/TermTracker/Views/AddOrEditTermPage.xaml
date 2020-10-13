@@ -4,8 +4,72 @@
              xmlns:ViewModels="clr-namespace:TermTracker.ViewModels"
              x:Class="TermTracker.Views.AddOrEditTermPage">
     <ContentPage.Content>
-        <StackLayout Margin="20" VerticalOptions="Start">
+        <StackLayout Margin="20">
+        <StackLayout  VerticalOptions="Start" >
             <ViewModels:PageHeaderView x:Name="PageHeaderView"></ViewModels:PageHeaderView>
+            <Label x:Name="TitleText" Text="" FontSize="Large" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15"/>
         </StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand" x:Name="InputsLayout">
+                <StackLayout Orientation="Horizontal">
+                    <Label 
+                        x:Name="lbl_TermTitle"
+                        Text="Title"
+                        FontSize="Subtitle"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
+                    <Entry 
+                        x:Name="ent_TermTitle"
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="200"
+                    />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label
+                        x:Name="lbl_TermStart"
+                        Text="Term Start"
+                        FontSize="Subtitle"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
+                    <DatePicker 
+                        x:Name="dp_TermStart"
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="150"
+                    />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label 
+                        x:Name="lbl_TermEnd"
+                        Text="Term End"
+                        FontSize="Subtitle"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
+                    <DatePicker
+                        x:Name="dp_TermEnd"
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="150"
+                    />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label 
+                        x:Name="lbl_TermStatus"
+                        Text="Status"
+                        FontSize="Subtitle"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
+                    <Picker
+                        x:Name="pk_TermStatus"
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="150"
+                    />
+                    
+                </StackLayout>
+            </StackLayout>
+
+        <StackLayout Orientation="Vertical" VerticalOptions="End">
+            <Button x:Name="Save" Text="Save Term" Clicked="Save_Clicked" CornerRadius="7" />
+            <Button x:Name="Cancel" Text="Cancel" Clicked="Cancel_Clicked" CornerRadius="7" />
+        </StackLayout>
+        </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>

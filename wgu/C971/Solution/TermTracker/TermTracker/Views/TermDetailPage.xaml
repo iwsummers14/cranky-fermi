@@ -9,10 +9,10 @@
             <ViewModels:PageHeaderView x:Name="PageHeaderView"></ViewModels:PageHeaderView>
             <Label x:Name="TitleText" Text="" FontSize="Large" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15"/>
             <StackLayout Orientation="Vertical" x:Name="Terms" VerticalOptions="FillAndExpand" Spacing="5">
-                <ListView x:Name="CoursesListView" HasUnevenRows="True">
+                <ListView x:Name="CoursesListView" HasUnevenRows="True" ItemTapped="CoursesListView_ItemTapped">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ViewModels:ViewCellCourse Tapped="ViewCellCourse_Tapped"/>
+                            <ViewModels:ViewCellCourse />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

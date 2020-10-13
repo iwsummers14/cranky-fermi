@@ -7,17 +7,65 @@
     <ContentPage.Content>
         <StackLayout Margin="20" VerticalOptions="Start">
             <ViewModels:PageHeaderView x:Name="PageHeaderView"></ViewModels:PageHeaderView>
-            <Label x:Name="TitleText" Text="" FontSize="Large" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15"/>
-            <StackLayout Orientation="Vertical" x:Name="Terms" VerticalOptions="FillAndExpand" Spacing="5">
-                <ListView x:Name="CoursesListView" HasUnevenRows="True">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewModels:ViewCellAssessment Tapped="ViewCellAssessment_Tapped" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+            <StackLayout Orientation="Horizontal">
+                <Label x:Name="TitleText" Text="" FontSize="Large" HorizontalTextAlignment="Center" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15" />
+                <ImageButton x:Name="ShareNotes"
+                                     HeightRequest="30"
+                                     WidthRequest="30"
+                                     Aspect="AspectFit"
+                                     Source="share.png"
+                                     BackgroundColor="Transparent"
+                                     HorizontalOptions="End"
+                                     Margin="0"
+                                     Padding="0" 
+                                     Clicked="ShareNotes_Clicked"/>
             </StackLayout>
-            <Button x:Name="AddAssessment" Text="Add Assessment" CornerRadius="7" />
+            <Frame BorderColor="#0a255c" CornerRadius="2" Padding="3">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Course Start Date:" />
+                        <Label x:Name="lbl_CourseStartDate" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Course End Date:" />
+                        <Label x:Name="lbl_CourseEndDate" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Notifications Enabled:" />
+                        <Label x:Name="lbl_CourseNotifications" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Instructor Name:" />
+                        <Label x:Name="lbl_InstructorName" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Instructor Phone:" />
+                        <Label x:Name="lbl_InstructorPhone" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Instructor Email:" />
+                        <Label x:Name="lbl_InstructorEmail" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Notes:" MinimumWidthRequest="65"/>
+                    <Label x:Name="lbl_Notes" 
+                               LineBreakMode="WordWrap"
+                               MaxLines="3"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <ScrollView>
+                <StackLayout Orientation="Vertical" x:Name="Terms" VerticalOptions="FillAndExpand" Spacing="5">
+                    <ListView x:Name="AssessmentsListView" HasUnevenRows="True" ItemTapped="AssessmentsListView_ItemTapped">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewModels:ViewCellAssessment/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </ScrollView>
+            <Button x:Name="AddAssessment" Text="Add Assessment" CornerRadius="7" Clicked="AddAssessment_Clicked"/>
             <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" >
                 <Button x:Name="EditCourse" 
                         Text="Edit Course" 

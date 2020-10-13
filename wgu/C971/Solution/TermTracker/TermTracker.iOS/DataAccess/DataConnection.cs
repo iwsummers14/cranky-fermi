@@ -15,6 +15,9 @@ using SQLite;
 [assembly: Dependency(typeof(TermTracker.iOS.DataAccess.DataConnection))]
 namespace TermTracker.iOS.DataAccess
 {
+    /// <summary>
+    /// iOS specific implementation of the IDataConnection interface. Includes a file system helper and stores SQLite database in the user's data folder.
+    /// </summary>
     public class DataConnection : IDataConnection
     {
         public IFileSystemHelper FileSystemHelper { get; private set; }

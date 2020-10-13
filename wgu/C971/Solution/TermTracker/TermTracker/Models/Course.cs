@@ -5,6 +5,9 @@ using System.Text;
 
 namespace TermTracker.Models
 {
+    /// <summary>
+    /// Course model, maps to Courses table in SQLite database.
+    /// </summary>
     [Table("Courses")]
     public class Course
     {
@@ -22,10 +25,14 @@ namespace TermTracker.Models
         public DateTime EndDate { get; set; }
 
         public bool NotificationsEnabled { get; set; }
-                
-        public int Instructor { get; set; }
 
-        public int Term { get; set; }
+        public string Notes { get; set; }        
+        
+        public int InstructorId { get; set; }
+
+        public int TermId { get; set; }
+
+        
 
     }
 }

@@ -17,6 +17,9 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(TermTracker.Droid.DataAccess.Logger))]
 namespace TermTracker.Droid.DataAccess
 {
+    /// <summary>
+    /// Android specific implementation of a logger class. Uses file system helper to log in the user's data folder.
+    /// </summary>
     public class Logger : ILogger
     {
         public IFileSystemHelper FileSystemHelper { get; private set; }

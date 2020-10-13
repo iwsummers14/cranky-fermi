@@ -4,8 +4,95 @@
              xmlns:ViewModels="clr-namespace:TermTracker.ViewModels"
              x:Class="TermTracker.Views.AddOrEditAssessmentPage">
     <ContentPage.Content>
-        <StackLayout Margin="20" VerticalOptions="Start">
-            <ViewModels:PageHeaderView x:Name="PageHeaderView"></ViewModels:PageHeaderView>
+        <StackLayout Margin="20">
+            <StackLayout  VerticalOptions="Start" >
+                <ViewModels:PageHeaderView x:Name="PageHeaderView"></ViewModels:PageHeaderView>
+                <Label x:Name="TitleText" Text="" FontSize="Large" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" Margin="5, 0, 5, 15"/>
+            </StackLayout>
+            <StackLayout VerticalOptions="FillAndExpand" x:Name="InputsLayout">
+                <StackLayout Orientation="Horizontal">
+                    <Label 
+                        x:Name="lbl_AssessmentTitle"
+                        Text="Title"
+                        FontSize="Subtitle"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
+                    <Entry 
+                        x:Name="ent_AssessmentTitle"
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="200"
+                    />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label 
+                        x:Name="lbl_AssessmentType"
+                        Text="Type"
+                        FontSize="Subtitle"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
+                    <Picker
+                        x:Name="pk_AssessmentType"
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="150"
+                    />
+
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label
+                        x:Name="lbl_AssessmentStart"
+                        Text="Start Date"
+                        FontSize="Subtitle"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
+                    <DatePicker 
+                        x:Name="dp_AssessmentStart"
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="150"
+                    />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label 
+                        x:Name="lbl_AssessmentEnd"
+                        Text="End Date"
+                        FontSize="Subtitle"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
+                    <DatePicker
+                        x:Name="dp_AssessmentEnd"
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="150"
+                    />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label 
+                        x:Name="lbl_AssessmentStatus"
+                        Text="Status"
+                        FontSize="Subtitle"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Start" />
+                    <Picker
+                        x:Name="pk_AssessmentStatus"
+                        HorizontalOptions="EndAndExpand"
+                        WidthRequest="150"
+                    />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label 
+                            x:Name="lbl_AssessmentNotifications"
+                            Text="Notifications Enabled"
+                            FontSize="Subtitle"
+                            VerticalOptions="Center"
+                            HorizontalOptions="StartAndExpand" />
+                    <Switch 
+                            x:Name="sw_NotificationsEnabled"
+                            HorizontalOptions="End"
+                        />
+                </StackLayout>
+            </StackLayout>
+            <StackLayout Orientation="Vertical" VerticalOptions="End">
+                <Button x:Name="Save" Text="Save" Clicked="Save_Clicked" CornerRadius="7" />
+                <Button x:Name="Cancel" Text="Cancel" Clicked="Cancel_Clicked" CornerRadius="7" />
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

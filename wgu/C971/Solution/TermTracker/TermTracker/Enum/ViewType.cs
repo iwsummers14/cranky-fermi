@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace TermTracker.Enum
 {
+    /// <summary>
+    /// Enumeration of types for views. Description attribute is used to identify the view.
+    /// </summary>
     public enum ViewType
     {
         [Description("AddOrEdit")]
