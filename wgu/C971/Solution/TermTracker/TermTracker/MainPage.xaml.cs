@@ -48,11 +48,16 @@ namespace TermTracker
         // constructor
         public MainPage()
         {
-            // initialize and create a background worker to handle notifications
+            
             InitializeComponent();
+
+            // initialize notification manager and create a background worker to handle notifications
             NotificationManager = DependencyService.Get<INotificationManager>();
+            NotificationManager.Initialize();
+
             NotificationWorker = new BackgroundWorker();
             NotificationWorker.DoWork += ProcessNotifications;
+            
 
             // create a startup object and assign an event handler to it, get the data connection back from it
             AppStart = new Startup();

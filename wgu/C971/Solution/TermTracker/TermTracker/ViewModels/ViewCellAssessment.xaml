@@ -10,8 +10,8 @@
                     <Label.FormattedText>
                         <FormattedString>
                             <Span Text="{Binding Title, StringFormat='{0} -'}" FontAttributes="Bold" FontSize="Small" />
-                            <Span Text="{Binding AssessmentType, StringFormat=' {0} Assessment -'}" />
-                            <Span Text="{Binding Status, StringFormat=' {0}'}" />
+                            <Span Text="{Binding AssessmentType, StringFormat=' {0} Assessment -'}" FontSize="Small" />
+                            <Span Text="{Binding Status, StringFormat=' {0}'}" FontSize="Small" />
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>

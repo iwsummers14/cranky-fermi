@@ -70,13 +70,13 @@ namespace TermTracker.Views
         }
 
         // initialize method for edit operation
-        private async void InitializeViewEdit(SQLiteAsyncConnection dConn, Assessment assessmentToLoad)
+        private void InitializeViewEdit(SQLiteAsyncConnection dConn, Assessment assessmentToLoad)
         {
             DataConnection = dConn;
             Operation = UserOperation.Edit;
             TitleText.Text = "Edit Assessment";
             
-            CurrentAssessment = await DataConnection.GetAsync<Assessment>(assessmentToLoad.Id);
+            CurrentAssessment = DataConnection.GetAsync<Assessment>(assessmentToLoad.Id).Result;
             
             PreparePickers(CurrentAssessment.CourseId);
             
@@ -135,20 +135,23 @@ namespace TermTracker.Views
             await Navigation.PopAsync();
         }
 
-        // async method to fill the pickers with data from enum types used to control their selections
-        private async void PreparePickers(int parentId)
+        // method to fill the pickers with data from enum types used to control their selections.
+        // lack of await operators is because this method must be synchronous in order to avoid null reference errors on the ItemsSource properties.
+        // data must be returned first to evaluate it and remove options from the type picker.
+        private void PreparePickers(int parentId)
         {
             TypeValues = EnumUtilities.EnumDescriptionsToList<AssessmentType>(typeof(AssessmentType));
             StatusValues = EnumUtilities.EnumDescriptionsToList<AssessmentStatus>(typeof(AssessmentStatus));
 
-            var objectiveAssessments = await DataConnection.QueryAsync<Assessment>("SELECT * FROM Assessments WHERE CourseId = ? AND AssessmentType = 'Objective'", parentId);
-            var performanceAssessments = await DataConnection.QueryAsync<Assessment>("SELECT * FROM Assessments WHERE CourseId = ? AND AssessmentType = 'Performance'", parentId);
+            var objectiveAssessments = DataConnection.QueryAsync<Assessment>("SELECT * FROM Assessments WHERE CourseId = ? AND AssessmentType = 'Objective'", parentId).Result;
+            var performanceAssessments = DataConnection.QueryAsync<Assessment>("SELECT * FROM Assessments WHERE CourseId = ? AND AssessmentType = 'Performance'", parentId).Result;
 
-            if (objectiveAssessments.Count >= 1 && Operation == UserOperation.Add)
+            // only restrict lists on Add operations. Allow edits to have both choices
+            if (objectiveAssessments.Count >= 1 & Operation == UserOperation.Add)
             {
                 TypeValues.RemoveAt(TypeValues.IndexOf("Objective"));
             }
-            if (performanceAssessments.Count >= 1 && Operation == UserOperation.Add)
+            if (performanceAssessments.Count >= 1 & Operation == UserOperation.Add)
             {
                 TypeValues.RemoveAt(TypeValues.IndexOf("Performance"));
             }

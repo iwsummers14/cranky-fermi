@@ -18,7 +18,7 @@ namespace TermTracker.iOS.NotificationHandlers
     {
         public override void WillPresentNotification(UNUserNotificationCenter center, UNNotification notification, Action<UNNotificationPresentationOptions> completionHandler)
         {
-            //DependencyService.Get<INotificationManager>().ReceiveNotification(notification.Request.Content.Title, notification.Request.Content.Body);
+            DependencyService.Get<INotificationManager>().ReceiveNotification(notification.Request.Content.Title, notification.Request.Content.Body);
             completionHandler(UNNotificationPresentationOptions.Alert);
         }
     }
