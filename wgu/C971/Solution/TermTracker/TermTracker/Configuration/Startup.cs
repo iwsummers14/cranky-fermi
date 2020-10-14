@@ -17,8 +17,9 @@ using TermTracker.Events;
 namespace TermTracker.Configuration
 {
     /// <summary>
-    /// Class to invoke app startup tasks. Since this is a 'demo' application the database is re-initialized on every run.
-    /// In a production scenario the database would be checked and then initialized if not present (i.e. first launch).
+    /// Class to invoke app startup tasks. 
+    /// Checks for the existence of the database file. If it does not exist, it is created and initialized.
+    /// If it does exist, the connection is opened.
     /// 
     /// In the context of this project this class injects the test data into the database at app start.
     /// An event handler is used to indicate when startup is complete.
