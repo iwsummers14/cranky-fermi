@@ -22,15 +22,28 @@ namespace TermTracker.iOS.DataAccess
     {
         public IFileSystemHelper FileSystemHelper { get; private set; }
 
+        private string dbPath;
+
         public DataConnection()
         {
             FileSystemHelper = new FileSystemHelper();
+            GetDbFileLocation();
+        }
+
+        private void GetDbFileLocation()
+        {
+            dbPath = FileSystemHelper.GetFilePathInPersonalFolder("TermTracker.db3");
         }
 
         public SQLiteAsyncConnection GetDataConnection()
         {
-            var path = FileSystemHelper.GetFilePathInPersonalFolder("TermTracker.db3");
-            return new SQLiteAsyncConnection(path);
+            return new SQLiteAsyncConnection(dbPath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create | SQLiteOpenFlags.SharedCache);
         }
+
+        public bool DatabaseExists()
+        {
+            return FileSystemHelper.FileExists(dbPath);
+        }
+
     }
 }

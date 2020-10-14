@@ -64,7 +64,6 @@ C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTrack
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.iOS\obj\iPhone\Debug\optimized\
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.iOS\obj\iPhone\Debug\TermTracker.iOS.csprojAssemblyReference.cache
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.iOS\obj\iPhone\Debug\TermTracker.iOS.csproj.CoreCompileInputs.cache
-C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.iOS\obj\iPhone\Debug\XamlC.stamp
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.iOS\obj\iPhone\Debug\TermTracker.iOS.csproj.CopyComplete
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.iOS\obj\iPhone\Debug\TermTracker.iOS.exe
 C:\Users\iwsum\source\repos\iwsummers14\cranky-fermi\wgu\C971\Solution\TermTracker\TermTracker.iOS\obj\iPhone\Debug\TermTracker.iOS.pdb

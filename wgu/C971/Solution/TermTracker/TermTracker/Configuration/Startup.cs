@@ -28,60 +28,49 @@ namespace TermTracker.Configuration
 
         public event EventHandler<StartupCompleteEventArgs> StartupComplete;
 
-        public SQLiteAsyncConnection DataConnection { get; private set; }
+        public IDataConnection BaseDataConnection { get; private set; }
         
+        public SQLiteAsyncConnection DataConnection { get; private set; }
+
         public ILogger Logger { get; private set; }
 
         public Startup()
         {
             // Data connection and logger classes for the specific platform are initialized
-            DataConnection = DependencyService.Get<IDataConnection>(DependencyFetchTarget.NewInstance).GetDataConnection();
+            BaseDataConnection = DependencyService.Get<IDataConnection>(DependencyFetchTarget.NewInstance);
             Logger = DependencyService.Get<ILogger>(DependencyFetchTarget.NewInstance);
-            
-            PrepareDatabase();
         }
 
-        private void PrepareDatabase()
+        public void Initialize()
         {
-            // Clear data and re-initialize the database
-            try
+            // look for existing database file
+            var databasePresent = BaseDataConnection.DatabaseExists();
+
+            if (databasePresent)
             {
-                CleanDatabase(InitializeDatabase);
-                                                
+                // assign the data connection object
+                DataConnection = BaseDataConnection.GetDataConnection();
+
+                // trigger the startup complete event
+                StartupCompleteEventArgs startupComplete = new StartupCompleteEventArgs() { TablesHydrated = true };
+                OnComplete(startupComplete);
             }
-            catch (SQLite.SQLiteException ex)
+            else
             {
-                Logger.WriteLogEntry(ex.Message);
+                // assign the data connection object
+                DataConnection = BaseDataConnection.GetDataConnection();
+                
+                // create tables and add records
+                CreateTables(InsertDemoData);
             }
-
         }
-
-        private async void CleanDatabase(Action callback)
-        {
-            // Drop all tables
-            await DataConnection.DropTableAsync<Assessment>();
-            await DataConnection.DropTableAsync<Course>();
-            await DataConnection.DropTableAsync<Instructor>();
-            await DataConnection.DropTableAsync<Term>();
-
-            // Execute the callback function 
-            callback();
-        }
-
-        private void InitializeDatabase()
-        {
-            // create tables and add records
-            CreateTables(HydrateTables);
-
-        }
-
+        
         private async void CreateTables(Action callback)
         {
             
             // Create tables in order of dependencies
             try
             {
-                
                 await DataConnection.CreateTableAsync<Term>();
                 await DataConnection.CreateTableAsync<Assessment>();
                 await DataConnection.CreateTableAsync<Instructor>();
@@ -98,7 +87,7 @@ namespace TermTracker.Configuration
             callback();
         }
 
-        private async void HydrateTables()
+        private async void InsertDemoData()
         {
             // set up seed values for various demo records and lists for holding multiple records
             var seedStartDate = DateTime.Today;
@@ -200,7 +189,7 @@ namespace TermTracker.Configuration
 
         }
 
-        // method to invoke the event
+        // method to fire the event
         protected void OnComplete(StartupCompleteEventArgs e)
         {
             StartupComplete?.Invoke(this, e);

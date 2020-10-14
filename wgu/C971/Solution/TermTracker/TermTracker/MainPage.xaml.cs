@@ -27,61 +27,84 @@ namespace TermTracker
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
-        private INotificationManager NotificationManager;
-
-        private int NotificationNumber = 0;
-
-        List<Tuple<Type, int>> NotificationsFired = new List<Tuple<Type, int>>();
-
-        private Startup AppStart;
-
-        private SQLiteAsyncConnection DataConnection;
-
-        private ObservableCollection<Term> TermsList;
-
         private BackgroundWorker NotificationWorker { get; set; }
 
         private ViewFactory Factory { get => new ViewFactory(); }
 
+        private INotificationManager NotificationManager { get; set; }
+
+        private Startup AppStart { get; set; }
+
+        private SQLiteAsyncConnection DataConnection { get; set; }
+
+        private ObservableCollection<Term> TermsList { get; set; }
+
+        private bool AppInitialized { get; set; }
+
+        List<Tuple<Type, int>> NotificationsFired = new List<Tuple<Type, int>>();
+        
+        private int NotificationNumber = 0;
+        
         public string ViewTitle = "Term Tracker";
 
         // constructor
         public MainPage()
         {
-            
-            InitializeComponent();
 
+            InitializeComponent();
+            
+            // set initialized variable to false
+            AppInitialized = false;
+            
             // initialize notification manager and create a background worker to handle notifications
             NotificationManager = DependencyService.Get<INotificationManager>();
             NotificationManager.Initialize();
 
+            // initialize a BackgroundWorker to process notifications and set method for work
             NotificationWorker = new BackgroundWorker();
             NotificationWorker.DoWork += ProcessNotifications;
-            
 
             // create a startup object and assign an event handler to it, get the data connection back from it
             AppStart = new Startup();
             AppStart.StartupComplete += AppStart_StartupComplete;
-            DataConnection = AppStart.DataConnection;
-            TitleText.Text = ViewTitle;
+            AppStart.Initialize();
             
+            // set the title text
+            TitleText.Text = ViewTitle;
+
         }
 
         // event handler method for when startup is complete
         private async void AppStart_StartupComplete(object sender, StartupCompleteEventArgs e)
         {
+            // switch AppInitialized to true, assign the data connection, and run the background worker for notifications
+            AppInitialized = true;
+            DataConnection = AppStart.DataConnection;
+            NotificationWorker.RunWorkerAsync();
+
+            // get data for terms list
             var terms = await DataConnection.Table<Term>().ToListAsync();
             TermsList = new ObservableCollection<Term>(terms);
             TermsListView.ItemsSource = TermsList;
+
         }
 
-        // override of the OnAppearing method to tell the background worker to run
-        protected override async void OnAppearing() 
+        // override of the OnAppearing method to tell the background worker to run and refresh the listview
+        protected override async void OnAppearing()
         {
-            if (NotificationWorker.IsBusy == false)
+            if (AppInitialized)
             {
-                NotificationWorker.RunWorkerAsync();
+
+                if (NotificationWorker.IsBusy == false)
+                {
+                    NotificationWorker.RunWorkerAsync();
+                }
+
+                var terms = await DataConnection.Table<Term>().ToListAsync();
+                TermsList = new ObservableCollection<Term>(terms);
+                TermsListView.ItemsSource = TermsList;
             }
+
         }
 
         // 'work' method for the background worker to create notifications
@@ -131,9 +154,9 @@ namespace TermTracker
                         throw new InvalidOperationException("Notifications are not supported for this type.");
                         break;
                 }
-                
+
             }
-                        
+
         }
 
         // method to create a notification for a course, and record it as a tuple so it is not fired again
@@ -176,8 +199,8 @@ namespace TermTracker
         private async Task<List<T>> GetEventsByStartDate<T>(DateTime date) where T : class, new()
         {
             Type type = typeof(T);
-            string querybase = $"SELECT * FROM {type.Name}s" ;
-            List <T> matches = await DataConnection.QueryAsync<T>($"{querybase} WHERE StartDate = ? AND NotificationsEnabled = ?", date, true);
+            string querybase = $"SELECT * FROM {type.Name}s";
+            List<T> matches = await DataConnection.QueryAsync<T>($"{querybase} WHERE StartDate = ? AND NotificationsEnabled = ?", date, true);
             return matches;
         }
 
@@ -196,14 +219,14 @@ namespace TermTracker
             NotificationNumber++;
             NotificationManager.ScheduleNotification(title, message);
         }
-               
+
         // event handler method for the add term button
         private async void AddTerm_Button_Clicked(object sender, EventArgs e)
         {
             var page = Factory.GetEntryView<Term>(UserOperation.Add, DataConnection);
             await Navigation.PushAsync(page, true);
         }
-        
+
         // event handler method for tapping a term item in the terms itemlist
         private async void TermsListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {

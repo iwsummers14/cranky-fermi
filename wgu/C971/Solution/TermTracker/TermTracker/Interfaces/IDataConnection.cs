@@ -11,6 +11,7 @@ namespace TermTracker.Interfaces
 
         SQLiteAsyncConnection GetDataConnection();
 
+        bool DatabaseExists();
     }
 
 }

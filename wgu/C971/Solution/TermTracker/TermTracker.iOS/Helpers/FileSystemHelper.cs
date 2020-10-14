@@ -16,6 +16,16 @@ namespace TermTracker.iOS.Helpers
     public class FileSystemHelper : IFileSystemHelper
     {
         /// <summary>
+        /// Checks to see if a file exists on the local file system.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public bool FileExists(string path)
+        {
+            return File.Exists(path);
+        }
+
+        /// <summary>
         /// Returns a file path in the user's data folder for the given file name.
         /// </summary>
         /// <param name="fileName"></param>

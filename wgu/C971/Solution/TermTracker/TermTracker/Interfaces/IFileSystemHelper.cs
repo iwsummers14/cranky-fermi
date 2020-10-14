@@ -7,5 +7,6 @@
     {
         string GetFilePathInPersonalFolder(string fileName);
 
+        bool FileExists(string path);
     }
 }
